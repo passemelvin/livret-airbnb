@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>PRIVÉ – Résidence Cervantes</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@600;700;900&family=Barlow:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #1a1a1a;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      font-family: 'Barlow', sans-serif;
+    }
+
+    .page {
+      width: 148mm;
+      height: 210mm;
+      background: #0d0d0d;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Diagonal stripes bg */
+    .bg-stripes {
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        -45deg,
+        rgba(0,177,64,0.04) 0px,
+        rgba(0,177,64,0.04) 2px,
+        transparent 2px,
+        transparent 18px
+      );
+    }
+
+    /* Top bar */
+    .top-bar {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 14mm;
+      background: #00B140;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+    }
+    .top-bar::after {
+      content: '';
+      position: absolute;
+      bottom: -7px; left: 0; right: 0;
+      height: 7px;
+      background: repeating-linear-gradient(
+        90deg,
+        #00B140 0px, #00B140 18px,
+        #f5f5f5 18px, #f5f5f5 36px,
+        #0d0d0d 36px, #0d0d0d 54px
+      );
+    }
+    .top-bar-text {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 14px;
+      letter-spacing: 5px;
+      color: white;
+      text-transform: uppercase;
+    }
+
+    /* Bottom bar */
+    .bottom-bar {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 10mm;
+      background: #00B140;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+    }
+    .bottom-bar::before {
+      content: '';
+      position: absolute;
+      top: -7px; left: 0; right: 0;
+      height: 7px;
+      background: repeating-linear-gradient(
+        90deg,
+        #0d0d0d 0px, #0d0d0d 18px,
+        #f5f5f5 18px, #f5f5f5 36px,
+        #00B140 36px, #00B140 54px
+      );
+    }
+    .bottom-bar-text {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 10px;
+      letter-spacing: 3px;
+      color: rgba(255,255,255,0.7);
+      text-transform: uppercase;
+    }
+
+    /* Content */
+    .content {
+      position: relative;
+      z-index: 5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8mm;
+    }
+
+    /* Big lock icon */
+    .lock-icon {
+      font-size: 64px;
+      line-height: 1;
+      filter: drop-shadow(0 0 20px rgba(0,177,64,0.5));
+    }
+
+    /* PRIVÉ text */
+    .prive-label {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 90px;
+      color: #ffffff;
+      letter-spacing: 10px;
+      line-height: 1;
+      text-shadow:
+        0 0 30px rgba(0,177,64,0.6),
+        0 0 80px rgba(0,177,64,0.2);
+    }
+
+    /* Decorative lines around PRIVÉ */
+    .deco-line {
+      display: flex;
+      align-items: center;
+      gap: 4mm;
+      width: 110mm;
+    }
+    .line {
+      flex: 1;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #00B140, transparent);
+    }
+    .line-dot {
+      width: 6px;
+      height: 6px;
+      background: #00B140;
+      border-radius: 50%;
+    }
+
+    /* Subtitle */
+    .subtitle {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 15px;
+      color: rgba(255,255,255,0.55);
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      text-align: center;
+    }
+
+    /* Warning box */
+    .warning-box {
+      border: 1px solid rgba(0,177,64,0.3);
+      background: rgba(0,177,64,0.06);
+      border-radius: 4px;
+      padding: 5mm 8mm;
+      text-align: center;
+      max-width: 100mm;
+    }
+    .warning-text {
+      font-size: 12px;
+      color: rgba(255,255,255,0.45);
+      line-height: 1.6;
+      letter-spacing: 0.5px;
+    }
+    .warning-text strong {
+      color: #00B140;
+      font-weight: 600;
+    }
+
+    @media print {
+      body { background: white; }
+      .page { box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="bg-stripes"></div>
+
+    <div class="top-bar">
+      <span class="top-bar-text">🏁 Résidence Cervantes · Le Mans</span>
+    </div>
+
+    <div class="content">
+      <div class="lock-icon">🔒</div>
+
+      <div class="deco-line">
+        <div class="line"></div>
+        <div class="line-dot"></div>
+        <div class="line"></div>
+      </div>
+
+      <div class="prive-label">PRIVÉ</div>
+
+      <div class="deco-line">
+        <div class="line"></div>
+        <div class="line-dot"></div>
+        <div class="line"></div>
+      </div>
+
+      <p class="subtitle">Accès réservé · Interdit aux clients</p>
+
+      <div class="warning-box">
+        <p class="warning-text">
+          Cet espace est <strong>réservé à l'usage exclusif</strong><br>
+          du propriétaire. Merci de ne pas y accéder.<br><br>
+          Pour toute demande, contactez votre hôte. 🙏
+        </p>
+      </div>
+    </div>
+
+    <div class="bottom-bar">
+      <span class="bottom-bar-text">Merci de respecter cet espace</span>
+    </div>
+  </div>
+</body>
+</html>

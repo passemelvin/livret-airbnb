@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Livret d'Accueil – Résidence Cervantes · Le Mans</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;600;700&family=Barlow+Condensed:wght@700;900&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #1a1a1a;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      font-family: 'Barlow', sans-serif;
+    }
+
+    .page {
+      width: 210mm;
+      height: 297mm;
+      background: #0d0d0d;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Racing stripes background */
+    .racing-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        repeating-linear-gradient(
+          -55deg,
+          transparent,
+          transparent 28px,
+          rgba(255,255,255,0.015) 28px,
+          rgba(255,255,255,0.015) 30px
+        );
+    }
+
+    /* Top banner */
+    .top-banner {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 18mm;
+      background: #00B140;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 12mm;
+      z-index: 10;
+    }
+
+    .top-banner::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      right: 0;
+      height: 8px;
+      background: repeating-linear-gradient(
+        90deg,
+        #00B140 0px, #00B140 20px,
+        #f5f5f5 20px, #f5f5f5 40px,
+        #0d0d0d 40px, #0d0d0d 60px
+      );
+    }
+
+    .banner-flag {
+      font-size: 28px;
+      letter-spacing: 4px;
+    }
+
+    .banner-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 22px;
+      color: white;
+      letter-spacing: 6px;
+      text-transform: uppercase;
+    }
+
+    /* Bottom banner */
+    .bottom-banner {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 14mm;
+      background: #00B140;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+    }
+
+    .bottom-banner::before {
+      content: '';
+      position: absolute;
+      top: -8px;
+      left: 0;
+      right: 0;
+      height: 8px;
+      background: repeating-linear-gradient(
+        90deg,
+        #0d0d0d 0px, #0d0d0d 20px,
+        #f5f5f5 20px, #f5f5f5 40px,
+        #00B140 40px, #00B140 60px
+      );
+    }
+
+    .bottom-text {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 13px;
+      color: rgba(255,255,255,0.7);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    /* Main content */
+    .content {
+      position: relative;
+      z-index: 5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10mm;
+      padding-top: 8mm;
+    }
+
+    .eyebrow {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 13px;
+      color: #00B140;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      text-align: center;
+    }
+
+    .headline {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 68px;
+      color: #ffffff;
+      letter-spacing: 6px;
+      text-align: center;
+      line-height: 0.9;
+      text-shadow: 0 0 60px rgba(0,177,64,0.4);
+    }
+
+    .headline span {
+      color: #00B140;
+    }
+
+    .subtitle {
+      font-family: 'Barlow', sans-serif;
+      font-size: 15px;
+      color: rgba(255,255,255,0.5);
+      letter-spacing: 2px;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    /* QR container */
+    .qr-wrapper {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6mm;
+    }
+
+    .qr-frame {
+      position: relative;
+      padding: 8mm;
+      background: white;
+      border-radius: 4px;
+      box-shadow:
+        0 0 0 2px #00B140,
+        0 0 0 6px #0d0d0d,
+        0 0 40px rgba(0,177,64,0.5),
+        0 0 80px rgba(0,177,64,0.15);
+    }
+
+    /* Corner accents */
+    .qr-frame::before,
+    .qr-frame::after {
+      content: '';
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      border-color: #00B140;
+      border-style: solid;
+    }
+    .qr-frame::before {
+      top: -8px; left: -8px;
+      border-width: 3px 0 0 3px;
+    }
+    .qr-frame::after {
+      bottom: -8px; right: -8px;
+      border-width: 0 3px 3px 0;
+    }
+
+    #qrcode canvas,
+    #qrcode img {
+      display: block;
+      border-radius: 2px;
+    }
+
+    .qr-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 16px;
+      color: rgba(255,255,255,0.6);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      text-align: center;
+    }
+
+    /* Divider */
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 4mm;
+      width: 120mm;
+    }
+
+    .divider-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(0,177,64,0.4), transparent);
+    }
+
+    .divider-icon {
+      font-size: 18px;
+    }
+
+    /* Address block */
+    .address-block {
+      text-align: center;
+    }
+
+    .address-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 26px;
+      color: white;
+      letter-spacing: 4px;
+    }
+
+    .address-detail {
+      font-size: 13px;
+      color: rgba(255,255,255,0.45);
+      letter-spacing: 1px;
+      margin-top: 3px;
+    }
+
+    /* Deco warning */
+    .deco-warning {
+      background: rgba(220, 38, 38, 0.12);
+      border: 1.5px solid rgba(220, 38, 38, 0.6);
+      border-radius: 6px;
+      padding: 8px 16px;
+      text-align: center;
+      width: 150mm;
+    }
+    .deco-warning-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #ff6b6b;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .deco-warning-text {
+      font-size: 12px;
+      color: rgba(255,255,255,0.65);
+      letter-spacing: 0.5px;
+      line-height: 1.5;
+    }
+
+    /* URL */
+    .url-tag {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 13px;
+      color: #00B140;
+      letter-spacing: 1px;
+      background: rgba(0,177,64,0.08);
+      border: 1px solid rgba(0,177,64,0.25);
+      padding: 5px 12px;
+      border-radius: 3px;
+    }
+
+    .print-btn {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 100;
+      background: #00B140;
+      color: white;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 16px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      border: none;
+      padding: 12px 28px;
+      border-radius: 4px;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(0,177,64,0.4);
+    }
+    .print-btn:hover { background: #009933; }
+
+    @page { size: A4; margin: 0; }
+
+    @media print {
+      body {
+        background: #0d0d0d;
+        margin: 0;
+        padding: 0;
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+      }
+      .page {
+        box-shadow: none;
+        width: 210mm;
+        height: 297mm;
+        page-break-after: avoid;
+      }
+      .print-btn { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="racing-bg"></div>
+
+    <div class="top-banner">
+      <span class="banner-flag">🏁</span>
+      <span class="banner-title">Résidence Cervantes · Le Mans</span>
+      <span class="banner-flag">🏎️</span>
+    </div>
+
+    <div class="content">
+      <p class="eyebrow">Scannez pour accéder à votre</p>
+
+      <div>
+        <div class="headline">LIVRET<br><span>D'ACCUEIL</span></div>
+      </div>
+
+
+      <div class="qr-wrapper">
+        <div class="qr-frame">
+          <div id="qrcode"></div>
+        </div>
+        <p class="qr-label">📱 Flashez le QR code</p>
+      </div>
+
+      <div class="divider">
+        <div class="divider-line"></div>
+        <span class="divider-icon">🏁</span>
+        <div class="divider-line"></div>
+      </div>
+
+      <div class="address-block">
+        <div class="address-name">Bienvenue & Bonne Course !</div>
+        <p class="address-detail">Votre guide complet : accès · WiFi · bons plans · circuit</p>
+      </div>
+
+      <div class="deco-warning">
+        <div class="deco-warning-title">⚠️ Décoration uniquement</div>
+        <div class="deco-warning-text">La casquette, la combinaison et les objets de collection présents dans l'appartement sont des éléments décoratifs.<br>Merci de ne pas les utiliser ni les déplacer.</div>
+      </div>
+
+      <div class="url-tag">passemelvin.github.io/livret-airbnb</div>
+    </div>
+
+    <div class="bottom-banner">
+      <span class="bottom-text">Tout ce qu'il vous faut pour un séjour parfait au Mans</span>
+    </div>
+  </div>
+
+  <button class="print-btn" onclick="window.print()">🖨️ Imprimer / PDF</button>
+
+  <script>
+    new QRCode(document.getElementById("qrcode"), {
+      text: "https://passemelvin.github.io/livret-airbnb/",
+      width: 260,
+      height: 260,
+      colorDark: "#000000",
+      colorLight: "#ffffff",
+      correctLevel: QRCode.CorrectLevel.H
+    });
+  </script>
+</body>
+</html>

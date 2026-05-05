@@ -1,0 +1,1282 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>Appartement · Résidence Cervantes · Le Mans</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --gold: #C9A84C;
+      --gold-dark: #9A7A2A;
+      --gold-glow: rgba(201,168,76,0.3);
+      --black: #0a0e1a;
+      --dark: #10162a;
+      --card: #161e30;
+      --border: #1e2a42;
+      --white: #ffffff;
+      --muted: #7a8aaa;
+      --text: #b8c4d8;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Barlow', sans-serif;
+      background: var(--black);
+      color: var(--white);
+      overflow-x: hidden;
+      padding-top: 58px;
+      padding-bottom: 58px;
+    }
+
+    /* ─── CHECKERED ─── */
+    .checkered-stripe {
+      background-image: repeating-conic-gradient(#000 0% 25%, #fff 0% 50%);
+      background-size: 14px 14px;
+    }
+
+    /* ─── HERO ─── */
+    .hero {
+      position: relative;
+      height: 100svh;
+      min-height: 520px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: url('images/deux-chambres.jpg') center/cover no-repeat;
+      filter: brightness(0.28) saturate(0.9);
+      transform: scale(1.05);
+      transition: transform 8s ease;
+    }
+    .hero-bg.loaded { transform: scale(1); }
+    .hero-stripe-top {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 10px;
+    }
+    .hero-stripe-bottom {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 6px;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 1rem;
+    }
+    .hero-eyebrow {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.85rem;
+      letter-spacing: 5px;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+    .hero-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3.5rem, 14vw, 7rem);
+      line-height: 0.9;
+      letter-spacing: 4px;
+      color: var(--white);
+      text-shadow: 0 0 80px var(--gold-glow);
+    }
+    .hero-title span { color: var(--gold); }
+    .hero-sub {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1rem;
+      letter-spacing: 3px;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-top: 1rem;
+    }
+    .hero-badges {
+      display: flex;
+      gap: 0.6rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 1.5rem;
+    }
+    .hero-badge {
+      background: rgba(201,168,76,0.12);
+      border: 1px solid rgba(201,168,76,0.3);
+      border-radius: 20px;
+      padding: 0.35rem 0.9rem;
+      font-size: 0.82rem;
+      color: var(--gold);
+      font-family: 'Barlow Condensed', sans-serif;
+      letter-spacing: 1px;
+    }
+    .hero-scroll {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.75rem;
+      letter-spacing: 3px;
+      color: var(--muted);
+      text-transform: uppercase;
+      animation: bounce 2s ease-in-out infinite;
+    }
+    .hero-scroll svg { width: 20px; height: 20px; stroke: var(--gold); fill: none; stroke-width: 2; }
+    @keyframes bounce { 0%,100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(6px); } }
+
+    /* ─── TOP NAV ─── */
+    .top-nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      height: 58px;
+      background: rgba(10,14,26,0.97);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.25rem;
+      padding: 0 0.5rem;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .top-nav::-webkit-scrollbar { display: none; }
+    .nav-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      padding: 0.4rem 0.7rem;
+      border-radius: 8px;
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 0.65rem;
+      font-family: 'Barlow Condensed', sans-serif;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      white-space: nowrap;
+      transition: color 0.2s, background 0.2s;
+    }
+    .nav-btn:hover, .nav-btn.active { color: var(--gold); background: rgba(201,168,76,0.08); }
+    .nav-icon { font-size: 1.1rem; }
+
+    /* ─── GALLERY STRIP ─── */
+    .gallery-strip {
+      background: var(--dark);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 0;
+      overflow: hidden;
+    }
+    .gallery-scroll {
+      display: flex;
+      gap: 0.5rem;
+      overflow-x: auto;
+      padding: 0 1rem;
+      scrollbar-width: none;
+      scroll-snap-type: x mandatory;
+    }
+    .gallery-scroll::-webkit-scrollbar { display: none; }
+    .gallery-thumb {
+      flex-shrink: 0;
+      width: 120px;
+      height: 80px;
+      border-radius: 6px;
+      overflow: hidden;
+      cursor: pointer;
+      scroll-snap-align: start;
+      border: 1px solid var(--border);
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .gallery-thumb:hover { border-color: var(--gold); transform: scale(1.03); }
+    .gallery-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    /* ─── SECTIONS ─── */
+    .sep { height: 1px; background: var(--border); }
+    .sep.section-alt { background: var(--border); }
+    .section-alt { background: var(--dark); }
+
+    section { padding: 2.5rem 0; }
+    .section-wrap { max-width: 640px; margin: 0 auto; padding: 0 1.25rem; }
+    .section-head { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
+    .section-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3.5rem;
+      color: var(--gold);
+      line-height: 1;
+      opacity: 0.35;
+      min-width: 3rem;
+    }
+    .section-label small {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 4px;
+      color: var(--gold);
+      text-transform: uppercase;
+      display: block;
+    }
+    .section-label h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.2rem;
+      letter-spacing: 3px;
+      color: var(--white);
+    }
+
+    /* ─── CARDS ─── */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.1rem 1.25rem;
+      margin-bottom: 0.75rem;
+    }
+    .card-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: var(--white);
+      margin-bottom: 0.6rem;
+    }
+    .card ul { list-style: none; padding: 0; }
+    .card ul li {
+      padding: 0.3rem 0;
+      color: var(--text);
+      font-size: 0.95rem;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .card ul li:last-child { border-bottom: none; }
+    .card p { color: var(--text); font-size: 0.95rem; line-height: 1.6; }
+
+    /* ─── HIGHLIGHT CARD ─── */
+    .highlight-card {
+      background: linear-gradient(135deg, #0d1425, #161e30);
+      border: 1px solid rgba(201,168,76,0.3);
+      border-radius: 12px;
+      padding: 1.25rem;
+      margin-bottom: 0.75rem;
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+    .highlight-icon { font-size: 1.8rem; flex-shrink: 0; }
+    .highlight-body { flex: 1; }
+    .highlight-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--gold);
+      letter-spacing: 1px;
+      margin-bottom: 0.25rem;
+    }
+    .highlight-text { font-size: 0.9rem; color: var(--text); line-height: 1.5; }
+
+    /* ─── TIMING GRID ─── */
+    .timing-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+    .timing-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem 1rem;
+      text-align: center;
+    }
+    .timing-icon { font-size: 1.8rem; margin-bottom: 0.4rem; }
+    .timing-label { font-family: 'Barlow Condensed', sans-serif; font-size: 0.85rem; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; }
+    .timing-time { font-family: 'Bebas Neue', sans-serif; font-size: 2.8rem; color: var(--gold); line-height: 1.1; }
+    .timing-note { font-size: 0.72rem; color: var(--muted); margin-top: 0.2rem; }
+
+    /* ─── WIFI ─── */
+    .wifi-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      text-align: center;
+      margin-bottom: 0.75rem;
+    }
+    .wifi-label { font-size: 0.78rem; letter-spacing: 3px; color: var(--muted); text-transform: uppercase; margin-bottom: 0.4rem; }
+    .wifi-name { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 4px; color: var(--white); }
+    .wifi-divider { height: 1px; background: var(--border); margin: 1rem 0; }
+    .wifi-note { font-size: 0.85rem; color: var(--muted); }
+    .wifi-note strong { color: var(--gold); }
+    .wifi-footer { font-size: 0.78rem; color: var(--muted); margin-top: 0.75rem; font-style: italic; }
+
+    /* ─── RULES ─── */
+    .rule {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 0.9rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .rule:last-child { border-bottom: none; }
+    .rule-icon { font-size: 1.5rem; flex-shrink: 0; }
+    .rule-body { color: var(--text); font-size: 1rem; line-height: 1.55; }
+    .rule-body strong { color: var(--white); display: block; margin-bottom: 0.15rem; }
+
+    /* ─── DÉPART SIMPLE ─── */
+    .depart-card {
+      background: linear-gradient(135deg, #0d1320, #161e30);
+      border: 1px solid rgba(201,168,76,0.3);
+      border-radius: 12px;
+      padding: 1.5rem;
+      text-align: center;
+      margin-bottom: 0.75rem;
+    }
+    .depart-icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
+    .depart-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.8rem;
+      letter-spacing: 3px;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+    }
+    .depart-text { font-size: 0.95rem; color: var(--text); line-height: 1.6; }
+    .depart-note {
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    .depart-note strong { color: var(--gold); }
+
+    /* ─── COUNTDOWN ─── */
+    .sub-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.82rem;
+      letter-spacing: 3px;
+      color: var(--muted);
+      text-transform: uppercase;
+      text-align: center;
+      margin-bottom: 0.75rem;
+    }
+    .countdown-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.5rem;
+      margin-bottom: 1.25rem;
+    }
+    .countdown-item {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.75rem 0.5rem;
+      text-align: center;
+    }
+    .countdown-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.2rem;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .countdown-label { font-size: 0.65rem; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; margin-top: 0.2rem; }
+
+    /* ─── TRAM ─── */
+    .tram-line {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      margin-bottom: 0.6rem;
+    }
+    .tram-dot {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: var(--gold);
+      color: var(--black);
+      font-weight: 900;
+      font-size: 0.75rem;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .tram-dot.mid { background: var(--border); color: var(--muted); }
+    .tram-content p { font-size: 0.9rem; color: var(--text); line-height: 1.5; }
+    .tram-content strong { color: var(--white); }
+    .tram-content small { color: var(--muted); font-size: 0.8rem; }
+
+    /* ─── MAP BTNS ─── */
+    .map-btn {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem 1.25rem;
+      text-decoration: none;
+      color: var(--white);
+      margin-bottom: 0.75rem;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .map-btn:hover { border-color: var(--gold); background: rgba(201,168,76,0.05); }
+    .btn-icon { font-size: 1.5rem; flex-shrink: 0; }
+    .btn-text { flex: 1; }
+    .btn-sub { font-size: 0.75rem; color: var(--muted); margin-bottom: 0.15rem; letter-spacing: 1px; }
+    .btn-arrow { color: var(--gold); font-size: 1.2rem; }
+
+    /* ─── ALERT ─── */
+    .alert {
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-start;
+      background: rgba(201,168,76,0.06);
+      border: 1px solid rgba(201,168,76,0.2);
+      border-radius: 10px;
+      padding: 1rem 1.1rem;
+      margin-bottom: 0.75rem;
+    }
+    .alert-icon { font-size: 1.3rem; flex-shrink: 0; }
+    .alert-body { font-size: 0.88rem; color: var(--text); line-height: 1.55; }
+    .alert-body strong { color: var(--gold); }
+    .alert-body a { color: var(--gold); }
+
+    /* ─── RECO ─── */
+    .reco-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 0.9rem 1.1rem;
+      text-decoration: none;
+      color: var(--white);
+      margin-bottom: 0.6rem;
+      transition: border-color 0.2s;
+    }
+    .reco-item:hover { border-color: var(--gold); }
+    .reco-emoji { font-size: 1.6rem; flex-shrink: 0; }
+    .reco-body { flex: 1; }
+    .reco-name { font-weight: 600; font-size: 0.98rem; }
+    .reco-type { font-size: 0.78rem; color: var(--muted); margin-top: 2px; }
+    .reco-stars { font-size: 0.78rem; color: var(--gold); margin-top: 2px; }
+    .reco-stars span { color: var(--muted); }
+    .reco-arrow { color: var(--gold); font-size: 1.1rem; }
+
+    .reco-collapse { display: none; }
+    .reco-collapse.open { display: block; }
+    .reco-more-btn {
+      width: 100%;
+      background: none;
+      border: 1px dashed var(--border);
+      border-radius: 10px;
+      padding: 0.75rem;
+      color: var(--muted);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.88rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      margin-bottom: 0.6rem;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .reco-more-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+    /* ─── PARCS / SHOPS ─── */
+    .reco-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; margin-bottom: 0.6rem; }
+    .reco-grid .reco-item { margin-bottom: 0; }
+
+    /* ─── CONTACT ─── */
+    .contact-btn {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.25rem;
+      text-decoration: none;
+      color: var(--white);
+      margin-bottom: 0.75rem;
+      transition: border-color 0.2s;
+    }
+    .contact-btn:hover { border-color: var(--gold); }
+    .contact-icon { font-size: 2rem; flex-shrink: 0; }
+    .contact-label { font-size: 0.72rem; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; margin-bottom: 0.2rem; }
+    .contact-value { font-weight: 700; font-size: 1.2rem; letter-spacing: 1px; }
+
+    /* ─── PHOTO CARD ─── */
+    .photo-card { margin-bottom: 0.75rem; border-radius: 10px; overflow: hidden; border: 1px solid var(--border); }
+    .photo-card img { width: 100%; height: 200px; object-fit: cover; display: block; }
+    .photo-caption { background: var(--card); padding: 0.5rem 0.75rem; font-size: 0.78rem; color: var(--muted); letter-spacing: 0.5px; }
+
+    /* ─── FOOTER ─── */
+    footer {
+      position: relative;
+      text-align: center;
+      padding: 4rem 1rem 3rem;
+      background-size: cover;
+      background-position: center;
+    }
+    footer::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.72);
+    }
+    footer > * { position: relative; z-index: 1; }
+    .footer-stripe { height: 6px; margin-bottom: 2.5rem; }
+    .footer-flag {
+      font-size: 3.5rem;
+      margin-bottom: 0.5rem;
+      display: block;
+      animation: flagWave 2s ease-in-out infinite;
+    }
+    @keyframes flagWave {
+      0%, 100% { transform: rotate(-5deg) scale(1); }
+      50%       { transform: rotate(5deg) scale(1.1); }
+    }
+    .footer-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.5rem, 10vw, 4rem);
+      letter-spacing: 8px;
+      color: var(--gold);
+      margin-bottom: 0.75rem;
+      text-shadow: 0 0 40px rgba(201,168,76,0.4);
+    }
+    .footer-sub {
+      font-size: 1rem;
+      color: #fff;
+      letter-spacing: 2px;
+      font-style: italic;
+    }
+    .footer-date {
+      margin-top: 1.5rem;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 3px;
+      color: rgba(255,255,255,0.5);
+      text-transform: uppercase;
+    }
+
+    /* ─── LIGHTBOX ─── */
+    .lightbox {
+      position: fixed; inset: 0; z-index: 9999;
+      background: rgba(0,0,0,0.95);
+      display: none; align-items: center; justify-content: center;
+      cursor: pointer;
+    }
+    .lightbox.open { display: flex; }
+    .lightbox img { max-width: 94vw; max-height: 92vh; object-fit: contain; border-radius: 4px; }
+    .lightbox-close {
+      position: absolute; top: 1rem; right: 1.2rem;
+      background: none; border: none; color: #fff; font-size: 2rem; cursor: pointer; opacity: 0.7;
+    }
+    .lightbox-nav {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.15);
+      color: white; font-size: 2.5rem; width: 48px; height: 60px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 6px; cursor: pointer; user-select: none;
+    }
+    .lightbox-nav.prev { left: 0.75rem; }
+    .lightbox-nav.next { right: 0.75rem; }
+    .lightbox-nav.hidden { display: none; }
+    .lightbox-counter {
+      position: absolute; bottom: 1rem; left: 50%; transform: translateX(-50%);
+      color: rgba(255,255,255,0.5); font-size: 0.85rem; letter-spacing: 2px;
+    }
+
+    /* ─── F1 OVERLAY ─── */
+    #f1overlay {
+      position: fixed; inset: 0; z-index: 9998;
+      background: #000 url('images/pescarolo.jpeg') center/cover no-repeat;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 2rem; transition: opacity 0.8s ease;
+    }
+    #f1overlay.fade-out { opacity: 0; pointer-events: none; }
+    .f1-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.5rem, 10vw, 4.5rem);
+      letter-spacing: 8px; color: #fff; line-height: 1;
+      margin-bottom: 0.1rem; position: relative;
+    }
+    .f1-subtitle {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(0.75rem, 3vw, 1rem);
+      letter-spacing: 6px; text-transform: uppercase;
+      color: #aaa; margin-bottom: 0.5rem; position: relative;
+    }
+    .f1-lights { display: flex; gap: 16px; position: relative; }
+    .f1-light {
+      width: clamp(40px, 10vw, 60px); height: clamp(40px, 10vw, 60px);
+      border-radius: 50%; background: #1a1a1a; border: 3px solid #333;
+      transition: background 0.15s, box-shadow 0.15s;
+    }
+    .f1-light.on {
+      background: #CC0000;
+      box-shadow: 0 0 20px #CC0000, 0 0 40px rgba(204,0,0,0.5);
+      border-color: #ff3333;
+    }
+    .f1-go {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3rem, 12vw, 6rem);
+      letter-spacing: 8px; color: var(--gold);
+      opacity: 0; transform: scale(0.5);
+      transition: opacity 0.3s, transform 0.3s;
+      text-shadow: 0 0 30px rgba(201,168,76,0.8); position: relative;
+    }
+    .f1-go.show { opacity: 1; transform: scale(1); }
+  </style>
+</head>
+<body>
+
+<div id="f1overlay">
+  <div style="position:absolute;inset:0;background:rgba(0,0,0,0.65)"></div>
+  <div class="f1-title">LE MANS</div>
+  <div class="f1-subtitle">Résidence Cervantes</div>
+  <div class="f1-lights">
+    <div class="f1-light" id="l1"></div>
+    <div class="f1-light" id="l2"></div>
+    <div class="f1-light" id="l3"></div>
+    <div class="f1-light" id="l4"></div>
+    <div class="f1-light" id="l5"></div>
+  </div>
+  <div class="f1-go" id="f1go">GO !</div>
+</div>
+
+<!-- ─── TOP NAV ─── -->
+<nav class="top-nav" id="topNav">
+  <a class="nav-btn" href="#appartement"><span class="nav-icon">🏠</span><span>Appartement</span></a>
+  <a class="nav-btn" href="#sejour"><span class="nav-icon">🏁</span><span>Séjour</span></a>
+  <a class="nav-btn" href="#regles"><span class="nav-icon">📋</span><span>Règles</span></a>
+  <a class="nav-btn" href="#circuit"><span class="nav-icon">🏎️</span><span>Circuit</span></a>
+  <a class="nav-btn" href="#bonplans"><span class="nav-icon">⭐</span><span>Bons plans</span></a>
+  <a class="nav-btn" href="#contact"><span class="nav-icon">📞</span><span>Contact</span></a>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section class="hero">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-stripe-top checkered-stripe"></div>
+
+  <div class="hero-content">
+    <p class="hero-eyebrow">Résidence Cervantes · Le Mans</p>
+    <div class="hero-title">APPARTEMENT<br><span>42m²</span></div>
+    <p class="hero-sub">Centre-ville · Parking couvert · Gare 3 min</p>
+    <div class="hero-badges">
+      <span class="hero-badge">👥 4 personnes</span>
+      <span class="hero-badge">🛏️ 2 espaces nuit</span>
+      <span class="hero-badge">🅿️ Parking inclus</span>
+    </div>
+  </div>
+
+  <div class="hero-scroll">
+    <span>Découvrir</span>
+    <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+  </div>
+
+  <div class="hero-stripe-bottom checkered-stripe"></div>
+</section>
+
+<!-- ─── GALLERY ─── -->
+<div class="gallery-strip">
+  <div class="gallery-scroll">
+    <div class="gallery-thumb" onclick="openLightbox('images/salon2.jpeg')">
+      <img src="images/salon2.jpeg" alt="Salon" loading="lazy">
+    </div>
+    <div class="gallery-thumb" onclick="openLightbox('images/cuisine2.jpg')">
+      <img src="images/cuisine2.jpg" alt="Cuisine" loading="lazy">
+    </div>
+    <div class="gallery-thumb" onclick="openLightbox('images/deux-chambres.jpg')">
+      <img src="images/deux-chambres.jpg" alt="Séjour" loading="lazy">
+    </div>
+    <div class="gallery-thumb" onclick="openLightbox('images/chambre.jpeg')">
+      <img src="images/chambre.jpeg" alt="Chambre" loading="lazy">
+    </div>
+    <div class="gallery-thumb" onclick="openLightbox('images/chambre-salon.jpg')">
+      <img src="images/chambre-salon.jpg" alt="Chambre salon" loading="lazy">
+    </div>
+    <div class="gallery-thumb" onclick="openLightbox('images/cuisine.jpg')">
+      <img src="images/cuisine.jpg" alt="Cuisine" loading="lazy">
+    </div>
+    <div class="gallery-thumb" onclick="openLightbox('images/salle-de-bain.jpg')">
+      <img src="images/salle-de-bain.jpg" alt="Salle de bain" loading="lazy">
+    </div>
+    <div class="gallery-thumb" onclick="openLightbox('images/decomeuble.jpeg')">
+      <img src="images/decomeuble.jpeg" alt="Décoration meuble" loading="lazy">
+    </div>
+    <div class="gallery-thumb" onclick="openLightbox('images/salon.jpg')">
+      <img src="images/salon.jpg" alt="Salon" loading="lazy">
+    </div>
+    <div class="gallery-thumb" onclick="openLightbox('images/table-basse.jpg')">
+      <img src="images/table-basse.jpg" alt="Table basse" loading="lazy">
+    </div>
+  </div>
+</div>
+
+<div class="sep"></div>
+
+<!-- ═══════════════ 01 · APPARTEMENT ═══════════════ -->
+<section id="appartement">
+  <div class="section-wrap">
+    <div class="section-head">
+      <span class="section-num">01</span>
+      <div class="section-label">
+        <small>Le logement</small>
+        <h2>L'APPARTEMENT</h2>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🏠 Le logement</div>
+      <ul>
+        <li>Appartement <strong>42 m²</strong> · 1er étage</li>
+        <li>Capacité : <strong>4 adultes</strong> + 1 enfant &lt; 3 ans</li>
+        <li>Ascenseur disponible</li>
+        <li>Draps, serviettes, gel douche & shampoing <strong>fournis</strong></li>
+      </ul>
+    </div>
+
+    <div class="highlight-card">
+      <div class="highlight-icon">🚆</div>
+      <div class="highlight-body">
+        <div class="highlight-title">Gare SNCF · 3 min à pied</div>
+        <div class="highlight-text">Idéal pour les déplacements professionnels ou explorer la région sans voiture.</div>
+      </div>
+    </div>
+
+    <div class="highlight-card">
+      <div class="highlight-icon">🅿️</div>
+      <div class="highlight-body">
+        <div class="highlight-title">Parking couvert sécurisé inclus</div>
+        <div class="highlight-text">Parking couvert avec accès télécommande, à proximité immédiate de la résidence.</div>
+      </div>
+    </div>
+
+    <div class="photo-card">
+      <img src="images/parking.jpg" alt="Parking couvert" loading="lazy" onclick="openLightbox('images/parking.jpg')" style="cursor:pointer;height:auto;object-fit:contain">
+      <div class="photo-caption">🅿️ Parking couvert sécurisé</div>
+    </div>
+
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- ═══════════════ 03 · SÉJOUR ═══════════════ -->
+<section id="sejour">
+  <div class="section-wrap">
+    <div class="section-head">
+      <span class="section-num">03</span>
+      <div class="section-label">
+        <small>Arrivée & horaires</small>
+        <h2>LE SÉJOUR</h2>
+      </div>
+    </div>
+
+    <div class="timing-grid">
+      <div class="timing-card">
+        <div class="timing-icon">🏁</div>
+        <div class="timing-label">Check-in</div>
+        <div class="timing-time">14h</div>
+        <div class="timing-note">À partir de</div>
+      </div>
+      <div class="timing-card">
+        <div class="timing-icon">🚦</div>
+        <div class="timing-label">Check-out</div>
+        <div class="timing-time">11h</div>
+        <div class="timing-note">Au plus tard</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🛏️ Linge & draps</div>
+      <ul>
+        <li>Draps et serviettes <strong>fournis</strong></li>
+        <li>Gel douche et shampoing <strong>fournis</strong></li>
+        <li>Lit parapluie disponible sur demande (enfant &lt; 3 ans)</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title">☕ Équipements & fournitures</div>
+      <ul>
+        <li>Cafetière <strong>Senseo</strong> — dosettes fournies</li>
+        <li>Café et thé <strong>fournis</strong></li>
+        <li>Fer à repasser <strong>disponible</strong></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="sep section-alt"></div>
+
+<!-- ═══════════════ 04 · RÈGLES ═══════════════ -->
+<section id="regles" class="section-alt">
+  <div class="section-wrap">
+    <div class="section-head">
+      <span class="section-num">04</span>
+      <div class="section-label">
+        <small>À respecter</small>
+        <h2>RÈGLES DE COURSE</h2>
+      </div>
+    </div>
+
+    <div class="rule">
+      <span class="rule-icon">🐾</span>
+      <div class="rule-body"><strong>Animaux interdits</strong> Les animaux de compagnie ne sont pas acceptés dans le logement.</div>
+    </div>
+    <div class="rule">
+      <span class="rule-icon">🚭</span>
+      <div class="rule-body"><strong>Non-fumeur</strong> Il est strictement interdit de fumer à l'intérieur du logement.</div>
+    </div>
+    <div class="rule">
+      <span class="rule-icon">🎉</span>
+      <div class="rule-body"><strong>Pas de fête</strong> Les soirées et événements festifs ne sont pas autorisés.</div>
+    </div>
+    <div class="rule">
+      <span class="rule-icon">🔇</span>
+      <div class="rule-body"><strong>Silence nocturne</strong> Merci de respecter le calme de la résidence entre <strong>22h et 8h</strong>.</div>
+    </div>
+    <div class="rule">
+      <span class="rule-icon">👥</span>
+      <div class="rule-body"><strong>Capacité maximale</strong> 4 adultes + 1 enfant de moins de 3 ans.<br><span style="color:var(--muted);font-size:0.85em">Lit parapluie disponible sur demande.</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- ═══════════════ 05 · DÉPART ═══════════════ -->
+<section id="depart">
+  <div class="section-wrap">
+    <div class="section-head">
+      <span class="section-num">05</span>
+      <div class="section-label">
+        <small>Check-out</small>
+        <h2>LIGNE D'ARRIVÉE</h2>
+      </div>
+    </div>
+
+    <div class="depart-card">
+      <div class="depart-icon">🏁</div>
+      <div class="depart-title">Sortie libre & en confiance</div>
+      <div class="depart-text">Pas besoin d'être présent pour le départ — laissez les clés dans la boîte aux lettres et partez à votre rythme avant 11h.</div>
+      <div class="depart-note">
+        🧹 <strong>Pas de frais de ménage facturé.</strong><br>
+        Un petit coup d'aspirateur avant de partir est apprécié — merci pour le geste !
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="sep section-alt"></div>
+
+<!-- ═══════════════ 06 · CIRCUIT ═══════════════ -->
+<section id="circuit" class="section-alt" style="position:relative;background:url('images/circuit.jpg') center/cover no-repeat fixed;">
+  <div style="position:absolute;inset:0;background:rgba(10,14,26,0.88);pointer-events:none"></div>
+  <div class="section-wrap" style="position:relative;z-index:1">
+    <div class="section-head">
+      <span class="section-num">06</span>
+      <div class="section-label">
+        <small>Le circuit mythique</small>
+        <h2>24H DU MANS</h2>
+      </div>
+    </div>
+
+    <p class="sub-label">⏳ Prochain départ · 24 Heures du Mans</p>
+    <div class="countdown-grid">
+      <div class="countdown-item">
+        <div class="countdown-num" id="cdDays">--</div>
+        <div class="countdown-label">Jours</div>
+      </div>
+      <div class="countdown-item">
+        <div class="countdown-num" id="cdHours">--</div>
+        <div class="countdown-label">Heures</div>
+      </div>
+      <div class="countdown-item">
+        <div class="countdown-num" id="cdMins">--</div>
+        <div class="countdown-label">Minutes</div>
+      </div>
+      <div class="countdown-item">
+        <div class="countdown-num" id="cdSecs">--</div>
+        <div class="countdown-label">Secondes</div>
+      </div>
+    </div>
+
+    <div class="card" style="border-color:rgba(201,168,76,0.3);background:linear-gradient(135deg,#0d1320,#161e30)">
+      <div class="card-title">🚊 Itinéraire en tramway</div>
+      <div style="margin-top:0.75rem">
+        <div class="tram-line">
+          <div class="tram-dot">A</div>
+          <div class="tram-content">
+            <p><strong>Départ · Arrêt Zola</strong><br><small>À proximité de la résidence</small></p>
+          </div>
+        </div>
+        <div class="tram-line">
+          <div class="tram-dot mid">→</div>
+          <div class="tram-content">
+            <p>Prendre le tramway direction <strong>Antarès</strong><br><small>Vérifiez les horaires SETRAM les jours de course</small></p>
+          </div>
+        </div>
+        <div class="tram-line">
+          <div class="tram-dot">B</div>
+          <div class="tram-content">
+            <p><strong>Arrivée · Pôle Santé Sud</strong><br><small>Arrêt Guetteloup — plus proche du Circuit de la Sarthe 🏎️</small></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <a class="map-btn" href="https://www.lemans.org/fr/evenements/calendrier" target="_blank" rel="noopener">
+      <span class="btn-icon">📅</span>
+      <div class="btn-text">
+        <div class="btn-sub">Circuit de la Sarthe</div>
+        Calendrier des événements
+      </div>
+      <span class="btn-arrow">→</span>
+    </a>
+
+    <div class="alert">
+      <span class="alert-icon">ℹ️</span>
+      <div class="alert-body">
+        <strong>Jours de course</strong><br>
+        Pensez à vérifier les horaires de tramway sur <a href="https://www.setram.fr" target="_blank">setram.fr</a> — des navettes spéciales peuvent être mises en place lors des 24 Heures du Mans.
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- ═══════════════ 07 · BONS PLANS ═══════════════ -->
+<section id="bonplans">
+  <div class="section-wrap">
+    <div class="section-head">
+      <span class="section-num">07</span>
+      <div class="section-label">
+        <small>Autour du logement</small>
+        <h2>BONS PLANS</h2>
+      </div>
+    </div>
+
+    <p class="sub-label">📍 Proximité immédiate · moins de 5 min à pied</p>
+
+    <a class="reco-item" href="https://www.google.com/maps/search/Le+Bellifontain+Le+Mans" target="_blank" rel="noopener">
+      <span class="reco-emoji">🍽️</span>
+      <div class="reco-body">
+        <div class="reco-name">Le Bellifontain</div>
+        <div class="reco-type">Français · International · ~2 min</div>
+        <div class="reco-stars">★★★★☆ <span>4.4 · Très bien</span></div>
+      </div>
+      <span class="reco-arrow">→</span>
+    </a>
+
+    <a class="reco-item" href="https://www.google.com/maps/search/L+Homme+Tranquille+Le+Mans" target="_blank" rel="noopener">
+      <span class="reco-emoji">🍺</span>
+      <div class="reco-body">
+        <div class="reco-name">L'Homme Tranquille</div>
+        <div class="reco-type">Français · Bar · ~2 min</div>
+        <div class="reco-stars">★★★★☆ <span>4.6 · Excellent</span></div>
+      </div>
+      <span class="reco-arrow">→</span>
+    </a>
+
+    <a class="reco-item" href="https://www.google.com/maps/search/L+Asgard+Le+Mans" target="_blank" rel="noopener">
+      <span class="reco-emoji">🍺</span>
+      <div class="reco-body">
+        <div class="reco-name">L'Asgard</div>
+        <div class="reco-type">Bar · Brasserie · Lounge</div>
+        <div class="reco-stars">★★★★★ <span>4.7 · Excellent</span></div>
+      </div>
+      <span class="reco-arrow">→</span>
+    </a>
+
+    <div class="reco-collapse" id="recoProximite">
+      <a class="reco-item" href="https://www.google.com/maps/search/Le+Chemin+de+la+Table+Le+Mans" target="_blank" rel="noopener">
+        <span class="reco-emoji">🍽️</span>
+        <div class="reco-body">
+          <div class="reco-name">Le Chemin de Table</div>
+          <div class="reco-type">Français · Traditionnel</div>
+          <div class="reco-stars">★★★★☆ <span>4.6 · Excellent</span></div>
+        </div>
+        <span class="reco-arrow">→</span>
+      </a>
+      <a class="reco-item" href="https://guide.michelin.com/fr/fr/pays-de-la-loire/le-mans/restaurant/l-insouciant" target="_blank" rel="noopener">
+        <span class="reco-emoji">⭐</span>
+        <div class="reco-body">
+          <div class="reco-name">L'Insouciant</div>
+          <div class="reco-type">Gastronomique · Guide Michelin</div>
+          <div class="reco-stars">★★★★★ <span>4.7 · Exceptionnel</span></div>
+        </div>
+        <span class="reco-arrow">→</span>
+      </a>
+    </div>
+
+    <button class="reco-more-btn" onclick="toggleReco('recoProximite', this)">+ Voir plus</button>
+
+    <p class="sub-label" style="margin-top:1rem">🍽️ À faire au moins une fois</p>
+
+    <a class="reco-item" href="https://www.google.com/maps/search/Le+Grenier+a+Sel+Le+Mans" target="_blank" rel="noopener">
+      <span class="reco-emoji">🧂</span>
+      <div class="reco-body">
+        <div class="reco-name">Le Grenier à Sel</div>
+        <div class="reco-type">Gastronomique · Classique français</div>
+        <div class="reco-stars">★★★★★ <span>4.7 · Exceptionnel</span></div>
+      </div>
+      <span class="reco-arrow">→</span>
+    </a>
+
+    <a class="reco-item" href="https://www.google.com/maps/search/Le+Nez+Rouge+Le+Mans" target="_blank" rel="noopener">
+      <span class="reco-emoji">🍷</span>
+      <div class="reco-body">
+        <div class="reco-name">Le Nez Rouge</div>
+        <div class="reco-type">Cave à vins · Bar à tapas</div>
+        <div class="reco-stars">★★★★★ <span>4.8 · Exceptionnel</span></div>
+      </div>
+      <span class="reco-arrow">→</span>
+    </a>
+
+    <p class="sub-label" style="margin-top:1rem">🌳 Parcs & détente</p>
+
+    <div class="reco-grid">
+      <a class="reco-item" href="https://www.google.com/maps/search/Jardin+des+Plantes+Le+Mans" target="_blank" rel="noopener">
+        <span class="reco-emoji">🌿</span>
+        <div class="reco-body">
+          <div class="reco-name">Jardin des Plantes</div>
+          <div class="reco-type">Parc botanique</div>
+          <div class="reco-stars">★★★★★ <span>4.7</span></div>
+        </div>
+      </a>
+      <a class="reco-item" href="https://www.google.com/maps/search/Parc+de+Tessé+Le+Mans" target="_blank" rel="noopener">
+        <span class="reco-emoji">🌳</span>
+        <div class="reco-body">
+          <div class="reco-name">Parc de Tessé</div>
+          <div class="reco-type">Parc urbain</div>
+          <div class="reco-stars">★★★★☆ <span>4.5</span></div>
+        </div>
+      </a>
+    </div>
+
+    <p class="sub-label" style="margin-top:1rem">🗺️ À voir</p>
+
+    <a class="reco-item" href="https://www.google.com/maps/search/Cité+Plantagenêt+Le+Mans" target="_blank" rel="noopener">
+      <span class="reco-emoji">🏰</span>
+      <div class="reco-body">
+        <div class="reco-name">Cité Plantagenêt</div>
+        <div class="reco-type">Vieille ville médiévale</div>
+        <div class="reco-stars">★★★★★ <span>4.8 · Incontournable</span></div>
+      </div>
+      <span class="reco-arrow">→</span>
+    </a>
+
+    <a class="reco-item" href="https://www.google.com/maps/search/Musée+des+24+Heures+du+Mans" target="_blank" rel="noopener">
+      <span class="reco-emoji">🏎️</span>
+      <div class="reco-body">
+        <div class="reco-name">Musée des 24 Heures</div>
+        <div class="reco-type">Musée automobile · Circuit</div>
+        <div class="reco-stars">★★★★★ <span>4.7 · Passionnant</span></div>
+      </div>
+      <span class="reco-arrow">→</span>
+    </a>
+  </div>
+</section>
+
+<div class="sep section-alt"></div>
+
+<!-- ═══════════════ 08 · CONTACT ═══════════════ -->
+<section id="contact" class="section-alt">
+  <div class="section-wrap">
+    <div class="section-head">
+      <span class="section-num">08</span>
+      <div class="section-label">
+        <small>Une question ?</small>
+        <h2>CONTACT</h2>
+      </div>
+    </div>
+
+    <a class="contact-btn" href="https://wa.me/33682149159" target="_blank" rel="noopener" style="background:linear-gradient(135deg,#0a1a10,#0f2015);border:2px solid #25D366;border-radius:16px;padding:1.5rem 1.25rem">
+      <span class="contact-icon" style="font-size:2.5rem">💬</span>
+      <div>
+        <div class="contact-label">🏎️ Votre hôte · En cas de besoin</div>
+        <div class="contact-value" style="color:#25D366;font-size:1.5rem">WhatsApp</div>
+        <div style="font-size:0.78rem;color:#888;margin-top:0.25rem">Appuyez pour écrire un message</div>
+      </div>
+    </a>
+
+    <a class="contact-btn" href="tel:0682149159" style="border-radius:16px;padding:1rem 1.25rem">
+      <span class="contact-icon" style="font-size:1.8rem">📞</span>
+      <div>
+        <div class="contact-label">Appel téléphonique</div>
+        <div class="contact-value" style="font-size:1.1rem">06.82.14.91.59</div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer id="siteFooter">
+  <div class="footer-stripe" style="background-image:repeating-conic-gradient(#000 0% 25%,#fff 0% 50%);background-size:12px 12px"></div>
+  <div class="footer-flag" id="footerFlag">🏁</div>
+  <div class="footer-title" id="footerTitle">BONNE COURSE !</div>
+  <div class="footer-sub" id="footerSub">Résidence Cervantes · Le Mans</div>
+  <div class="footer-date" id="footerDate"></div>
+</footer>
+
+<!-- ─── LIGHTBOX ─── -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  <button class="lightbox-nav prev hidden" id="lbPrev" onclick="event.stopPropagation();lbNav(-1)">‹</button>
+  <img id="lightboxImg" src="" alt="" onclick="event.stopPropagation()">
+  <button class="lightbox-nav next hidden" id="lbNext" onclick="event.stopPropagation();lbNav(1)">›</button>
+  <div class="lightbox-counter" id="lbCounter"></div>
+</div>
+
+<script>
+  // Hero bg
+  document.getElementById('heroBg').classList.add('loaded');
+
+  // F1 lights animation
+  (function() {
+    const overlay = document.getElementById('f1overlay');
+    const lights  = ['l1','l2','l3','l4','l5'].map(id => document.getElementById(id));
+    const goEl    = document.getElementById('f1go');
+    let i = 0;
+    function lightUp() {
+      if (i < lights.length) {
+        lights[i].classList.add('on');
+        i++;
+        setTimeout(lightUp, 550);
+      } else {
+        setTimeout(() => {
+          lights.forEach(l => l.classList.remove('on'));
+          goEl.classList.add('show');
+          setTimeout(() => {
+            overlay.classList.add('fade-out');
+            setTimeout(() => { overlay.style.display = 'none'; }, 900);
+          }, 700);
+        }, 900);
+      }
+    }
+    setTimeout(lightUp, 400);
+  })();
+
+  // Countdown 24H du Mans 2025 (14 juin 2025 16h00)
+  function updateCountdown() {
+    const race = new Date('2026-06-13T16:00:00+02:00');
+    const now = new Date();
+    const diff = race - now;
+    if (diff <= 0) {
+      ['cdDays','cdHours','cdMins','cdSecs'].forEach(id => document.getElementById(id).textContent = '00');
+      return;
+    }
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor((diff % 86400000) / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+    document.getElementById('cdDays').textContent = String(d).padStart(2,'0');
+    document.getElementById('cdHours').textContent = String(h).padStart(2,'0');
+    document.getElementById('cdMins').textContent = String(m).padStart(2,'0');
+    document.getElementById('cdSecs').textContent = String(s).padStart(2,'0');
+  }
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+
+  // Reco toggle
+  function toggleReco(id, btn) {
+    const el = document.getElementById(id);
+    el.classList.toggle('open');
+    btn.textContent = el.classList.contains('open') ? '− Voir moins' : '+ Voir plus';
+  }
+
+  // Lightbox
+  const _gallery = [
+    'images/salon2.jpeg','images/cuisine2.jpg','images/deux-chambres.jpg',
+    'images/chambre.jpeg','images/chambre-salon.jpg','images/cuisine.jpg',
+    'images/salle-de-bain.jpg','images/decomeuble.jpeg',
+    'images/salon.jpg','images/table-basse.jpg'
+  ];
+  let _lbIndex = -1;
+
+  function openLightbox(src) {
+    _lbIndex = _gallery.indexOf(src);
+    _lbShow(src);
+    document.getElementById('lightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function _lbShow(src) {
+    const img = document.getElementById('lightboxImg');
+    img.src = src;
+    const inGallery = _lbIndex >= 0;
+    document.getElementById('lbPrev').classList.toggle('hidden', !inGallery);
+    document.getElementById('lbNext').classList.toggle('hidden', !inGallery);
+    document.getElementById('lbCounter').textContent = inGallery ? (_lbIndex + 1) + ' / ' + _gallery.length : '';
+  }
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function lbNav(dir) {
+    if (_lbIndex < 0) return;
+    _lbIndex = (_lbIndex + dir + _gallery.length) % _gallery.length;
+    _lbShow(_gallery[_lbIndex]);
+  }
+  document.addEventListener('keydown', e => {
+    if (!document.getElementById('lightbox').classList.contains('open')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft') lbNav(-1);
+    if (e.key === 'ArrowRight') lbNav(1);
+  });
+
+  // Dynamic footer
+  (function() {
+    const hh = new Date().getHours() + new Date().getMinutes() / 60;
+    const slots = {
+      morning:  { flag:'🌅', title:'BONNE MATINÉE !',  sub:'Profitez bien de votre journée au Mans', bg:'lever-soleil.jpg' },
+      checkout: { flag:'🏁', title:'BONNE COURSE !',   sub:'Merci pour votre visite · À bientôt',   bg:'journee.jpg' },
+      noon:     { flag:'☀️', title:'BON APPÉTIT !',    sub:'Une pause méritée avant de repartir en piste', bg:'journee.jpg' },
+      day:      { flag:'🏁', title:'BONNE JOURNÉE !',  sub:'En route pour une journée de découverte', bg:'journee.jpg' },
+      evening:  { flag:'🌆', title:'BONNE SOIRÉE !',   sub:'Le Mans by night — profitez bien',       bg:'coucher-soleil.jpg' },
+      night:    { flag:'🌙', title:'BONNE NUIT !',     sub:'Reposez-vous bien',                      bg:'nuit.jpg' },
+    };
+    let key = 'night';
+    if (hh >= 6   && hh < 10.5) key = 'morning';
+    else if (hh >= 10.5 && hh < 11.5) key = 'checkout';
+    else if (hh >= 11.5 && hh < 14)   key = 'noon';
+    else if (hh >= 14  && hh < 18)    key = 'day';
+    else if (hh >= 18  && hh < 22)    key = 'evening';
+    const s = slots[key];
+    document.getElementById('footerFlag').textContent  = s.flag;
+    document.getElementById('footerTitle').textContent = s.title;
+    document.getElementById('footerSub').textContent   = s.sub;
+    document.getElementById('footerDate').textContent  = new Date().toLocaleDateString('fr-FR', { weekday:'long', day:'numeric', month:'long', year:'numeric' });
+    const footer = document.getElementById('siteFooter');
+    footer.style.backgroundImage    = `url('images/${s.bg}')`;
+    footer.style.backgroundSize     = 'cover';
+    footer.style.backgroundPosition = 'center';
+  })();
+
+  // Nav active
+  const sections = document.querySelectorAll('section[id]');
+  const navBtns = document.querySelectorAll('.nav-btn');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        navBtns.forEach(b => b.classList.toggle('active', b.getAttribute('href') === '#' + e.target.id));
+      }
+    });
+  }, { threshold: 0.3 });
+  sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>

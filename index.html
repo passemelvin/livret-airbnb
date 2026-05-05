@@ -1,0 +1,2960 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>Livret d'Accueil · Le Circuit du Mans</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --red: #00B140;
+      --dark-red: #007B30;
+      --blue: #1565C0;
+      --yellow: #FFD700;
+      --black: #0d0d0d;
+      --dark: #141414;
+      --card: #1c1c1c;
+      --border: #2a2a2a;
+      --white: #ffffff;
+      --muted: #888888;
+      --text: #cccccc;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Barlow', sans-serif;
+      background: var(--black);
+      color: var(--white);
+      overflow-x: hidden;
+      padding-top: 88px;
+      padding-bottom: 58px;
+    }
+
+    /* ─── LANGUAGE BAR ─── */
+    .lang-bar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 30px;
+      z-index: 1002;
+      background: #080808;
+      border-bottom: 1px solid #1a1a1a;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 2px;
+      padding: 0 1rem;
+    }
+    .lang-btn {
+      background: none;
+      border: none;
+      font-size: 1.15rem;
+      cursor: pointer;
+      opacity: 0.35;
+      transition: opacity 0.2s, transform 0.15s;
+      padding: 2px 5px;
+      border-radius: 4px;
+      line-height: 1;
+    }
+    .lang-btn:hover { opacity: 0.8; }
+    .lang-btn.active { opacity: 1; transform: scale(1.25); }
+
+    /* ─── CHECKERED UTIL ─── */
+    .checkered-stripe {
+      background-image: repeating-conic-gradient(#000 0% 25%, #fff 0% 50%);
+      background-size: 14px 14px;
+    }
+
+    /* ─── HERO ─── */
+    .hero {
+      position: relative;
+      height: 100svh;
+      min-height: 520px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: url('images/deux-chambres.jpg') center/cover no-repeat;
+      filter: brightness(0.35) saturate(1.2);
+      transform: scale(1.05);
+      transition: transform 8s ease;
+    }
+
+    .hero-bg.loaded { transform: scale(1); }
+
+    .hero-stripe-top {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 10px;
+    }
+
+    .hero-stripe-bottom {
+      position: absolute;
+      bottom: 72px; left: 0; right: 0;
+      height: 6px;
+      opacity: 0.4;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,177,64,0.05) 50%, rgba(0,0,0,0.6) 100%);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      padding: 2rem 1.5rem;
+      max-width: 600px;
+    }
+
+    .hero-eyebrow {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #64B5F6;
+      margin-bottom: 0.75rem;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.2s ease forwards;
+    }
+
+    .hero-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3.5rem, 14vw, 8rem);
+      letter-spacing: 3px;
+      line-height: 0.9;
+      color: var(--white);
+      text-shadow: 0 4px 40px rgba(0,0,0,0.8);
+      opacity: 0;
+      animation: fadeUp 0.6s 0.4s ease forwards;
+    }
+
+    .hero-title .accent { color: var(--red); }
+
+    .hero-sub {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(0.9rem, 3vw, 1.2rem);
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #aaaaaa;
+      margin-top: 0.75rem;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.6s ease forwards;
+    }
+
+    .hero-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 2rem;
+      background: var(--red);
+      padding: 0.8rem 1.75rem;
+      border-radius: 100px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.8s ease forwards, pulse 2.5s 1.5s infinite;
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 100px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      color: #555;
+      font-size: 0.65rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      animation: bounce 2s 1.5s infinite;
+    }
+
+    .hero-scroll svg { width: 20px; height: 20px; fill: none; stroke: #555; stroke-width: 2; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(0,177,64,0.4); }
+      50%       { box-shadow: 0 0 0 12px rgba(0,177,64,0); }
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50%       { transform: translateX(-50%) translateY(-8px); }
+    }
+
+    /* ─── BOTTOM NAV ─── */
+    .top-nav, .bottom-nav {
+      position: fixed;
+      left: 0; right: 0;
+      z-index: 1000;
+      background: rgba(20,20,20,0.97);
+      backdrop-filter: blur(12px);
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+    }
+
+    .top-nav {
+      top: 30px;
+      border-bottom: 3px solid var(--blue);
+    }
+
+    .bottom-nav {
+      bottom: 0;
+      border-top: 3px solid var(--blue);
+    }
+
+    .nav-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      padding: 7px 4px 5px;
+      text-decoration: none;
+      color: #bbb;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-btn .nav-icon { font-size: 1.5rem; line-height: 1; }
+    .nav-btn:hover, .nav-btn.active { color: var(--red); }
+
+    /* ─── GALLERY STRIP ─── */
+    .gallery-strip {
+      background: var(--dark);
+      padding: 1.25rem 0;
+    }
+
+    .gallery-scroll {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding: 0 1.25rem;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .gallery-scroll::-webkit-scrollbar { display: none; }
+
+    .gallery-thumb {
+      flex-shrink: 0;
+      width: 180px;
+      height: 120px;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 2px solid var(--border);
+      cursor: pointer;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .gallery-thumb:hover { border-color: var(--red); transform: scale(1.02); }
+    .gallery-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    /* ─── SECTION WRAPPER ─── */
+    .section-wrap {
+      padding: 3rem 1.25rem;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .section-alt { background: var(--dark); }
+
+    .section-head {
+      display: flex;
+      align-items: flex-end;
+      gap: 1rem;
+      margin-bottom: 1.75rem;
+      padding-bottom: 1rem;
+      border-bottom: 6px solid transparent;
+      border-image: repeating-linear-gradient(90deg, #CC0000 0px, #CC0000 18px, #ffffff 18px, #ffffff 36px) 1;
+    }
+
+    .section-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3.5rem;
+      line-height: 1;
+      color: var(--red);
+      opacity: 0.75;
+      flex-shrink: 0;
+    }
+
+    .section-label small {
+      display: block;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #bbbbbb;
+      margin-bottom: 0.2rem;
+    }
+
+    .section-label h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.2rem;
+      letter-spacing: 2px;
+      line-height: 1;
+    }
+
+    /* ─── SEPARATOR ─── */
+    .sep {
+      height: 12px;
+      background-image: repeating-conic-gradient(#000 0% 25%, #fff 0% 50%);
+      background-size: 12px 12px;
+    }
+
+/* ─── CARDS ─── */
+    .card {
+      background: var(--card);
+      border-radius: 14px;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 0.875rem;
+      border-left: 4px solid var(--red);
+    }
+
+    .card-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 0.75rem;
+    }
+
+    .card p, .card li {
+      color: var(--text);
+      line-height: 1.65;
+      font-size: 1.05rem;
+    }
+
+    .card ul { list-style: none; }
+    .card ul li { padding: 0.3rem 0 0.3rem 1.5rem; position: relative; }
+    .card ul li::before { content: '▸'; position: absolute; left: 0; color: var(--red); }
+
+    /* ─── MAP BUTTONS ─── */
+    .map-btn {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: var(--card);
+      border: 2px solid var(--red);
+      color: var(--white);
+      text-decoration: none;
+      padding: 1rem 1.25rem;
+      border-radius: 12px;
+      margin-bottom: 0.75rem;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 1.05rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: background 0.2s, border-color 0.2s, transform 0.15s;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .map-btn:hover { background: rgba(0,177,64,0.12); }
+    .map-btn.secondary { background: var(--card); border-color: var(--red); }
+    .map-btn:active { transform: scale(0.98); }
+    .map-btn .btn-icon { font-size: 1.5rem; flex-shrink: 0; }
+    .map-btn .btn-text { flex: 1; }
+    .map-btn .btn-sub { font-size: 0.65rem; letter-spacing: 2px; opacity: 0.75; margin-bottom: 0.1rem; }
+    .map-btn .btn-arrow { font-size: 1.1rem; opacity: 0.7; }
+
+    /* ─── PARKING PHOTO ─── */
+    .photo-card {
+      border-radius: 14px;
+      overflow: hidden;
+      border: 2px solid var(--border);
+      margin-bottom: 0.875rem;
+    }
+
+    .photo-card img { width: 100%; height: 200px; object-fit: cover; display: block; }
+
+    .photo-caption {
+      background: var(--card);
+      padding: 0.75rem 1rem;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 1px;
+      color: var(--muted);
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    /* ─── WIFI CARD ─── */
+    .wifi-card {
+      background: linear-gradient(135deg, #001a08 0%, #002a10 100%);
+      border: 2px solid var(--red);
+      border-radius: 16px;
+      padding: 2rem 1.5rem;
+      text-align: center;
+      margin-bottom: 0.875rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .wifi-card::before {
+      content: '';
+      position: absolute;
+      top: -30px; right: -30px;
+      width: 100px; height: 100px;
+      border-radius: 50%;
+      background: rgba(0,177,64,0.1);
+    }
+
+    .wifi-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.3rem;
+    }
+
+    .wifi-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.5rem;
+      letter-spacing: 5px;
+      color: var(--white);
+    }
+
+    .wifi-divider {
+      width: 40px;
+      height: 2px;
+      background: var(--red);
+      margin: 1rem auto;
+      opacity: 0.5;
+    }
+
+    .wifi-password {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.75rem;
+      font-weight: 700;
+      letter-spacing: 4px;
+      color: var(--red);
+    }
+
+    .wifi-footer {
+      margin-top: 1rem;
+      font-size: 0.7rem;
+      color: #444;
+      letter-spacing: 1px;
+      font-style: italic;
+    }
+
+    /* ─── TIMING ─── */
+    .timing-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.875rem;
+      margin-bottom: 0.875rem;
+    }
+
+    .timing-card {
+      background: var(--card);
+      border-radius: 14px;
+      padding: 1.5rem 1rem;
+      text-align: center;
+    }
+
+    .timing-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+
+    .timing-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.25rem;
+    }
+
+    .timing-time {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3rem;
+      color: var(--red);
+      letter-spacing: 2px;
+      line-height: 1;
+    }
+
+    .timing-note {
+      font-size: 0.72rem;
+      color: #555;
+      margin-top: 0.3rem;
+    }
+
+    /* ─── ALERT BOX ─── */
+    .alert {
+      display: flex;
+      gap: 0.875rem;
+      align-items: flex-start;
+      background: linear-gradient(135deg, #1a0a00, #2a1500);
+      border: 1px solid #1a5c2e;
+      border-radius: 12px;
+      padding: 1.1rem 1.25rem;
+      margin-bottom: 0.875rem;
+    }
+
+    .alert-icon { font-size: 1.5rem; flex-shrink: 0; margin-top: 0.1rem; }
+
+    .alert-body { font-size: 0.9rem; color: #88ffbb; line-height: 1.6; }
+    .alert-body strong { color: var(--white); }
+
+    /* ─── RULES ─── */
+    .rule {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      background: var(--card);
+      border-radius: 12px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .rule-icon { font-size: 1.5rem; flex-shrink: 0; }
+    .rule-body { color: var(--text); font-size: 1.02rem; line-height: 1.55; }
+    .rule-body strong { color: var(--white); display: block; margin-bottom: 0.15rem; }
+
+    /* ─── TRASH ─── */
+    .trash-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.75rem;
+      margin-bottom: 0.875rem;
+    }
+
+    .trash-item {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 1rem 0.75rem;
+      text-align: center;
+    }
+
+    .trash-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+
+    .trash-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.25rem;
+    }
+
+    .trash-desc { font-size: 0.78rem; color: var(--text); line-height: 1.4; }
+
+    /* ─── CHECKLIST ─── */
+    .checklist-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 1.5rem 0 0.75rem 0.25rem;
+    }
+
+    .check-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: var(--card);
+      border-radius: 10px;
+      padding: 0.9rem 1.1rem;
+      margin-bottom: 0.5rem;
+      cursor: pointer;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      transition: background 0.15s;
+      border: 1px solid transparent;
+    }
+
+    .check-item:active { background: #222; }
+    .check-item.done { opacity: 0.55; border-color: var(--border); }
+
+    .check-box {
+      width: 22px;
+      height: 22px;
+      border: 2px solid var(--red);
+      border-radius: 5px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+      font-size: 0.75rem;
+      color: transparent;
+    }
+
+    .check-item.done .check-box {
+      background: var(--red);
+      color: var(--white);
+    }
+
+    .check-text {
+      color: var(--text);
+      font-size: 1.02rem;
+      line-height: 1.45;
+      transition: color 0.2s;
+    }
+
+    .check-item.done .check-text {
+      text-decoration: line-through;
+      color: #444;
+    }
+
+    /* ─── TRAM ─── */
+    .tram-line {
+      position: relative;
+      padding-left: 2.5rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .tram-dot {
+      position: absolute;
+      left: 0;
+      top: 0.15rem;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--red);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.9rem;
+      color: var(--white);
+      flex-shrink: 0;
+    }
+
+    .tram-dot.mid {
+      background: var(--card);
+      border: 2px solid var(--red);
+      font-size: 0.8rem;
+      color: var(--red);
+    }
+
+    .tram-line:not(:last-child) .tram-dot::after {
+      content: '';
+      position: absolute;
+      top: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 2px;
+      height: calc(100% + 0.75rem + 0.15rem);
+      background: linear-gradient(to bottom, var(--red), transparent);
+    }
+
+    .tram-content {
+      background: var(--card);
+      border-radius: 10px;
+      padding: 0.9rem 1.1rem;
+    }
+
+    .tram-content strong { color: var(--white); }
+    .tram-content p { color: var(--text); font-size: 0.9rem; line-height: 1.5; }
+    .tram-content small { color: var(--muted); font-size: 0.8rem; }
+
+    /* ─── RESTAURANTS ─── */
+    .reco-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: var(--card);
+      border-radius: 12px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 0.75rem;
+      text-decoration: none;
+      color: var(--white);
+      border: 1px solid var(--border);
+      transition: border-color 0.2s, transform 0.15s;
+    }
+
+    .reco-item:active { transform: scale(0.99); }
+    .reco-item:hover { border-color: var(--red); }
+
+    .reco-emoji { font-size: 1.75rem; flex-shrink: 0; }
+    .reco-body { flex: 1; }
+    .reco-name { font-weight: 600; font-size: 1.05rem; margin-bottom: 0.15rem; }
+    .reco-type { font-size: 0.88rem; color: var(--muted); margin-bottom: 0.2rem; }
+    .reco-stars { font-size: 0.9rem; color: #FFD700; }
+    .reco-stars span { color: var(--muted); }
+    .reco-arrow { color: var(--muted); font-size: 1rem; }
+
+    .sub-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 1.5rem 0 0.75rem 0.25rem;
+    }
+
+    /* ─── COLLAPSIBLE LIST ─── */
+    .reco-collapse {
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height 0.4s ease;
+    }
+    .reco-collapse.open { max-height: 9999px; }
+
+    .show-more-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      width: 100%;
+      background: none;
+      border: 1px dashed var(--border);
+      border-radius: 10px;
+      padding: 0.8rem 1rem;
+      margin-bottom: 0.75rem;
+      color: var(--muted);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .show-more-btn:hover { border-color: var(--red); color: var(--red); }
+    .show-more-btn .btn-chevron { transition: transform 0.3s; }
+    .show-more-btn.open .btn-chevron { transform: rotate(180deg); }
+
+    /* ─── CONTACTS ─── */
+    .contact-btn {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.1rem 1.25rem;
+      margin-bottom: 0.75rem;
+      text-decoration: none;
+      color: var(--white);
+      transition: border-color 0.2s, transform 0.15s;
+    }
+
+    .contact-btn:active { transform: scale(0.98); }
+    .contact-btn:hover { border-color: var(--red); }
+    .contact-icon { font-size: 2rem; flex-shrink: 0; }
+    .contact-label { font-family: 'Barlow Condensed', sans-serif; font-size: 0.65rem; letter-spacing: 3px; text-transform: uppercase; color: var(--muted); }
+    .contact-value { font-size: 1.15rem; font-weight: 600; margin-top: 0.1rem; }
+
+    .contact-btn.emergency { border-left: 4px solid var(--red); }
+
+    /* ─── FOOTER ─── */
+    footer {
+      padding: 3rem 1.5rem 5rem;
+      text-align: center;
+      background: var(--dark);
+      position: relative;
+      overflow: hidden;
+    }
+
+    footer::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      pointer-events: none;
+    }
+
+    .footer-stripe { height: 6px; margin-bottom: 2.5rem; position: relative; }
+
+    .footer-flag {
+      font-size: 3.5rem;
+      margin-bottom: 0.5rem;
+      display: block;
+      animation: flagWave 2s ease-in-out infinite;
+    }
+
+    @keyframes flagWave {
+      0%, 100% { transform: rotate(-5deg) scale(1); }
+      50%       { transform: rotate(5deg) scale(1.1); }
+    }
+
+    .footer-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.5rem, 10vw, 4rem);
+      letter-spacing: 8px;
+      color: var(--red);
+      margin-bottom: 0.75rem;
+      text-shadow: 0 0 40px rgba(0,177,64,0.3);
+    }
+
+    .footer-sub {
+      font-size: 1rem;
+      color: #fff;
+      letter-spacing: 2px;
+      font-style: italic;
+    }
+
+    /* ─── LIGHTBOX ─── */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: rgba(0,0,0,0.95);
+      align-items: center;
+      justify-content: center;
+    }
+
+    .lightbox.open { display: flex; }
+    .lightbox img { max-width: 95vw; max-height: 90vh; border-radius: 8px; object-fit: contain; transition: opacity 0.2s; }
+    .lightbox img.fading { opacity: 0; }
+    .lightbox-close {
+      position: absolute;
+      top: 1rem; right: 1.25rem;
+      font-size: 2rem;
+      color: var(--white);
+      cursor: pointer;
+      background: none;
+      border: none;
+      line-height: 1;
+    }
+    .lightbox-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255,255,255,0.12);
+      border: none;
+      color: #fff;
+      font-size: 2rem;
+      width: 48px;
+      height: 64px;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+      z-index: 1;
+    }
+    .lightbox-nav:hover { background: rgba(255,255,255,0.25); }
+    .lightbox-nav.prev { left: 0.75rem; }
+    .lightbox-nav.next { right: 0.75rem; }
+    .lightbox-nav.hidden { display: none; }
+    .lightbox-counter {
+      position: absolute;
+      bottom: 1rem;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 3px;
+      color: rgba(255,255,255,0.5);
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 380px) {
+      .timing-grid { grid-template-columns: 1fr; }
+      .trash-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    /* ─── F1 LIGHTS OVERLAY ─── */
+    #f1overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 9998;
+      background: #000 url('images/pescarolo.jpeg') center/cover no-repeat;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+      transition: opacity 0.8s ease;
+    }
+
+    #f1overlay.fade-out { opacity: 0; pointer-events: none; }
+
+    .f1-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.5rem, 10vw, 4.5rem);
+      letter-spacing: 8px;
+      color: #fff;
+      line-height: 1;
+      margin-bottom: 0.1rem;
+      position: relative;
+    }
+
+    .f1-subtitle {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(0.75rem, 3vw, 1rem);
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin-bottom: 0.5rem;
+      position: relative;
+    }
+
+    .f1-lights {
+      display: flex;
+      gap: 16px;
+      position: relative;
+    }
+
+    .f1-light {
+      width: clamp(40px, 10vw, 60px);
+      height: clamp(40px, 10vw, 60px);
+      border-radius: 50%;
+      background: #1a1a1a;
+      border: 3px solid #333;
+      transition: background 0.15s, box-shadow 0.15s;
+    }
+
+    .f1-light.on {
+      background: #CC0000;
+      box-shadow: 0 0 20px #CC0000, 0 0 40px rgba(204,0,0,0.5);
+      border-color: #ff3333;
+    }
+
+    .f1-go {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3rem, 12vw, 6rem);
+      letter-spacing: 8px;
+      color: var(--red);
+      opacity: 0;
+      transform: scale(0.5);
+      transition: opacity 0.3s, transform 0.3s;
+      text-shadow: 0 0 30px rgba(0,177,64,0.8);
+      position: relative;
+    }
+
+    .f1-go.show { opacity: 1; transform: scale(1); }
+
+    /* ─── SCROLL PROGRESS CAR ─── */
+    #scrollTrack {
+      position: fixed;
+      top: 88px;
+      left: 0; right: 0;
+      height: 26px;
+      z-index: 999;
+      background: #1a1a1a;
+      border-bottom: 2px solid #222;
+      overflow: hidden;
+    }
+
+    .track-line {
+      position: absolute;
+      top: 50%;
+      left: 0; right: 0;
+      height: 2px;
+      background: repeating-linear-gradient(90deg, #333 0px, #333 10px, transparent 10px, transparent 20px);
+      transform: translateY(-50%);
+    }
+
+    #scrollCar {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%) scaleX(-1);
+      font-size: 1.3rem;
+      line-height: 1;
+      transition: left 0.1s linear;
+      filter: drop-shadow(0 0 6px rgba(0,177,64,0.9));
+    }
+
+    /* ─── WEATHER & CLOCK WIDGET ─── */
+    .hero-dashboard {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1.5rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .dash-card {
+      background: rgba(0,0,0,0.5);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 0.6rem 1.25rem;
+      text-align: center;
+      backdrop-filter: blur(8px);
+      min-width: 110px;
+    }
+
+    .dash-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.6rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #888;
+      margin-bottom: 0.2rem;
+    }
+
+    .dash-value {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.6rem;
+      letter-spacing: 2px;
+      color: var(--white);
+      line-height: 1;
+    }
+
+    .dash-sub {
+      font-size: 0.7rem;
+      color: #aaa;
+      margin-top: 0.1rem;
+    }
+
+    /* ─── COUNTDOWN ─── */
+    .countdown-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.75rem;
+      margin-bottom: 0.875rem;
+    }
+
+    .countdown-item {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 1rem 0.5rem;
+      text-align: center;
+      border-top: 3px solid var(--red);
+    }
+
+    .countdown-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.5rem;
+      color: var(--red);
+      line-height: 1;
+    }
+
+    .countdown-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.6rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 0.2rem;
+    }
+
+/* ─── DISCOVERY CHECKLIST ─── */
+    .discovery-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: var(--card);
+      border-radius: 10px;
+      padding: 0.9rem 1.1rem;
+      margin-bottom: 0.5rem;
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.15s;
+      border: 1px solid transparent;
+    }
+
+    .discovery-item.done {
+      border-color: var(--red);
+      background: rgba(0,177,64,0.08);
+    }
+
+    .discovery-box {
+      width: 24px;
+      height: 24px;
+      border: 2px solid #444;
+      border-radius: 50%;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      color: transparent;
+      transition: all 0.2s;
+    }
+
+    .discovery-item.done .discovery-box {
+      background: var(--red);
+      border-color: var(--red);
+      color: white;
+    }
+
+    .discovery-text {
+      color: var(--text);
+      font-size: 0.95rem;
+    }
+
+    .discovery-score {
+      text-align: center;
+      margin-top: 1rem;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem;
+      letter-spacing: 3px;
+      color: var(--red);
+    }
+
+    /* ─── CONFETTI ─── */
+    #confettiCanvas {
+      position: fixed;
+      inset: 0;
+      z-index: 9997;
+      pointer-events: none;
+    }
+
+    /* ─── SECTION REVEAL ─── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+<!-- LANGUAGE BAR -->
+<div class="lang-bar">
+  <button class="lang-btn active" data-lang="fr" onclick="setLang('fr')" title="Français">🇫🇷</button>
+  <button class="lang-btn" data-lang="en" onclick="setLang('en')" title="English">🇬🇧</button>
+  <button class="lang-btn" data-lang="de" onclick="setLang('de')" title="Deutsch">🇩🇪</button>
+  <button class="lang-btn" data-lang="es" onclick="setLang('es')" title="Español">🇪🇸</button>
+</div>
+
+<!-- F1 LIGHTS OVERLAY -->
+<div id="f1overlay">
+  <div style="position:absolute;inset:0;background:rgba(0,0,0,0.65)"></div>
+  <div class="f1-title">LE MANS</div>
+  <div class="f1-subtitle">Circuit de la Sarthe</div>
+  <div class="f1-lights">
+    <div class="f1-light" id="l1"></div>
+    <div class="f1-light" id="l2"></div>
+    <div class="f1-light" id="l3"></div>
+    <div class="f1-light" id="l4"></div>
+    <div class="f1-light" id="l5"></div>
+  </div>
+  <div class="f1-go" id="f1go">GO !</div>
+</div>
+
+<!-- SCROLL PROGRESS BAR -->
+<div id="scrollTrack" style="display:none">
+  <div class="track-line"></div>
+  <span id="scrollCar">🏎️</span>
+</div>
+
+<!-- CONFETTI CANVAS -->
+<canvas id="confettiCanvas"></canvas>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<section class="hero" id="top">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-stripe-top checkered-stripe"></div>
+  <div class="hero-stripe-bottom checkered-stripe"></div>
+
+  <div class="hero-content">
+    <p class="hero-eyebrow">🏁 Résidence Cervantes · Le Mans</p>
+    <h1 class="hero-title" data-i18n="hero-title">BIENVENUE<br>AU <span class="accent">CIRCUIT</span></h1>
+    <p class="hero-sub" data-i18n="h-sub">Votre guide de séjour</p>
+
+    <div class="hero-dashboard">
+      <div class="dash-card">
+        <div class="dash-label" data-i18n="dash-weather">Météo · Le Mans</div>
+        <div class="dash-value"><span id="weatherIcon">⏳</span>&nbsp;<span id="weatherValue">...</span></div>
+        <div class="dash-sub" id="windValue">Vent · ...</div>
+      </div>
+      <div class="dash-card">
+        <div class="dash-label">Heure locale</div>
+        <div class="dash-value" id="clockValue">--:--:--</div>
+        <div class="dash-sub">Le Mans · France</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-scroll">
+    <span data-i18n="hero-scroll">Découvrir</span>
+    <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+  </div>
+</section>
+
+<!-- ═══════════════ TOP NAV ═══════════════ -->
+<nav class="top-nav" id="topNav">
+  <a class="nav-btn" href="#acces"><span class="nav-icon">📍</span><span data-i18n="nav-acces">Accès</span></a>
+  <a class="nav-btn" href="#wifi"><span class="nav-icon">📶</span><span data-i18n="nav-wifi">WiFi</span></a>
+  <a class="nav-btn" href="#sejour"><span class="nav-icon">🏁</span><span data-i18n="nav-sejour">Séjour</span></a>
+  <a class="nav-btn" href="#regles"><span class="nav-icon">📋</span><span data-i18n="nav-regles">Règles</span></a>
+  <a class="nav-btn" href="#poubelles"><span class="nav-icon">♻️</span><span data-i18n="nav-tri">Tri</span></a>
+</nav>
+
+<!-- ═══════════════ BOTTOM NAV ═══════════════ -->
+<nav class="bottom-nav" id="bottomNav">
+  <a class="nav-btn" href="#depart"><span class="nav-icon">🚦</span><span data-i18n="nav-depart">Départ</span></a>
+  <a class="nav-btn" href="#circuit"><span class="nav-icon">🏎️</span><span data-i18n="nav-circuit">Circuit</span></a>
+  <a class="nav-btn" href="#bonplans"><span class="nav-icon">⭐</span><span data-i18n="nav-bonplans">Bons plans</span></a>
+  <a class="nav-btn" href="#decouverte"><span class="nav-icon">🗺️</span><span data-i18n="nav-decouverte">Découverte</span></a>
+  <a class="nav-btn" href="#contact"><span class="nav-icon">📞</span><span data-i18n="nav-contact">Contact</span></a>
+</nav>
+
+<!-- ═══════════════ GALLERY ═══════════════ -->
+<div class="gallery-strip">
+  <div class="gallery-scroll">
+    <div class="gallery-thumb" onclick="openLightbox('images/salon2.jpeg')">
+      <img src="images/salon2.jpeg" alt="Salon" loading="lazy">
+    </div>
+    <div class="gallery-thumb" onclick="openLightbox('images/cuisine2.jpg')">
+      <img src="images/cuisine2.jpg" alt="Cuisine" loading="lazy">
+    </div>
+    <div class="gallery-thumb" onclick="openLightbox('images/deux-chambres.jpg')">
+      <img src="images/deux-chambres.jpg" alt="Séjour" loading="lazy">
+    </div>
+    <div class="gallery-thumb" onclick="openLightbox('images/chambre.jpeg')">
+      <img src="images/chambre.jpeg" alt="Chambre" loading="lazy">
+    </div>
+    <div class="gallery-thumb" onclick="openLightbox('images/chambre-salon.jpg')">
+      <img src="images/chambre-salon.jpg" alt="Chambre salon" loading="lazy">
+    </div>
+    <div class="gallery-thumb" onclick="openLightbox('images/cuisine.jpg')">
+      <img src="images/cuisine.jpg" alt="Cuisine" loading="lazy">
+    </div>
+    <div class="gallery-thumb" onclick="openLightbox('images/salle-de-bain.jpg')">
+      <img src="images/salle-de-bain.jpg" alt="Salle de bain" loading="lazy">
+    </div>
+    <div class="gallery-thumb" onclick="openLightbox('images/decomeuble.jpeg')">
+      <img src="images/decomeuble.jpeg" alt="Décoration meuble" loading="lazy">
+    </div>
+    <div class="gallery-thumb" onclick="openLightbox('images/salon.jpg')">
+      <img src="images/salon.jpg" alt="Salon" loading="lazy">
+    </div>
+    <div class="gallery-thumb" onclick="openLightbox('images/table-basse.jpg')">
+      <img src="images/table-basse.jpg" alt="Table basse" loading="lazy">
+    </div>
+  </div>
+</div>
+
+<div class="sep"></div>
+
+<!-- ═══════════════ 01 · ACCÈS ═══════════════ -->
+<section id="acces">
+  <div class="section-wrap">
+    <div class="section-head">
+      <span class="section-num">01</span>
+      <div class="section-label">
+        <small data-i18n="s1-sub">Comment nous trouver</small>
+        <h2 data-i18n="s1-h2">ACCÈS</h2>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title" data-i18n="ct-apt">📍 L'appartement</div>
+      <ul>
+        <li><strong>Résidence Cervantes</strong></li>
+        <li>1er étage — Appartement <strong>37</strong></li>
+        <li>Porte <strong style="color:var(--red);font-size:1.1em">103</strong></li>
+      </ul>
+    </div>
+
+    <a class="map-btn" href="https://www.google.com/maps/place/47%C2%B059'43.1%22N+0%C2%B011'48.2%22E/@47.9952726,0.1967503,3a,75y,328.3h,90t/data=!3m7!1e1!3m5!1snaCPtjh6Zwr5uTkED9Metw!2e0!6shttps:%2F%2Fstreetviewpixels-pa.googleapis.com%2Fv1%2Fthumbnail%3Fcb_client%3Dmaps_sv.tactile%26w%3D900%26h%3D600%26pitch%3D0%26panoid%3DnaCPtjh6Zwr5uTkED9Metw%26yaw%3D328.30197!7i16384!8i8192!4m4!3m3!8m2!3d47.995302!4d0.196726?entry=ttu&g_ep=EgoyMDI2MDQxNS4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener">
+      <span class="btn-icon">🚶</span>
+      <div class="btn-text">
+        <div class="btn-sub" data-i18n="map-foot-sub">Avec badge · Entrée piétonne</div>
+        Rue Bitche
+      </div>
+      <span class="btn-arrow">→</span>
+    </a>
+
+    <a class="map-btn secondary" href="https://www.google.com/maps/place/15+Rue+d'Alsace,+72100+Le+Mans/@47.995383,0.196351,3a,75y,42.61h,90t/data=!3m7!1e1!3m5!1szP2lKiqdwRyif4m1P-CzJA!2e0!6shttps:%2F%2Fstreetviewpixels-pa.googleapis.com%2Fv1%2Fthumbnail%3Fcb_client%3Dmaps_sv.tactile%26w%3D900%26h%3D600%26pitch%3D0%26panoid%3DzP2lKiqdwRyif4m1P-CzJA%26yaw%3D42.60942!7i16384!8i8192!4m15!1m8!3m7!1s0x47e28f31f0f75b8d:0x2443e47b5f763d78!2s15+Rue+d'Alsace,+72100+Le+Mans!3b1!8m2!3d47.9954691!4d0.1964335!16s%2Fg%2F11cp9s_2c_!3m5!1s0x47e28f31f0f75b8d:0x2443e47b5f763d78!8m2!3d47.9954691!4d0.1964335!16s%2Fg%2F11cp9s_2c_?entry=ttu&g_ep=EgoyMDI2MDQxNS4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener">
+      <span class="btn-icon">🚗</span>
+      <div class="btn-text">
+        <div class="btn-sub" data-i18n="map-car-sub">Avec télécommande · Parking couvert</div>
+        En face du 14 rue d'Alsace
+      </div>
+      <span class="btn-arrow">→</span>
+    </a>
+
+    <div class="photo-card">
+      <img src="images/parking.jpg" alt="Parking couvert" loading="lazy" onclick="openLightbox('images/parking.jpg')" style="cursor:pointer;height:auto;object-fit:contain">
+      <div class="photo-caption" data-i18n="photo-parking">🅿️ Votre place · N°<strong style="color:var(--red)">20</strong> · Parking couvert sécurisé</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title" data-i18n="ct-keys">🔑 Remise des clés</div>
+      <p data-i18n="ct-keys-body">La remise des clés se fait <strong>en main propre</strong> à votre arrivée. Contactez-nous pour convenir de l'heure exacte.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title" data-i18n="ct-train">🚆 Gare SNCF · 3 min à pied</div>
+      <p data-i18n="ct-train-body">La <strong>Gare du Mans</strong> est à seulement 3 minutes à pied. Idéal pour les déplacements professionnels ou explorer la région sans voiture.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title" data-i18n="ct-lift">🛗 Ascenseur disponible</div>
+      <p data-i18n="ct-lift-body">La résidence est équipée d'un <strong>ascenseur</strong> pour accéder au 1er étage.</p>
+    </div>
+  </div>
+</section>
+
+<div class="sep section-alt"></div>
+
+<!-- ═══════════════ 02 · WIFI ═══════════════ -->
+<section id="wifi" class="section-alt">
+  <div class="section-wrap">
+    <div class="section-head">
+      <span class="section-num">02</span>
+      <div class="section-label">
+        <small data-i18n="s2-sub">Restez connecté</small>
+        <h2 data-i18n="s2-h2">CONNEXION</h2>
+      </div>
+    </div>
+
+    <div class="wifi-card">
+      <div class="wifi-label" data-i18n="wifi-net-label">📶 Réseau WiFi</div>
+      <div class="wifi-name">24HLEMANS</div>
+      <div class="wifi-divider"></div>
+      <div class="wifi-label" data-i18n="wifi-pwd-label">🔒 Mot de passe</div>
+      <div class="wifi-password">Pescarolo</div>
+      <div class="wifi-footer" data-i18n="wifi-footer">Henri Pescarolo — Légende des 24 Heures du Mans 🏁</div>
+    </div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- ═══════════════ 03 · SÉJOUR ═══════════════ -->
+<section id="sejour">
+  <div class="section-wrap">
+    <div class="section-head">
+      <span class="section-num">03</span>
+      <div class="section-label">
+        <small data-i18n="s3-sub">Arrivée & horaires</small>
+        <h2 data-i18n="s3-h2">LE SÉJOUR</h2>
+      </div>
+    </div>
+
+    <div class="timing-grid">
+      <div class="timing-card">
+        <div class="timing-icon">🏁</div>
+        <div class="timing-label" data-i18n="timing-in">Check-in</div>
+        <div class="timing-time">14h</div>
+        <div class="timing-note" data-i18n="timing-in-note">À partir de</div>
+      </div>
+      <div class="timing-card">
+        <div class="timing-icon">🚦</div>
+        <div class="timing-label" data-i18n="timing-out">Check-out</div>
+        <div class="timing-time">11h</div>
+        <div class="timing-note" data-i18n="timing-out-note">Au plus tard</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title" data-i18n="ct-linge">🛏️ Linge & draps</div>
+      <ul data-i18n="ct-linge-body">
+        <li>Draps et serviettes <strong>fournis</strong></li>
+        <li>Avant votre départ : enlever tous les draps et les déposer <strong>au sol dans la salle de bain</strong></li>
+        <li>Gel douche et shampoing <strong>fournis</strong></li>
+        <li>Lit parapluie disponible sur demande (enfant &lt; 3 ans)</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title" data-i18n="ct-equip">☕ Équipements & fournitures</div>
+      <ul data-i18n="ct-equip-body">
+        <li>Cafetière <strong>Senseo</strong> — dosettes fournies</li>
+        <li>Café et thé <strong>fournis</strong></li>
+        <li>Fer à repasser <strong>disponible</strong></li>
+      </ul>
+    </div>
+
+    <div class="alert">
+      <span class="alert-icon">💧</span>
+      <div class="alert-body" data-i18n="alert-water">
+        <strong>Eau & électricité</strong><br>
+        Merci d'être raisonnable dans votre consommation. En cas d'abus constaté, une refacturation pourra être appliquée.
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title" data-i18n="ct-tv-light">💡 Lumière du meuble TV</div>
+      <p style="font-size:0.92rem;color:var(--text);margin-top:0.5rem;line-height:1.6" data-i18n="ct-tv-light-sub">Pour allumer la lumière du meuble TV à la télécommande, <strong>placez-vous bien à droite du meuble</strong> — c'est la seule position où la télécommande est détectée.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title" data-i18n="ct-cuisine-light">💡 Lumière de la cuisine</div>
+      <video controls playsinline preload="none" style="width:100%;border-radius:10px;margin-top:0.75rem;max-height:380px;object-fit:cover;background:#000">
+        <source src="images/lumiere%20cuisine.mp4" type="video/mp4">
+      </video>
+      <p style="font-size:0.82rem;color:var(--muted);margin-top:0.6rem" data-i18n="video-cuisine-sub">La lumière de la cuisine a un fonctionnement particulier — regardez la vidéo.</p>
+    </div>
+  </div>
+</section>
+
+<div class="sep section-alt"></div>
+
+<!-- ═══════════════ 04 · RÈGLES ═══════════════ -->
+<section id="regles" class="section-alt">
+  <div class="section-wrap">
+    <div class="section-head">
+      <span class="section-num">04</span>
+      <div class="section-label">
+        <small data-i18n="s4-sub">À respecter</small>
+        <h2 data-i18n="s4-h2">RÈGLES DE COURSE</h2>
+      </div>
+    </div>
+
+    <div class="rule">
+      <span class="rule-icon">🐾</span>
+      <div class="rule-body" data-i18n="r1"><strong>Animaux interdits</strong> Les animaux de compagnie ne sont pas acceptés dans le logement.</div>
+    </div>
+
+    <div class="rule">
+      <span class="rule-icon">🚭</span>
+      <div class="rule-body" data-i18n="r2"><strong>Non-fumeur</strong> Il est strictement interdit de fumer à l'intérieur du logement.</div>
+    </div>
+
+    <div class="rule">
+      <span class="rule-icon">🎉</span>
+      <div class="rule-body" data-i18n="r3"><strong>Pas de fête</strong> Les soirées et événements festifs ne sont pas autorisés.</div>
+    </div>
+
+    <div class="rule">
+      <span class="rule-icon">🔇</span>
+      <div class="rule-body" data-i18n="r4"><strong>Silence nocturne</strong> Merci de respecter le calme de la résidence entre <strong>22h et 8h</strong>.</div>
+    </div>
+
+    <div class="rule">
+      <span class="rule-icon">👥</span>
+      <div class="rule-body" data-i18n="r5"><strong>Capacité maximale</strong> 4 adultes + 1 enfant de moins de 3 ans.<br><span style="color:var(--muted);font-size:0.85em">Lit parapluie disponible sur demande.</span></div>
+    </div>
+
+    <div class="rule" style="border:2px solid rgba(220,38,38,0.5);background:rgba(220,38,38,0.08);border-radius:10px;padding:1rem 1.25rem">
+      <span class="rule-icon">🏎️</span>
+      <div class="rule-body" data-i18n="r6"><strong style="color:#ff6b6b">Décorations — Ne pas toucher</strong> La casquette, la combinaison de pilote et les objets de collection sont des éléments décoratifs. Merci de ne pas les utiliser, les porter ni les déplacer.</div>
+    </div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- ═══════════════ 05 · POUBELLES ═══════════════ -->
+<section id="poubelles">
+  <div class="section-wrap">
+    <div class="section-head">
+      <span class="section-num">05</span>
+      <div class="section-label">
+        <small data-i18n="s5-sub">Tri sélectif</small>
+        <h2 data-i18n="s5-h2">RAVITAILLEMENT</h2>
+      </div>
+    </div>
+
+    <div class="trash-grid">
+      <div class="trash-item">
+        <div class="trash-icon">🗑️</div>
+        <div class="trash-label" data-i18n="trash-ord">Ordures<br>ménagères</div>
+        <div class="trash-desc" data-i18n="trash-ord-desc">Bacs noirs<br>dans le parking</div>
+      </div>
+      <div class="trash-item">
+        <div class="trash-icon">♻️</div>
+        <div class="trash-label" data-i18n="trash-pla">Plastique<br>& Carton</div>
+        <div class="trash-desc" data-i18n="trash-pla-desc">Bacs verts<br>dans le parking</div>
+      </div>
+      <div class="trash-item">
+        <div class="trash-icon">🍾</div>
+        <div class="trash-label" data-i18n="trash-ver">Verre</div>
+        <div class="trash-desc" data-i18n="trash-ver-desc">Placard<br>de l'entrée</div>
+      </div>
+    </div>
+
+    <div class="photo-card">
+      <img src="images/poubelles.jpg" alt="Poubelles tri sélectif" loading="lazy" onclick="openLightbox('images/poubelles.jpg')" style="cursor:pointer">
+      <div class="photo-caption" data-i18n="photo-poubelles">♻️ Bacs noirs = ordures · Bacs verts = plastique & carton</div>
+    </div>
+
+    <div class="photo-card">
+      <img src="images/bac%20verre.jpeg" alt="Bac verre" loading="lazy" onclick="openLightbox('images/bac%20verre.jpeg')" style="cursor:pointer">
+      <div class="photo-caption" data-i18n="photo-verre">🍾 Caisse à verre · Placard de l'entrée</div>
+    </div>
+  </div>
+</section>
+
+<div class="sep section-alt"></div>
+
+<!-- ═══════════════ 06 · DÉPART ═══════════════ -->
+<section id="depart" class="section-alt">
+  <div class="section-wrap">
+    <div class="section-head">
+      <span class="section-num">06</span>
+      <div class="section-label">
+        <small data-i18n="s6-sub">Check-out</small>
+        <h2 data-i18n="s6-h2">LIGNE D'ARRIVÉE</h2>
+      </div>
+    </div>
+
+    <div class="card" style="background:linear-gradient(135deg,#001a08,#002a10);border-color:var(--red)">
+      <div class="card-title" data-i18n="ct-depart">🚦 Départ avant 11h00</div>
+      <p data-i18n="ct-depart-body">Déposez les <strong>clés dans la boite aux lettres</strong> en partant. Pensez à <strong>sortir votre véhicule du parking avant de mettre les clés dans la boite aux lettres</strong>.</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;margin-bottom:0.75rem">
+      <div class="photo-card" style="margin:0">
+        <img src="images/boite%20aux%20lettre%201.jpeg" alt="Boîte aux lettres" loading="lazy" onclick="openLightbox('images/boite%20aux%20lettre%201.jpeg')" style="cursor:pointer">
+      </div>
+      <div class="photo-card" style="margin:0">
+        <img src="images/boite%20aux%20lettre%202.jpeg" alt="Boîte aux lettres" loading="lazy" onclick="openLightbox('images/boite%20aux%20lettre%202.jpeg')" style="cursor:pointer">
+      </div>
+    </div>
+    <div class="photo-caption" style="text-align:center;margin-bottom:0.75rem" data-i18n="photo-bal">📬 Votre boîte aux lettres pour déposer les clés</div>
+
+    <p class="checklist-label" data-i18n="cl-label">✅ Checklist avant de quitter l'appartement</p>
+
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box">✓</div>
+      <span class="check-text" data-i18n="ck1">🛏️ Draps et linge déposés au sol dans la salle de bain</span>
+    </div>
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box">✓</div>
+      <span class="check-text" data-i18n="ck2">🔑 Clés déposées dans la boite aux lettres</span>
+    </div>
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box">✓</div>
+      <span class="check-text" data-i18n="ck3">🍽️ Vaisselle faite et rangée</span>
+    </div>
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box">✓</div>
+      <span class="check-text" data-i18n="ck4">♻️ Poubelles triées et sorties</span>
+    </div>
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box">✓</div>
+      <span class="check-text" data-i18n="ck5">💡 Toutes les lumières éteintes</span>
+    </div>
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box">✓</div>
+      <span class="check-text" data-i18n="ck6">☕ Cafetière vidée et propre</span>
+    </div>
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box">✓</div>
+      <span class="check-text" data-i18n="ck7">🪟 Toutes les fenêtres fermées</span>
+    </div>
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box">✓</div>
+      <span class="check-text" data-i18n="ck8">🧹 Un petit coup d'aspirateur — pas de frais de ménage facturé, merci pour le geste !</span>
+    </div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- ═══════════════ 07 · CIRCUIT ═══════════════ -->
+<section id="circuit" style="position:relative;background:url('images/circuit.jpg') center/cover no-repeat fixed;">
+  <div style="position:absolute;inset:0;background:rgba(0,0,0,0.82);pointer-events:none"></div>
+  <div class="section-wrap" style="position:relative;z-index:1">
+    <div class="section-head">
+      <span class="section-num">07</span>
+      <div class="section-label">
+        <small data-i18n="s7-sub">Le circuit mythique</small>
+        <h2 data-i18n="s7-h2">24H DU MANS</h2>
+      </div>
+    </div>
+
+    <p class="sub-label" data-i18n="cd-label">⏳ Prochain départ · 24 Heures du Mans</p>
+    <div class="countdown-grid">
+      <div class="countdown-item">
+        <div class="countdown-num" id="cdDays">--</div>
+        <div class="countdown-label" data-i18n="cd-days">Jours</div>
+      </div>
+      <div class="countdown-item">
+        <div class="countdown-num" id="cdHours">--</div>
+        <div class="countdown-label" data-i18n="cd-hours">Heures</div>
+      </div>
+      <div class="countdown-item">
+        <div class="countdown-num" id="cdMins">--</div>
+        <div class="countdown-label" data-i18n="cd-mins">Minutes</div>
+      </div>
+      <div class="countdown-item">
+        <div class="countdown-num" id="cdSecs">--</div>
+        <div class="countdown-label" data-i18n="cd-secs">Secondes</div>
+      </div>
+    </div>
+
+    <div class="card" style="border-color:var(--red);background:linear-gradient(135deg,#001a08,#1c1c1c)">
+      <div class="card-title" data-i18n="ct-tram">🚊 Itinéraire en tramway</div>
+
+      <div style="margin-top:0.75rem">
+        <div class="tram-line">
+          <div class="tram-dot">A</div>
+          <div class="tram-content">
+            <p data-i18n="tram-a"><strong>Départ · Arrêt Zola</strong><br><small>À proximité de la résidence</small></p>
+          </div>
+        </div>
+
+        <div class="tram-line">
+          <div class="tram-dot mid">→</div>
+          <div class="tram-content">
+            <p data-i18n="tram-mid">Prendre le tramway direction <strong>Antarès</strong><br><small>Vérifiez les horaires SETRAM les jours de course</small></p>
+          </div>
+        </div>
+
+        <div class="tram-line">
+          <div class="tram-dot">B</div>
+          <div class="tram-content">
+            <p data-i18n="tram-b"><strong>Arrivée · Pôle Santé Sud</strong><br><small>Arrêt Guetteloup — plus proche du Circuit de la Sarthe 🏎️</small></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<a class="map-btn secondary" href="https://www.google.com/maps/dir/?api=1&origin=22+rue+Bitche%2C+Le+Mans&destination=47.962302696647185%2C0.22241219750754782&travelmode=transit" target="_blank" rel="noopener">
+      <span class="btn-icon">🏎️</span>
+      <div class="btn-text">
+        <div class="btn-sub" data-i18n="map-maps-sub">Voir sur Maps</div>
+        Circuit de la Sarthe
+      </div>
+      <span class="btn-arrow">→</span>
+    </a>
+
+    <a class="map-btn secondary" href="https://www.lemans.org/fr/evenements/calendrier" target="_blank" rel="noopener">
+      <span class="btn-icon">📅</span>
+      <div class="btn-text">
+        <div class="btn-sub">Circuit de la Sarthe</div>
+        <span data-i18n="map-cal-text">Calendrier des événements</span>
+      </div>
+      <span class="btn-arrow">→</span>
+    </a>
+
+    <div class="alert" style="margin-top:0.25rem">
+      <span class="alert-icon">ℹ️</span>
+      <div class="alert-body" data-i18n="alert-race">
+        <strong>Jours de course</strong><br>
+        Pensez à vérifier les horaires de tramway sur <a href="https://www.setram.fr" target="_blank" style="color:#88ffbb">setram.fr</a> — des navettes spéciales peuvent être mises en place lors des 24 Heures du Mans.
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="sep section-alt"></div>
+
+<!-- ═══════════════ 08 · BONS PLANS ═══════════════ -->
+<section id="bonplans" class="section-alt">
+  <div class="section-wrap">
+    <div class="section-head">
+      <span class="section-num">08</span>
+      <div class="section-label">
+        <small data-i18n="s8-sub">Autour du logement</small>
+        <h2 data-i18n="s8-h2">BONS PLANS</h2>
+      </div>
+    </div>
+
+    <p class="sub-label" data-i18n="sl-prox">📍 Proximité immédiate · moins de 5 min à pied</p>
+
+    <!-- Top 3 toujours visibles -->
+    <a class="reco-item" href="https://www.google.com/maps/search/Le+Bellifontain+Le+Mans" target="_blank" rel="noopener">
+      <span class="reco-emoji">🍽️</span>
+      <div class="reco-body">
+        <div class="reco-name">Le Bellifontain</div>
+        <div class="reco-type" data-i18n="rp1-t">Français · International · ~2 min</div>
+        <div class="reco-stars" data-i18n="rp1-s">★★★★☆ <span>4.4 · Très bien</span></div>
+      </div>
+      <span class="reco-arrow">→</span>
+    </a>
+
+    <a class="reco-item" href="https://www.google.com/maps/search/L+Homme+Tranquille+Le+Mans" target="_blank" rel="noopener">
+      <span class="reco-emoji">🍺</span>
+      <div class="reco-body">
+        <div class="reco-name">L'Homme Tranquille</div>
+        <div class="reco-type" data-i18n="rp2-t">Français · Bar · ~2 min</div>
+        <div class="reco-stars" data-i18n="rp2-s">★★★★☆ <span>4.6 · Excellent</span></div>
+      </div>
+      <span class="reco-arrow">→</span>
+    </a>
+
+    <a class="reco-item" href="https://www.google.com/maps/search/L+Asgard+Le+Mans" target="_blank" rel="noopener">
+      <span class="reco-emoji">🍺</span>
+      <div class="reco-body">
+        <div class="reco-name">L'Asgard</div>
+        <div class="reco-type" data-i18n="rp3-t">Bar · Brasserie · Lounge</div>
+        <div class="reco-stars" data-i18n="rp3-s">★★★★★ <span>4.7 · Excellent</span></div>
+      </div>
+      <span class="reco-arrow">→</span>
+    </a>
+
+    <!-- Autres restaurants à proximité (repliables) -->
+    <div class="reco-collapse" id="recoProximite">
+      <a class="reco-item" href="https://www.google.com/maps/search/Le+Chemin+de+la+Table+Le+Mans" target="_blank" rel="noopener">
+        <span class="reco-emoji">🍽️</span>
+        <div class="reco-body">
+          <div class="reco-name">Le Chemin de Table</div>
+          <div class="reco-type" data-i18n="rp4-t">Français · Traditionnel</div>
+          <div class="reco-stars" data-i18n="rp4-s">★★★★☆ <span>4.6 · Excellent</span></div>
+        </div>
+        <span class="reco-arrow">→</span>
+      </a>
+      <a class="reco-item" href="https://guide.michelin.com/fr/fr/pays-de-la-loire/le-mans/restaurant/l-insouciant" target="_blank" rel="noopener">
+        <span class="reco-emoji">⭐</span>
+        <div class="reco-body">
+          <div class="reco-name">L'Insouciant</div>
+          <div class="reco-type" data-i18n="rp5-t">Gastronomique · Guide Michelin</div>
+          <div class="reco-stars" data-i18n="rp5-s">★★★★★ <span>4.7 · Exceptionnel</span></div>
+        </div>
+        <span class="reco-arrow">→</span>
+      </a>
+      <a class="reco-item" href="https://www.tripadvisor.com/Restaurant_Review-g187195-d10049651-Reviews-Savourez-Le_Mans_City_Le_Mans_Sarthe_Pays_de_la_Loire.html" target="_blank" rel="noopener">
+        <span class="reco-emoji">🥘</span>
+        <div class="reco-body">
+          <div class="reco-name">Savourez</div>
+          <div class="reco-type" data-i18n="rp6-t">Brasserie · Bistrot · Fait maison</div>
+          <div class="reco-stars" data-i18n="rp6-s">★★★★★ <span>4.7 · Exceptionnel</span></div>
+        </div>
+        <span class="reco-arrow">→</span>
+      </a>
+      <a class="reco-item" href="https://www.tripadvisor.com/Restaurant_Review-g187195-d6878318-Reviews-Le_Comptoir_Des_Papilles-Le_Mans_City_Le_Mans_Sarthe_Pays_de_la_Loire.html" target="_blank" rel="noopener">
+        <span class="reco-emoji">🧑‍🍳</span>
+        <div class="reco-body">
+          <div class="reco-name">Le Comptoir des Papilles</div>
+          <div class="reco-type" data-i18n="rp7-t">Française · Bistrot</div>
+          <div class="reco-stars" data-i18n="rp7-s">★★★★☆ <span>4.5 · Très bien</span></div>
+        </div>
+        <span class="reco-arrow">→</span>
+      </a>
+      <a class="reco-item" href="https://www.tripadvisor.com/Restaurant_Review-g187195-d27473430-Reviews-Les_Aventuriers_De_La_Galette-Le_Mans_City_Le_Mans_Sarthe_Pays_de_la_Loire.html" target="_blank" rel="noopener">
+        <span class="reco-emoji">🥞</span>
+        <div class="reco-body">
+          <div class="reco-name">Les Aventuriers de la Galette</div>
+          <div class="reco-type" data-i18n="rp8-t">Crêperie · Galettes bretonnes</div>
+          <div class="reco-stars" data-i18n="rp8-s">★★★★★ <span>5.0 · Parfait</span></div>
+        </div>
+        <span class="reco-arrow">→</span>
+      </a>
+      <a class="reco-item" href="https://www.google.com/maps/search/Class+Croute+Le+Mans" target="_blank" rel="noopener">
+        <span class="reco-emoji">🥪</span>
+        <div class="reco-body">
+          <div class="reco-name">Class'Croute</div>
+          <div class="reco-type" data-i18n="rp9-t">Traiteur · Sandwiches · Plats chauds</div>
+          <div class="reco-stars" style="color:var(--muted)" data-i18n="rp9-s">Idéal pour un déjeuner rapide</div>
+        </div>
+        <span class="reco-arrow">→</span>
+      </a>
+      <a class="reco-item" href="https://www.google.com/maps/search/L+Atlas+Le+Mans" target="_blank" rel="noopener">
+        <span class="reco-emoji">🌍</span>
+        <div class="reco-body">
+          <div class="reco-name">L'Atlas</div>
+          <div class="reco-type" data-i18n="rp10-t">Cuisine du monde</div>
+          <div class="reco-stars" style="color:var(--muted)" data-i18n="nearby">À proximité</div>
+        </div>
+        <span class="reco-arrow">→</span>
+      </a>
+      <a class="reco-item" href="https://www.google.com/maps/search/Tasty+Crousty+Le+Mans" target="_blank" rel="noopener">
+        <span class="reco-emoji">🥐</span>
+        <div class="reco-body">
+          <div class="reco-name">Tasty Crousty</div>
+          <div class="reco-type" data-i18n="rp11-t">Snacking · Sur le pouce</div>
+          <div class="reco-stars" style="color:var(--muted)" data-i18n="nearby">À proximité</div>
+        </div>
+        <span class="reco-arrow">→</span>
+      </a>
+      <a class="reco-item" href="https://www.google.com/maps/search/Chocken+Street+Le+Mans" target="_blank" rel="noopener">
+        <span class="reco-emoji">🍗</span>
+        <div class="reco-body">
+          <div class="reco-name">Chocken Street</div>
+          <div class="reco-type" data-i18n="rp12-t">Poulet · Street food</div>
+          <div class="reco-stars" style="color:var(--muted)" data-i18n="nearby">À proximité</div>
+        </div>
+        <span class="reco-arrow">→</span>
+      </a>
+    </div>
+    <button class="show-more-btn" onclick="toggleReco('recoProximite', this)" id="btnProximite">
+      <span>Voir tous les restaurants à proximité (9)</span>
+      <span class="btn-chevron">▼</span>
+    </button>
+
+    <p class="sub-label" data-i18n="sl-faire">⭐ À faire · valent le détour</p>
+
+    <!-- Top 2 toujours visibles -->
+    <a class="reco-item" href="https://www.tripadvisor.com/Restaurant_Review-g187195-d13431503-Reviews-La_Cuisine_de_Madeleine-Le_Mans_City_Le_Mans_Sarthe_Pays_de_la_Loire.html" target="_blank" rel="noopener">
+      <span class="reco-emoji">👩‍🍳</span>
+      <div class="reco-body">
+        <div class="reco-name">La Cuisine de Madeleine</div>
+        <div class="reco-type" data-i18n="rf1-t">30 Rue Gambetta · Française · ~10 min</div>
+        <div class="reco-stars" data-i18n="rf1-s">★★★★★ <span>4.9 · Exceptionnel</span></div>
+      </div>
+      <span class="reco-arrow">→</span>
+    </a>
+
+    <a class="reco-item" href="https://www.tripadvisor.com/Restaurant_Review-g187195-d10469756-Reviews-La_Brochette_Du_Boucher-Le_Mans_City_Le_Mans_Sarthe_Pays_de_la_Loire.html" target="_blank" rel="noopener">
+      <span class="reco-emoji">🥩</span>
+      <div class="reco-body">
+        <div class="reco-name">La Brochette du Boucher</div>
+        <div class="reco-type" data-i18n="rf2-t">Place Saint-Pierre · Grill · ~15 min</div>
+        <div class="reco-stars" data-i18n="rf2-s">★★★★★ <span>4.8 · Exceptionnel</span></div>
+      </div>
+      <span class="reco-arrow">→</span>
+    </a>
+
+    <!-- Autres "À faire" (repliables) -->
+    <div class="reco-collapse" id="recoAfaire">
+      <a class="reco-item" href="https://www.tripadvisor.com/Restaurant_Review-g187195-d18921221-Reviews-Liberta-Le_Mans_City_Le_Mans_Sarthe_Pays_de_la_Loire.html" target="_blank" rel="noopener">
+        <span class="reco-emoji">🍕</span>
+        <div class="reco-body">
+          <div class="reco-name">Libertà</div>
+          <div class="reco-type" data-i18n="rf3-t">1 Rue Gambetta · Italien · ~10 min</div>
+          <div class="reco-stars" data-i18n="rf3-s">★★★★☆ <span>4.6 · Excellent</span></div>
+        </div>
+        <span class="reco-arrow">→</span>
+      </a>
+      <a class="reco-item" href="https://www.tripadvisor.com/Restaurant_Review-g187195-d3673601-Reviews-La_Baraque_a_Boeuf-Le_Mans_City_Le_Mans_Sarthe_Pays_de_la_Loire.html" target="_blank" rel="noopener">
+        <span class="reco-emoji">🍔</span>
+        <div class="reco-body">
+          <div class="reco-name">La Baraque à Bœuf</div>
+          <div class="reco-type" data-i18n="rf4-t">11 Place Saint-Pierre · Viandes · ~15 min</div>
+          <div class="reco-stars" data-i18n="rf4-s">★★★★★ <span>4.6 · Excellent</span></div>
+        </div>
+        <span class="reco-arrow">→</span>
+      </a>
+      <a class="reco-item" href="https://www.tripadvisor.com/Restaurant_Review-g187195-d1334400-Reviews-La_Vieille_Porte-Le_Mans_City_Le_Mans_Sarthe_Pays_de_la_Loire.html" target="_blank" rel="noopener">
+        <span class="reco-emoji">🏰</span>
+        <div class="reco-body">
+          <div class="reco-name">La Vieille Porte</div>
+          <div class="reco-type" data-i18n="rf5-t">Cité Plantagenêt · Française · ~18 min</div>
+          <div class="reco-stars" data-i18n="rf5-s">★★★★★ <span>4.7 · Excellent</span></div>
+        </div>
+        <span class="reco-arrow">→</span>
+      </a>
+      <a class="reco-item" href="https://www.tripadvisor.com/Restaurant_Review-g187195-d1934125-Reviews-Restaurant_Le_Grenier_a_Sel-Le_Mans_City_Le_Mans_Sarthe_Pays_de_la_Loire.html" target="_blank" rel="noopener">
+        <span class="reco-emoji">🧂</span>
+        <div class="reco-body">
+          <div class="reco-name">Le Grenier à Sel</div>
+          <div class="reco-type" data-i18n="rf6-t">Vieille ville · Gastronomique · ~18 min</div>
+          <div class="reco-stars" data-i18n="rf6-s">★★★★☆ <span>4.5 · Très bien</span></div>
+        </div>
+        <span class="reco-arrow">→</span>
+      </a>
+    </div>
+    <button class="show-more-btn" onclick="toggleReco('recoAfaire', this)" id="btnAfaire">
+      <span>Voir tous les restaurants à faire (4)</span>
+      <span class="btn-chevron">▼</span>
+    </button>
+
+    <p class="sub-label" data-i18n="sl-parcs">🌳 Parcs & espaces verts</p>
+
+    <a class="reco-item" href="https://www.google.com/maps/search/Gué+de+Maulny+Le+Mans" target="_blank" rel="noopener">
+      <span class="reco-emoji">🌿</span>
+      <div class="reco-body">
+        <div class="reco-name">Gué de Maulny</div>
+        <div class="reco-type" data-i18n="pk1-t">Parc · Juste à côté</div>
+        <div class="reco-stars" style="color:var(--muted)" data-i18n="pk1-s">À deux pas de l'appartement</div>
+      </div>
+      <span class="reco-arrow">→</span>
+    </a>
+
+    <a class="reco-item" href="https://www.google.com/maps/search/Jardins+de+la+Prefecture+Le+Mans" target="_blank" rel="noopener">
+      <span class="reco-emoji">🌿</span>
+      <div class="reco-body">
+        <div class="reco-name">Jardins de la Préfecture</div>
+        <div class="reco-type" data-i18n="pk2-t">Parc en plein centre · ~5 min à pied</div>
+        <div class="reco-stars" style="color:var(--muted)" data-i18n="pk2-s">Idéal pour une pause</div>
+      </div>
+      <span class="reco-arrow">→</span>
+    </a>
+
+    <a class="reco-item" href="https://www.google.com/maps/search/Jardin+des+Plantes+Le+Mans" target="_blank" rel="noopener">
+      <span class="reco-emoji">🌸</span>
+      <div class="reco-body">
+        <div class="reco-name">Jardin des Plantes</div>
+        <div class="reco-type" data-i18n="pk3-t">5 hectares · Serre tropicale · ~10 min</div>
+        <div class="reco-stars" data-i18n="pk3-s">★★★★☆ <span>Incontournable</span></div>
+      </div>
+      <span class="reco-arrow">→</span>
+    </a>
+
+    <a class="reco-item" href="https://www.google.com/maps/search/Quinconces+des+Jacobins+Le+Mans" target="_blank" rel="noopener">
+      <span class="reco-emoji">🌳</span>
+      <div class="reco-body">
+        <div class="reco-name">Quinconces des Jacobins</div>
+        <div class="reco-type" data-i18n="pk4-t">Havre de verdure en plein centre-ville</div>
+        <div class="reco-stars" style="color:var(--muted)" data-i18n="pk4-s">Très proche</div>
+      </div>
+      <span class="reco-arrow">→</span>
+    </a>
+
+    <p class="sub-label" data-i18n="sl-commerces">🛒 Commerces & services</p>
+
+    <a class="reco-item" href="https://www.google.com/maps/search/supermarch%C3%A9+Le+Mans+centre" target="_blank" rel="noopener">
+      <span class="reco-emoji">🛒</span>
+      <div class="reco-body">
+        <div class="reco-name" data-i18n="sh1-n">Supermarchés à proximité</div>
+        <div class="reco-type">Carrefour City · Monoprix · Intermarché</div>
+        <div class="reco-stars" style="color:var(--muted)" data-i18n="gmaps">Voir sur Google Maps</div>
+      </div>
+      <span class="reco-arrow">→</span>
+    </a>
+
+    <a class="reco-item" href="https://www.google.com/maps/search/pharmacie+Le+Mans+centre" target="_blank" rel="noopener">
+      <span class="reco-emoji">💊</span>
+      <div class="reco-body">
+        <div class="reco-name">Pharmacies</div>
+        <div class="reco-type" data-i18n="sh2-t">Pharmacies en centre-ville</div>
+        <div class="reco-stars" style="color:var(--muted)" data-i18n="gmaps">Voir sur Google Maps</div>
+      </div>
+      <span class="reco-arrow">→</span>
+    </a>
+
+    <p class="sub-label" data-i18n="sl-spec">🥫 Spécialité locale · À ramener</p>
+
+    <a class="reco-item" href="https://www.google.com/maps/search/Boucherie+Ramage+Le+Mans" target="_blank" rel="noopener">
+      <span class="reco-emoji">🍖</span>
+      <div class="reco-body">
+        <div class="reco-name">Rillettes aux Truffes · Ramage</div>
+        <div class="reco-type" data-i18n="sp1-t">Boucherie Ramage · Spécialité du Mans</div>
+        <div class="reco-stars" style="color:var(--yellow)" data-i18n="sp1-s">✦ Le souvenir gourmand à rapporter</div>
+      </div>
+      <span class="reco-arrow">→</span>
+    </a>
+
+    <p class="sub-label" data-i18n="sl-voir">🏛️ À voir absolument</p>
+
+    <a class="reco-item" href="https://www.google.com/maps/search/Cit%C3%A9+Plantagenet+Le+Mans" target="_blank" rel="noopener">
+      <span class="reco-emoji">🏰</span>
+      <div class="reco-body">
+        <div class="reco-name">Cité Plantagenêt</div>
+        <div class="reco-type" data-i18n="vo1-t">Vieille ville médiévale · À 10 min à pied</div>
+        <div class="reco-stars" data-i18n="vo1-s">★★★★★ <span>Incontournable</span></div>
+      </div>
+      <span class="reco-arrow">→</span>
+    </a>
+
+    <a class="reco-item" href="https://www.google.com/maps/search/Circuit+de+la+Sarthe+Le+Mans" target="_blank" rel="noopener">
+      <span class="reco-emoji">🏎️</span>
+      <div class="reco-body">
+        <div class="reco-name">Circuit de la Sarthe</div>
+        <div class="reco-type" data-i18n="vo2-t">Le temple des 24 Heures du Mans</div>
+        <div class="reco-stars" data-i18n="vo2-s">★★★★★ <span>Mythique</span></div>
+      </div>
+      <span class="reco-arrow">→</span>
+    </a>
+
+    <a class="reco-item" href="https://www.google.com/maps/search/Mus%C3%A9e+des+24+Heures+du+Mans" target="_blank" rel="noopener">
+      <span class="reco-emoji">🏆</span>
+      <div class="reco-body">
+        <div class="reco-name">Musée des 24 Heures du Mans</div>
+        <div class="reco-type" data-i18n="vo3-t">Histoire de la course · Collection unique</div>
+        <div class="reco-stars" data-i18n="vo3-s">★★★★☆ <span>À ne pas manquer</span></div>
+      </div>
+      <span class="reco-arrow">→</span>
+    </a>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- ═══════════════ 09 · CONTACT ═══════════════ -->
+<section id="contact">
+  <div class="section-wrap">
+    <div class="section-head">
+      <span class="section-num">09</span>
+      <div class="section-label">
+        <small data-i18n="s9-sub">En cas de besoin</small>
+        <h2 data-i18n="s9-h2">CONTACTS</h2>
+      </div>
+    </div>
+
+    <a class="contact-btn" href="https://wa.me/33682149159" target="_blank" rel="noopener" style="background:linear-gradient(135deg,#001a08,#002a10);border:2px solid #25D366;border-radius:16px;padding:1.5rem 1.25rem">
+      <span class="contact-icon" style="font-size:2.5rem">💬</span>
+      <div>
+        <div class="contact-label" style="font-size:0.75rem;margin-bottom:0.35rem" data-i18n="host-label">🏎️ Votre hôte · En cas de besoin</div>
+        <div class="contact-value" style="font-size:1.5rem;font-weight:700;letter-spacing:1px;color:#25D366">WhatsApp</div>
+        <div style="font-size:0.78rem;color:#888;margin-top:0.25rem" data-i18n="host-wa">Appuyez pour écrire un message</div>
+      </div>
+    </a>
+    <a class="contact-btn" href="tel:0682149159" style="border-radius:16px;padding:1rem 1.25rem">
+      <span class="contact-icon" style="font-size:1.8rem">📞</span>
+      <div>
+        <div class="contact-label" style="font-size:0.65rem;margin-bottom:0.2rem" data-i18n="host-call-label">Appel téléphonique</div>
+        <div class="contact-value" style="font-size:1.1rem;font-weight:600;letter-spacing:1px">06.82.14.91.59</div>
+      </div>
+    </a>
+
+    <p class="sub-label" data-i18n="sl-urgences">🚨 Numéros d'urgence</p>
+
+    <a class="contact-btn emergency" href="tel:15">
+      <span class="contact-icon">🚑</span>
+      <div>
+        <div class="contact-label" data-i18n="emg-samu">SAMU · Urgences médicales</div>
+        <div class="contact-value">15</div>
+      </div>
+    </a>
+
+    <a class="contact-btn emergency" href="tel:17">
+      <span class="contact-icon">👮</span>
+      <div>
+        <div class="contact-label" data-i18n="emg-police">Police · Gendarmerie</div>
+        <div class="contact-value">17</div>
+      </div>
+    </a>
+
+    <a class="contact-btn emergency" href="tel:18">
+      <span class="contact-icon">🚒</span>
+      <div>
+        <div class="contact-label" data-i18n="emg-fire">Pompiers</div>
+        <div class="contact-value">18</div>
+      </div>
+    </a>
+
+    <a class="contact-btn emergency" href="tel:112">
+      <span class="contact-icon">🆘</span>
+      <div>
+        <div class="contact-label" data-i18n="emg-eu">Urgences européennes · Tous secours</div>
+        <div class="contact-value">112</div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- ═══════════════ 10 · DÉCOUVERTE ═══════════════ -->
+<section id="decouverte">
+  <div class="section-wrap">
+    <div class="section-head">
+      <span class="section-num">10</span>
+      <div class="section-label">
+        <small data-i18n="s10-sub">Votre bilan de séjour</small>
+        <h2 data-i18n="s10-h2">DÉCOUVERTE</h2>
+      </div>
+    </div>
+
+    <p class="sub-label" data-i18n="disc-label">🏁 Avez-vous déjà...</p>
+
+    <div class="discovery-item" onclick="toggleDiscovery(this)">
+      <div class="discovery-box">✓</div>
+      <span class="discovery-text" data-i18n="d1">🏰 Visité la Cité Plantagenêt</span>
+    </div>
+    <div class="discovery-item" onclick="toggleDiscovery(this)">
+      <div class="discovery-box">✓</div>
+      <span class="discovery-text" data-i18n="d2">🍖 Goûté les Rillettes du Mans</span>
+    </div>
+    <div class="discovery-item" onclick="toggleDiscovery(this)">
+      <div class="discovery-box">✓</div>
+      <span class="discovery-text" data-i18n="d3">🏎️ Assisté à une course au Circuit</span>
+    </div>
+    <div class="discovery-item" onclick="toggleDiscovery(this)">
+      <div class="discovery-box">✓</div>
+      <span class="discovery-text" data-i18n="d4">🚊 Pris le tramway jusqu'au Circuit</span>
+    </div>
+    <div class="discovery-item" onclick="toggleDiscovery(this)">
+      <div class="discovery-box">✓</div>
+      <span class="discovery-text" data-i18n="d5">🌸 Exploré le Jardin des Plantes</span>
+    </div>
+    <div class="discovery-item" onclick="toggleDiscovery(this)">
+      <div class="discovery-box">✓</div>
+      <span class="discovery-text" data-i18n="d6">🏆 Visité le Musée des 24 Heures</span>
+    </div>
+    <div class="discovery-item" onclick="toggleDiscovery(this)">
+      <div class="discovery-box">✓</div>
+      <span class="discovery-text" data-i18n="d7">⭐ Testé un restaurant recommandé</span>
+    </div>
+    <div class="discovery-item" onclick="toggleDiscovery(this)">
+      <div class="discovery-box">✓</div>
+      <span class="discovery-text" data-i18n="d8">🌿 Pique-niqué au Gué de Maulny</span>
+    </div>
+
+    <div class="discovery-score" id="discoveryScore">0 / 8 explorés</div>
+  </div>
+</section>
+
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<footer>
+  <div style="position:relative;z-index:1">
+  <div class="footer-stripe" style="background-image:repeating-conic-gradient(#000 0% 25%,#fff 0% 50%);background-size:12px 12px"></div>
+  <div class="footer-flag" id="footerFlag">🏁</div>
+  <div class="footer-title" id="footerTitle">BONNE COURSE !</div>
+  <div class="footer-sub" id="footerSub">Merci pour votre séjour · À bientôt sur le circuit</div>
+  <div style="margin-top:1.5rem;font-family:'Barlow Condensed',sans-serif;font-size:0.8rem;letter-spacing:3px;color:#fff;text-transform:uppercase" id="footerDate"></div>
+
+  <div style="margin-top:2.5rem;padding-top:2rem;border-top:1px solid #222">
+    <p data-i18n="footer-review" style="font-family:'Barlow Condensed',sans-serif;font-size:0.75rem;letter-spacing:3px;text-transform:uppercase;color:#555;margin-bottom:1rem">Votre séjour s'est bien passé ?</p>
+    <a href="https://wa.me/33682149159?text=Bonjour%20Melvin%2C%20je%20viens%20de%20terminer%20mon%20s%C3%A9jour%20dans%20votre%20appartement%20et%20voici%20mon%20avis%20%3A%20" target="_blank" rel="noopener"
+      style="display:inline-flex;align-items:center;gap:0.6rem;background:#25D366;color:#fff;text-decoration:none;padding:0.85rem 1.75rem;border-radius:100px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1rem;letter-spacing:2px;text-transform:uppercase">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      <span data-i18n="footer-wa">Laisser un avis WhatsApp</span>
+    </a>
+  </div>
+  </div>
+</footer>
+
+<!-- ═══════════════ LIGHTBOX ═══════════════ -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  <button class="lightbox-nav prev hidden" id="lbPrev" onclick="event.stopPropagation();lbNav(-1)">‹</button>
+  <img id="lightboxImg" src="" alt="" onclick="event.stopPropagation()">
+  <button class="lightbox-nav next hidden" id="lbNext" onclick="event.stopPropagation();lbNav(1)">›</button>
+  <div class="lightbox-counter" id="lbCounter"></div>
+</div>
+
+<!-- ═══════════════ JS ═══════════════ -->
+<script>
+  // ─── GLOBALS ───────────────────────────────────────────
+  let confettiTriggered = false;
+  let _currentLang = 'fr';
+  let _windSpeed = null;
+
+  // ─── TRANSLATIONS ──────────────────────────────────────
+  const LANGS = {
+    fr: {
+      'nav-acces':'Accès','nav-wifi':'WiFi','nav-sejour':'Séjour','nav-regles':'Règles','nav-tri':'Tri',
+      'nav-depart':'Départ','nav-circuit':'Circuit','nav-bonplans':'Bons plans','nav-decouverte':'Découverte','nav-contact':'Contact',
+      'h-sub':'Votre guide de séjour',
+      's1-sub':'Comment nous trouver','s1-h2':'ACCÈS',
+      'ct-apt':'📍 L\'appartement','ct-keys':'🔑 Remise des clés','ct-train':'🚆 Gare SNCF · 3 min à pied','ct-lift':'🛗 Ascenseur disponible',
+      's2-sub':'Restez connecté','s2-h2':'CONNEXION',
+      'wifi-net-label':'📶 Réseau WiFi','wifi-pwd-label':'🔒 Mot de passe',
+      'wifi-footer':'Henri Pescarolo — Légende des 24 Heures du Mans 🏁',
+      's3-sub':'Arrivée & horaires','s3-h2':'LE SÉJOUR',
+      'timing-in':'Check-in','timing-in-note':'À partir de','timing-out':'Check-out','timing-out-note':'Au plus tard',
+      'ct-linge':'🛏️ Linge & draps',
+      'ct-linge-body':'<li>Draps et serviettes <strong>fournis</strong></li><li>Avant votre départ : enlever tous les draps et les déposer <strong>au sol dans la salle de bain</strong></li><li>Gel douche et shampoing <strong>fournis</strong></li><li>Lit parapluie disponible sur demande (enfant &lt; 3 ans)</li>',
+      'ct-equip':'☕ Équipements & fournitures',
+      'ct-equip-body':'<li>Cafetière <strong>Senseo</strong> — dosettes fournies</li><li>Café et thé <strong>fournis</strong></li><li>Fer à repasser <strong>disponible</strong></li>',
+      'alert-water':'<strong>Eau & électricité</strong><br>Merci d\'être raisonnable dans votre consommation. En cas d\'abus constaté, une refacturation pourra être appliquée.',
+      's4-sub':'À respecter','s4-h2':'RÈGLES DE COURSE',
+      'r1':'<strong>Animaux interdits</strong> Les animaux de compagnie ne sont pas acceptés dans le logement.',
+      'r2':'<strong>Non-fumeur</strong> Il est strictement interdit de fumer à l\'intérieur du logement.',
+      'r3':'<strong>Pas de fête</strong> Les soirées et événements festifs ne sont pas autorisés.',
+      'r4':'<strong>Silence nocturne</strong> Merci de respecter le calme de la résidence entre <strong>22h et 8h</strong>.',
+      'r5':'<strong>Capacité maximale</strong> 4 adultes + 1 enfant de moins de 3 ans.<br><span style="color:var(--muted);font-size:0.85em">Lit parapluie disponible sur demande.</span>',
+      'r6':'<strong style="color:#ff6b6b">Décorations — Ne pas toucher</strong> La casquette, la combinaison de pilote et les objets de collection sont des éléments décoratifs. Merci de ne pas les utiliser, les porter ni les déplacer.',
+      's5-sub':'Tri sélectif','s5-h2':'RAVITAILLEMENT',
+      's6-sub':'Check-out','s6-h2':'LIGNE D\'ARRIVÉE',
+      'ct-depart':'🚦 Départ avant 11h00',
+      'ct-depart-body':'Déposez les <strong>clés dans la boite aux lettres</strong> en partant. Pensez à <strong>sortir votre véhicule du parking avant de mettre les clés dans la boite aux lettres</strong>.',
+      'cl-label':'✅ Checklist avant de quitter l\'appartement',
+      'ck1':'🛏️ Draps et linge déposés au sol dans la salle de bain',
+      'ck2':'🔑 Clés déposées dans la boite aux lettres',
+      'ck3':'🍽️ Vaisselle faite et rangée',
+      'ck4':'♻️ Poubelles triées et sorties',
+      'ck5':'💡 Toutes les lumières éteintes',
+      'ck6':'☕ Cafetière vidée et propre',
+      'ck7':'🪟 Toutes les fenêtres fermées',
+      'ck8':'🧹 Un petit coup d\'aspirateur — pas de frais de ménage facturé, merci pour le geste !',
+      's7-sub':'Le circuit mythique','s7-h2':'24H DU MANS',
+      'cd-label':'⏳ Prochain départ · 24 Heures du Mans',
+      'cd-days':'Jours','cd-hours':'Heures','cd-mins':'Minutes','cd-secs':'Secondes',
+      'ct-tram':'🚊 Itinéraire en tramway',
+      's8-sub':'Autour du logement','s8-h2':'BONS PLANS',
+      'sl-prox':'📍 Proximité immédiate · moins de 5 min à pied',
+      'sl-faire':'⭐ À faire · valent le détour',
+      'sl-parcs':'🌳 Parcs & espaces verts',
+      'sl-commerces':'🛒 Commerces & services',
+      'sl-spec':'🥫 Spécialité locale · À ramener',
+      'sl-voir':'🏛️ À voir absolument',
+      's9-sub':'En cas de besoin','s9-h2':'CONTACTS',
+      'sl-urgences':'🚨 Numéros d\'urgence',
+      's10-sub':'Votre bilan de séjour','s10-h2':'DÉCOUVERTE',
+      'disc-label':'🏁 Avez-vous déjà...',
+      'd1':'🏰 Visité la Cité Plantagenêt','d2':'🍖 Goûté les Rillettes du Mans',
+      'd3':'🏎️ Assisté à une course au Circuit','d4':'🚊 Pris le tramway jusqu\'au Circuit',
+      'd5':'🌸 Exploré le Jardin des Plantes','d6':'🏆 Visité le Musée des 24 Heures',
+      'd7':'⭐ Testé un restaurant recommandé','d8':'🌿 Pique-niqué au Gué de Maulny',
+      'disc-score':'{done} / {total} explorés',
+      'footer-review':'Votre séjour s\'est bien passé ?','footer-wa':'Laisser un avis WhatsApp',
+      'btn-prox-more':'Voir tous les restaurants à proximité (9)','btn-prox-less':'Réduire la liste (9)',
+      'btn-faire-more':'Voir tous les restaurants à faire (4)','btn-faire-less':'Réduire la liste (4)',
+      'footer-morning-title':'BONNE MATINÉE !','footer-morning-sub':'Profitez bien de votre journée au Mans',
+      'footer-checkout-title':'BONNE COURSE !','footer-checkout-sub':'Merci pour votre séjour · À bientôt sur le circuit',
+      'footer-noon-title':'BON APPÉTIT !','footer-noon-sub':'Une pause méritée avant de repartir en piste',
+      'footer-day-title':'BONNE JOURNÉE !','footer-day-sub':'En route pour une journée de roulage',
+      'footer-evening-title':'BONNE SOIRÉE !','footer-evening-sub':'Le Mans by night — profitez bien',
+      'footer-night-title':'BONNE NUIT !','footer-night-sub':'Reposez-vous · Demain la course continue',
+      'hero-title':'BIENVENUE<br>AU <span class="accent">CIRCUIT</span>',
+      'hero-scroll':'Découvrir',
+      'dash-weather':'Météo · Le Mans',
+      'ct-keys-body':'La remise des clés se fait <strong>en main propre</strong> à votre arrivée. Contactez-nous pour convenir de l\'heure exacte.',
+      'ct-train-body':'La <strong>Gare du Mans</strong> est à seulement 3 minutes à pied. Idéal pour les déplacements professionnels ou explorer la région sans voiture.',
+      'ct-lift-body':'La résidence est équipée d\'un <strong>ascenseur</strong> pour accéder au 1er étage.',
+      'map-foot-sub':'Avec badge · Entrée piétonne',
+      'map-car-sub':'Avec télécommande · Parking couvert',
+      'photo-parking':'🅿️ Votre place · N°<strong style="color:var(--red)">20</strong> · Parking couvert sécurisé',
+      'trash-ord':'Ordures<br>ménagères','trash-ord-desc':'Bacs noirs<br>dans le parking',
+      'trash-pla':'Plastique<br>& Carton','trash-pla-desc':'Bacs verts<br>dans le parking',
+      'trash-ver':'Verre','trash-ver-desc':'Placard<br>de l\'entrée',
+      'photo-poubelles':'♻️ Bacs noirs = ordures · Bacs verts = plastique & carton',
+      'photo-verre':'🍾 Caisse à verre · Placard de l\'entrée',
+      'photo-bal':'📬 Votre boîte aux lettres pour déposer les clés',
+      'ct-tv-light':'💡 Lumière du meuble TV',
+      'ct-tv-light-sub':'Pour allumer la lumière du meuble TV à la télécommande, <strong>placez-vous bien à droite du meuble</strong> — c\'est la seule position où la télécommande est détectée.',
+      'ct-cuisine-light':'💡 Lumière de la cuisine',
+      'video-cuisine-sub':'La lumière de la cuisine a un fonctionnement particulier — regardez la vidéo.',
+      'tram-a':'<strong>Départ · Arrêt Zola</strong><br><small>À proximité de la résidence</small>',
+      'tram-mid':'Prendre le tramway direction <strong>Antarès</strong><br><small>Vérifiez les horaires SETRAM les jours de course</small>',
+      'tram-b':'<strong>Arrivée · Pôle Santé Sud</strong><br><small>Arrêt Guetteloup — plus proche du Circuit de la Sarthe 🏎️</small>',
+      'alert-race':'<strong>Jours de course</strong><br>Pensez à vérifier les horaires de tramway sur <a href="https://www.setram.fr" target="_blank" style="color:#88ffbb">setram.fr</a> — des navettes spéciales peuvent être mises en place lors des 24 Heures du Mans.',
+      'map-maps-sub':'Voir sur Maps',
+      'map-cal-text':'Calendrier des événements',
+      'host-label':'🏎️ Votre hôte · En cas de besoin',
+      'host-wa':'Appuyez pour écrire un message',
+      'host-call-label':'Appel téléphonique',
+      'host-call':'Appuyez pour appeler directement',
+      'emg-samu':'SAMU · Urgences médicales',
+      'emg-police':'Police · Gendarmerie',
+      'emg-fire':'Pompiers',
+      'emg-eu':'Urgences européennes · Tous secours',
+      'nearby':'À proximité','gmaps':'Voir sur Google Maps',
+      'rp1-t':'Français · International · ~2 min','rp1-s':'★★★★☆ <span>4.4 · Très bien</span>',
+      'rp2-t':'Français · Bar · ~2 min','rp2-s':'★★★★☆ <span>4.6 · Excellent</span>',
+      'rp3-t':'Bar · Brasserie · Lounge','rp3-s':'★★★★★ <span>4.7 · Excellent</span>',
+      'rp4-t':'Français · Traditionnel','rp4-s':'★★★★☆ <span>4.6 · Excellent</span>',
+      'rp5-t':'Gastronomique · Guide Michelin','rp5-s':'★★★★★ <span>4.7 · Exceptionnel</span>',
+      'rp6-t':'Brasserie · Bistrot · Fait maison','rp6-s':'★★★★★ <span>4.7 · Exceptionnel</span>',
+      'rp7-t':'Française · Bistrot','rp7-s':'★★★★☆ <span>4.5 · Très bien</span>',
+      'rp8-t':'Crêperie · Galettes bretonnes','rp8-s':'★★★★★ <span>5.0 · Parfait</span>',
+      'rp9-t':'Traiteur · Sandwiches · Plats chauds','rp9-s':'Idéal pour un déjeuner rapide',
+      'rp10-t':'Cuisine du monde',
+      'rp11-t':'Snacking · Sur le pouce',
+      'rp12-t':'Poulet · Street food',
+      'rf1-t':'30 Rue Gambetta · Française · ~10 min','rf1-s':'★★★★★ <span>4.9 · Exceptionnel</span>',
+      'rf2-t':'Place Saint-Pierre · Grill · ~15 min','rf2-s':'★★★★★ <span>4.8 · Exceptionnel</span>',
+      'rf3-t':'1 Rue Gambetta · Italien · ~10 min','rf3-s':'★★★★☆ <span>4.6 · Excellent</span>',
+      'rf4-t':'11 Place Saint-Pierre · Viandes · ~15 min','rf4-s':'★★★★★ <span>4.6 · Excellent</span>',
+      'rf5-t':'Cité Plantagenêt · Française · ~18 min','rf5-s':'★★★★★ <span>4.7 · Excellent</span>',
+      'rf6-t':'Vieille ville · Gastronomique · ~18 min','rf6-s':'★★★★☆ <span>4.5 · Très bien</span>',
+      'pk1-t':'Parc · Juste à côté','pk1-s':'À deux pas de l\'appartement',
+      'pk2-t':'Parc en plein centre · ~5 min à pied','pk2-s':'Idéal pour une pause',
+      'pk3-t':'5 hectares · Serre tropicale · ~10 min','pk3-s':'★★★★☆ <span>Incontournable</span>',
+      'pk4-t':'Havre de verdure en plein centre-ville','pk4-s':'Très proche',
+      'sh1-n':'Supermarchés à proximité','sh2-t':'Pharmacies en centre-ville',
+      'sp1-t':'Boucherie Ramage · Spécialité du Mans','sp1-s':'✦ Le souvenir gourmand à rapporter',
+      'vo1-t':'Vieille ville médiévale · À 10 min à pied','vo1-s':'★★★★★ <span>Incontournable</span>',
+      'vo2-t':'Le temple des 24 Heures du Mans','vo2-s':'★★★★★ <span>Mythique</span>',
+      'vo3-t':'Histoire de la course · Collection unique','vo3-s':'★★★★☆ <span>À ne pas manquer</span>',
+    },
+    en: {
+      'nav-acces':'Access','nav-wifi':'WiFi','nav-sejour':'Stay','nav-regles':'Rules','nav-tri':'Bins',
+      'nav-depart':'Checkout','nav-circuit':'Circuit','nav-bonplans':'Tips','nav-decouverte':'Discover','nav-contact':'Contact',
+      'h-sub':'Your stay guide',
+      's1-sub':'How to find us','s1-h2':'ACCESS',
+      'ct-apt':'📍 The apartment','ct-keys':'🔑 Key handover','ct-train':'🚆 Train station · 3 min walk','ct-lift':'🛗 Elevator available',
+      's2-sub':'Stay connected','s2-h2':'CONNECTION',
+      'wifi-net-label':'📶 WiFi Network','wifi-pwd-label':'🔒 Password',
+      'wifi-footer':'Henri Pescarolo — Legend of the 24 Hours of Le Mans 🏁',
+      's3-sub':'Arrival & schedule','s3-h2':'YOUR STAY',
+      'timing-in':'Check-in','timing-in-note':'From','timing-out':'Check-out','timing-out-note':'No later than',
+      'ct-linge':'🛏️ Linen & towels',
+      'ct-linge-body':'<li>Sheets and towels <strong>provided</strong></li><li>Before leaving: remove all sheets and leave them <strong>on the bathroom floor</strong></li><li>Shower gel and shampoo <strong>provided</strong></li><li>Travel cot available on request (child &lt; 3 years)</li>',
+      'ct-equip':'☕ Equipment & amenities',
+      'ct-equip-body':'<li><strong>Senseo</strong> coffee machine — pods provided</li><li>Coffee and tea <strong>provided</strong></li><li>Iron <strong>available</strong></li>',
+      'alert-water':'<strong>Water & electricity</strong><br>Please be mindful of your consumption. Excessive use may result in additional charges.',
+      's4-sub':'House rules','s4-h2':'RACING RULES',
+      'r1':'<strong>No pets</strong> Pets are not allowed in the accommodation.',
+      'r2':'<strong>Non-smoking</strong> Smoking is strictly prohibited inside the accommodation.',
+      'r3':'<strong>No parties</strong> Parties and festive events are not permitted.',
+      'r4':'<strong>Quiet hours</strong> Please respect the quiet hours between <strong>10pm and 8am</strong>.',
+      'r5':'<strong>Maximum capacity</strong> 4 adults + 1 child under 3 years old.<br><span style="color:var(--muted);font-size:0.85em">Travel cot available on request.</span>',
+      'r6':'<strong style="color:#ff6b6b">Decorations — Do not touch</strong> The cap, the racing suit and the collectible items are decorative elements. Please do not use, wear or move them.',
+      's5-sub':'Recycling','s5-h2':'PIT STOP',
+      's6-sub':'Check-out','s6-h2':'FINISH LINE',
+      'ct-depart':'🚦 Departure before 11:00 am',
+      'ct-depart-body':'Leave the <strong>keys in the mailbox</strong> when leaving. Remember to <strong>move your vehicle from the parking before putting the keys in the mailbox</strong>.',
+      'cl-label':'✅ Checklist before leaving the apartment',
+      'ck1':'🛏️ Sheets and linen left on the bathroom floor',
+      'ck2':'🔑 Keys left in the mailbox',
+      'ck3':'🍽️ Dishes washed and put away',
+      'ck4':'♻️ Bins sorted and taken out',
+      'ck5':'💡 All lights turned off',
+      'ck6':'☕ Coffee machine emptied and clean',
+      'ck7':'🪟 All windows closed',
+      'ck8':'🧹 A quick vacuum — no cleaning fee is charged, thank you for the gesture!',
+      's7-sub':'The legendary circuit','s7-h2':'24H OF LE MANS',
+      'cd-label':'⏳ Next start · 24 Hours of Le Mans',
+      'cd-days':'Days','cd-hours':'Hours','cd-mins':'Minutes','cd-secs':'Seconds',
+      'ct-tram':'🚊 Tram route',
+      's8-sub':'Around the apartment','s8-h2':'GOOD TIPS',
+      'sl-prox':'📍 Close by · less than 5 min walk',
+      'sl-faire':'⭐ Worth the trip',
+      'sl-parcs':'🌳 Parks & green spaces',
+      'sl-commerces':'🛒 Shops & services',
+      'sl-spec':'🥫 Local speciality · Take some home',
+      'sl-voir':'🏛️ Must see',
+      's9-sub':'If you need help','s9-h2':'CONTACTS',
+      'sl-urgences':'🚨 Emergency numbers',
+      's10-sub':'Your stay summary','s10-h2':'DISCOVERY',
+      'disc-label':'🏁 Have you already...',
+      'd1':'🏰 Visited the Plantagenet City','d2':'🍖 Tasted the Rillettes du Mans',
+      'd3':'🏎️ Attended a race at the Circuit','d4':'🚊 Taken the tram to the Circuit',
+      'd5':'🌸 Explored the Botanical Garden','d6':'🏆 Visited the 24 Hours Museum',
+      'd7':'⭐ Tried a recommended restaurant','d8':'🌿 Picnicked at Gué de Maulny',
+      'disc-score':'{done} / {total} explored',
+      'footer-review':'Did you enjoy your stay?','footer-wa':'Leave a WhatsApp review',
+      'btn-prox-more':'See all nearby restaurants (9)','btn-prox-less':'Collapse list (9)',
+      'btn-faire-more':'See all recommended restaurants (4)','btn-faire-less':'Collapse list (4)',
+      'footer-morning-title':'GOOD MORNING!','footer-morning-sub':'Enjoy your day in Le Mans',
+      'footer-checkout-title':'GOOD RACE!','footer-checkout-sub':'Thank you for your stay · See you on the circuit',
+      'footer-noon-title':'ENJOY YOUR MEAL!','footer-noon-sub':'A well-deserved break before getting back on track',
+      'footer-day-title':'GOOD DAY!','footer-day-sub':'On your way for a great day on the track',
+      'footer-evening-title':'GOOD EVENING!','footer-evening-sub':'Le Mans by night — enjoy',
+      'footer-night-title':'GOOD NIGHT!','footer-night-sub':'Rest up · Tomorrow the race continues',
+      'hero-title':'WELCOME<br>TO THE <span class="accent">CIRCUIT</span>',
+      'hero-scroll':'Discover',
+      'dash-weather':'Weather · Le Mans',
+      'ct-keys-body':'Key handover is done <strong>in person</strong> upon your arrival. Contact us to arrange the exact time.',
+      'ct-train-body':'The <strong>Le Mans train station</strong> is just 3 minutes on foot. Perfect for business trips or exploring the region without a car.',
+      'ct-lift-body':'The building is equipped with an <strong>elevator</strong> to reach the 1st floor.',
+      'map-foot-sub':'With badge · Pedestrian entrance',
+      'map-car-sub':'With remote · Covered parking',
+      'photo-parking':'🅿️ Your spot · N°<strong style="color:var(--red)">20</strong> · Secured covered parking',
+      'trash-ord':'Household<br>waste','trash-ord-desc':'Black bins<br>in the parking',
+      'trash-pla':'Plastic<br>& Cardboard','trash-pla-desc':'Green bins<br>in the parking',
+      'trash-ver':'Glass','trash-ver-desc':'Hallway<br>cupboard',
+      'photo-poubelles':'♻️ Black bins = waste · Green bins = plastic & cardboard',
+      'photo-verre':'🍾 Glass bin · Hallway cupboard',
+      'photo-bal':'📬 Your mailbox — leave the keys here',
+      'ct-tv-light':'💡 TV unit light',
+      'ct-tv-light-sub':'To turn on the TV unit light with the remote, <strong>stand to the right of the unit</strong> — that is the only position where the remote is detected.',
+      'ct-cuisine-light':'💡 Kitchen light',
+      'video-cuisine-sub':'The kitchen light has a specific way to turn on and off — watch the video.',
+      'tram-a':'<strong>Departure · Zola stop</strong><br><small>Near the residence</small>',
+      'tram-mid':'Take the tram towards <strong>Antarès</strong><br><small>Check SETRAM schedules on race days</small>',
+      'tram-b':'<strong>Arrival · Pôle Santé Sud</strong><br><small>Guetteloup stop — closest to the Circuit de la Sarthe 🏎️</small>',
+      'alert-race':'<strong>Race days</strong><br>Remember to check tram schedules at <a href="https://www.setram.fr" target="_blank" style="color:#88ffbb">setram.fr</a> — special shuttles may run during the 24 Hours of Le Mans.',
+      'map-maps-sub':'See on Maps',
+      'map-cal-text':'Events calendar',
+      'host-label':'🏎️ Your host · If you need help',
+      'host-wa':'Tap to send a message',
+      'host-call-label':'Phone call',
+      'host-call':'Tap to call directly',
+      'emg-samu':'SAMU · Medical emergencies',
+      'emg-police':'Police · Gendarmerie',
+      'emg-fire':'Fire brigade',
+      'emg-eu':'European emergencies · All services',
+      'nearby':'Nearby','gmaps':'View on Google Maps',
+      'rp1-t':'French · International · ~2 min','rp1-s':'★★★★☆ <span>4.4 · Very good</span>',
+      'rp2-t':'French · Bar · ~2 min','rp2-s':'★★★★☆ <span>4.6 · Excellent</span>',
+      'rp3-t':'Bar · Brasserie · Lounge','rp3-s':'★★★★★ <span>4.7 · Excellent</span>',
+      'rp4-t':'French · Traditional','rp4-s':'★★★★☆ <span>4.6 · Excellent</span>',
+      'rp5-t':'Gastronomic · Michelin Guide','rp5-s':'★★★★★ <span>4.7 · Exceptional</span>',
+      'rp6-t':'Brasserie · Bistro · Homemade','rp6-s':'★★★★★ <span>4.7 · Exceptional</span>',
+      'rp7-t':'French · Bistro','rp7-s':'★★★★☆ <span>4.5 · Very good</span>',
+      'rp8-t':'Crêperie · Breton galettes','rp8-s':'★★★★★ <span>5.0 · Perfect</span>',
+      'rp9-t':'Deli · Sandwiches · Hot dishes','rp9-s':'Perfect for a quick lunch',
+      'rp10-t':'World cuisine',
+      'rp11-t':'Snacking · On the go',
+      'rp12-t':'Chicken · Street food',
+      'rf1-t':'30 Rue Gambetta · French · ~10 min','rf1-s':'★★★★★ <span>4.9 · Exceptional</span>',
+      'rf2-t':'Place Saint-Pierre · Grill · ~15 min','rf2-s':'★★★★★ <span>4.8 · Exceptional</span>',
+      'rf3-t':'1 Rue Gambetta · Italian · ~10 min','rf3-s':'★★★★☆ <span>4.6 · Excellent</span>',
+      'rf4-t':'11 Place Saint-Pierre · Meats · ~15 min','rf4-s':'★★★★★ <span>4.6 · Excellent</span>',
+      'rf5-t':'Cité Plantagenêt · French · ~18 min','rf5-s':'★★★★★ <span>4.7 · Excellent</span>',
+      'rf6-t':'Old town · Gastronomic · ~18 min','rf6-s':'★★★★☆ <span>4.5 · Very good</span>',
+      'pk1-t':'Park · Right next door','pk1-s':'Steps from the apartment',
+      'pk2-t':'Park in the city centre · ~5 min walk','pk2-s':'Perfect for a break',
+      'pk3-t':'5 hectares · Tropical greenhouse · ~10 min','pk3-s':'★★★★☆ <span>Must-visit</span>',
+      'pk4-t':'Green haven in the city centre','pk4-s':'Very close',
+      'sh1-n':'Nearby supermarkets','sh2-t':'City centre pharmacies',
+      'sp1-t':'Butcher Ramage · Le Mans speciality','sp1-s':'✦ The gourmet souvenir to take home',
+      'vo1-t':'Medieval old town · 10 min walk','vo1-s':'★★★★★ <span>Must-visit</span>',
+      'vo2-t':'The temple of the 24 Hours of Le Mans','vo2-s':'★★★★★ <span>Mythical</span>',
+      'vo3-t':'Racing history · Unique collection','vo3-s':'★★★★☆ <span>Not to miss</span>',
+    },
+    de: {
+      'nav-acces':'Anfahrt','nav-wifi':'WLAN','nav-sejour':'Aufenthalt','nav-regles':'Regeln','nav-tri':'Müll',
+      'nav-depart':'Abreise','nav-circuit':'Strecke','nav-bonplans':'Tipps','nav-decouverte':'Entdecken','nav-contact':'Kontakt',
+      'h-sub':'Ihr Reiseführer',
+      's1-sub':'So finden Sie uns','s1-h2':'ANFAHRT',
+      'ct-apt':'📍 Die Wohnung','ct-keys':'🔑 Schlüsselübergabe','ct-train':'🚆 Bahnhof · 3 Min. zu Fuß','ct-lift':'🛗 Aufzug verfügbar',
+      's2-sub':'Bleiben Sie verbunden','s2-h2':'VERBINDUNG',
+      'wifi-net-label':'📶 WLAN-Netzwerk','wifi-pwd-label':'🔒 Passwort',
+      'wifi-footer':'Henri Pescarolo — Legende der 24 Stunden von Le Mans 🏁',
+      's3-sub':'Ankunft & Zeiten','s3-h2':'IHR AUFENTHALT',
+      'timing-in':'Check-in','timing-in-note':'Ab','timing-out':'Check-out','timing-out-note':'Spätestens',
+      'ct-linge':'🛏️ Bettwäsche & Handtücher',
+      'ct-linge-body':'<li>Bettwäsche und Handtücher <strong>inklusive</strong></li><li>Vor der Abreise: alle Bettwäsche abnehmen und <strong>auf dem Badezimmerboden</strong> hinterlassen</li><li>Duschgel und Shampoo <strong>inklusive</strong></li><li>Reisebett auf Anfrage verfügbar (Kind &lt; 3 Jahre)</li>',
+      'ct-equip':'☕ Ausstattung & Zubehör',
+      'ct-equip-body':'<li><strong>Senseo</strong> Kaffeemaschine — Pads inklusive</li><li>Kaffee und Tee <strong>inklusive</strong></li><li>Bügeleisen <strong>verfügbar</strong></li>',
+      'alert-water':'<strong>Wasser & Strom</strong><br>Bitte gehen Sie sparsam mit dem Verbrauch um. Bei übermäßigem Verbrauch kann eine Nachberechnung erfolgen.',
+      's4-sub':'Bitte beachten','s4-h2':'RENNREGELN',
+      'r1':'<strong>Keine Haustiere</strong> Haustiere sind in der Unterkunft nicht erlaubt.',
+      'r2':'<strong>Nichtraucher</strong> Das Rauchen innerhalb der Unterkunft ist streng verboten.',
+      'r3':'<strong>Keine Partys</strong> Partys und Festveranstaltungen sind nicht gestattet.',
+      'r4':'<strong>Nachtruhe</strong> Bitte halten Sie die Ruhe zwischen <strong>22 und 8 Uhr</strong>.',
+      'r5':'<strong>Maximale Belegung</strong> 4 Erwachsene + 1 Kind unter 3 Jahren.<br><span style="color:var(--muted);font-size:0.85em">Reisebett auf Anfrage verfügbar.</span>',
+      'r6':'<strong style="color:#ff6b6b">Dekorationen — Bitte nicht anfassen</strong> Die Kappe, der Rennanzug und die Sammlerstücke sind Dekorationselemente. Bitte diese nicht benutzen, tragen oder verschieben.',
+      's5-sub':'Mülltrennung','s5-h2':'BOXENSTOPP',
+      's6-sub':'Check-out','s6-h2':'ZIELLINIE',
+      'ct-depart':'🚦 Abreise vor 11:00 Uhr',
+      'ct-depart-body':'Hinterlassen Sie die <strong>Schlüssel im Briefkasten</strong> beim Verlassen. Denken Sie daran, <strong>Ihr Fahrzeug aus dem Parkhaus zu fahren, bevor Sie die Schlüssel einwerfen</strong>.',
+      'cl-label':'✅ Checkliste vor dem Verlassen der Wohnung',
+      'ck1':'🛏️ Bettwäsche auf dem Badezimmerboden abgelegt',
+      'ck2':'🔑 Schlüssel im Briefkasten hinterlegt',
+      'ck3':'🍽️ Geschirr gespült und weggeräumt',
+      'ck4':'♻️ Müll getrennt und herausgebracht',
+      'ck5':'💡 Alle Lichter ausgeschaltet',
+      'ck6':'☕ Kaffeemaschine geleert und sauber',
+      'ck7':'🪟 Alle Fenster geschlossen',
+      'ck8':'🧹 Kurz staubsaugen — keine Reinigungsgebühr wird berechnet, vielen Dank für die Geste!',
+      's7-sub':'Die legendäre Strecke','s7-h2':'24H VON LE MANS',
+      'cd-label':'⏳ Nächster Start · 24 Stunden von Le Mans',
+      'cd-days':'Tage','cd-hours':'Stunden','cd-mins':'Minuten','cd-secs':'Sekunden',
+      'ct-tram':'🚊 Straßenbahnroute',
+      's8-sub':'Rund ums Appartement','s8-h2':'TIPPS',
+      'sl-prox':'📍 Unmittelbare Nähe · weniger als 5 Min. zu Fuß',
+      'sl-faire':'⭐ Lohnt sich · einen Ausflug wert',
+      'sl-parcs':'🌳 Parks & Grünflächen',
+      'sl-commerces':'🛒 Geschäfte & Dienstleistungen',
+      'sl-spec':'🥫 Lokale Spezialität · Als Souvenir mitnehmen',
+      'sl-voir':'🏛️ Unbedingt sehen',
+      's9-sub':'Wenn Sie Hilfe brauchen','s9-h2':'KONTAKTE',
+      'sl-urgences':'🚨 Notrufnummern',
+      's10-sub':'Ihre Aufenthaltsbilanz','s10-h2':'ENTDECKUNGEN',
+      'disc-label':'🏁 Haben Sie schon...',
+      'd1':'🏰 Die Plantagenet-Stadt besucht','d2':'🍖 Die Rillettes du Mans gekostet',
+      'd3':'🏎️ Einem Rennen auf dem Circuit beigewohnt','d4':'🚊 Die Straßenbahn zum Circuit genommen',
+      'd5':'🌸 Den Botanischen Garten erkundet','d6':'🏆 Das 24-Stunden-Museum besucht',
+      'd7':'⭐ Ein empfohlenes Restaurant ausprobiert','d8':'🌿 Im Gué de Maulny gepicknickt',
+      'disc-score':'{done} / {total} erkundet',
+      'footer-review':'Hat Ihnen Ihr Aufenthalt gefallen?','footer-wa':'WhatsApp-Bewertung hinterlassen',
+      'btn-prox-more':'Alle nahen Restaurants anzeigen (9)','btn-prox-less':'Liste reduzieren (9)',
+      'btn-faire-more':'Alle empfohlenen Restaurants anzeigen (4)','btn-faire-less':'Liste reduzieren (4)',
+      'footer-morning-title':'GUTEN MORGEN!','footer-morning-sub':'Genießen Sie Ihren Tag in Le Mans',
+      'footer-checkout-title':'GUTES RENNEN!','footer-checkout-sub':'Danke für Ihren Aufenthalt · Bis zum nächsten Mal',
+      'footer-noon-title':'GUTEN APPETIT!','footer-noon-sub':'Eine wohlverdiente Pause vor der nächsten Runde',
+      'footer-day-title':'SCHÖNEN TAG!','footer-day-sub':'Auf zu einem tollen Tag auf der Strecke',
+      'footer-evening-title':'GUTEN ABEND!','footer-evening-sub':'Le Mans bei Nacht — genießen Sie es',
+      'footer-night-title':'GUTE NACHT!','footer-night-sub':'Ausruhen · Morgen geht das Rennen weiter',
+      'hero-title':'WILLKOMMEN<br>AM <span class="accent">CIRCUIT</span>',
+      'hero-scroll':'Entdecken',
+      'dash-weather':'Wetter · Le Mans',
+      'ct-keys-body':'Die Schlüsselübergabe erfolgt <strong>persönlich</strong> bei Ihrer Ankunft. Kontaktieren Sie uns, um die genaue Uhrzeit zu vereinbaren.',
+      'ct-train-body':'Der <strong>Bahnhof Le Mans</strong> ist nur 3 Minuten zu Fuß entfernt. Ideal für Geschäftsreisen oder um die Region ohne Auto zu erkunden.',
+      'ct-lift-body':'Das Gebäude ist mit einem <strong>Aufzug</strong> ausgestattet, um ins 1. OG zu gelangen.',
+      'map-foot-sub':'Mit Ausweis · Fußgängereingang',
+      'map-car-sub':'Mit Fernbedienung · Tiefgarage',
+      'photo-parking':'🅿️ Ihr Stellplatz · N°<strong style="color:var(--red)">20</strong> · Gesichertes Parkhaus',
+      'trash-ord':'Hausmüll','trash-ord-desc':'Schwarze Tonnen<br>im Parkhaus',
+      'trash-pla':'Plastik<br>& Karton','trash-pla-desc':'Grüne Tonnen<br>im Parkhaus',
+      'trash-ver':'Glas','trash-ver-desc':'Schrank<br>im Eingang',
+      'photo-poubelles':'♻️ Schwarze Tonnen = Müll · Grüne Tonnen = Plastik & Karton',
+      'photo-verre':'🍾 Glasbox · Schrank im Eingang',
+      'photo-bal':'📬 Ihr Briefkasten — Schlüssel hier einwerfen',
+      'ct-tv-light':'💡 TV-Möbel Beleuchtung',
+      'ct-tv-light-sub':'Um das Licht des TV-Möbels mit der Fernbedienung einzuschalten, <strong>stellen Sie sich rechts vom Möbel</strong> — das ist die einzige Position, in der die Fernbedienung erkannt wird.',
+      'ct-cuisine-light':'💡 Küchenbeleuchtung',
+      'video-cuisine-sub':'Das Küchenlicht hat eine besondere Bedienung — sehen Sie sich das Video an.',
+      'tram-a':'<strong>Abfahrt · Haltestelle Zola</strong><br><small>In der Nähe der Wohnung</small>',
+      'tram-mid':'Nehmen Sie die Straßenbahn Richtung <strong>Antarès</strong><br><small>Prüfen Sie die SETRAM-Zeiten an Renntagen</small>',
+      'tram-b':'<strong>Ankunft · Pôle Santé Sud</strong><br><small>Haltestelle Guetteloup — nächste am Circuit de la Sarthe 🏎️</small>',
+      'alert-race':'<strong>Renntage</strong><br>Prüfen Sie die Straßenbahn-Zeiten auf <a href="https://www.setram.fr" target="_blank" style="color:#88ffbb">setram.fr</a> — an den 24 Stunden von Le Mans können Sonderfahrten eingesetzt werden.',
+      'map-maps-sub':'Auf Maps ansehen',
+      'map-cal-text':'Veranstaltungskalender',
+      'host-label':'🏎️ Ihr Gastgeber · Bei Bedarf',
+      'host-wa':'Tippen Sie, um eine Nachricht zu senden',
+      'host-call-label':'Telefonanruf',
+      'host-call':'Tippen Sie zum direkten Anrufen',
+      'emg-samu':'SAMU · Medizinische Notfälle',
+      'emg-police':'Polizei · Gendarmerie',
+      'emg-fire':'Feuerwehr',
+      'emg-eu':'Europäischer Notruf · Alle Dienste',
+      'nearby':'In der Nähe','gmaps':'Auf Google Maps ansehen',
+      'rp1-t':'Französisch · International · ~2 Min.','rp1-s':'★★★★☆ <span>4.4 · Sehr gut</span>',
+      'rp2-t':'Französisch · Bar · ~2 Min.','rp2-s':'★★★★☆ <span>4.6 · Ausgezeichnet</span>',
+      'rp3-t':'Bar · Brasserie · Lounge','rp3-s':'★★★★★ <span>4.7 · Ausgezeichnet</span>',
+      'rp4-t':'Französisch · Traditionell','rp4-s':'★★★★☆ <span>4.6 · Ausgezeichnet</span>',
+      'rp5-t':'Gastronomisch · Guide Michelin','rp5-s':'★★★★★ <span>4.7 · Außergewöhnlich</span>',
+      'rp6-t':'Brasserie · Bistrot · Hausgemacht','rp6-s':'★★★★★ <span>4.7 · Außergewöhnlich</span>',
+      'rp7-t':'Französisch · Bistrot','rp7-s':'★★★★☆ <span>4.5 · Sehr gut</span>',
+      'rp8-t':'Crêperie · Bretonische Galettes','rp8-s':'★★★★★ <span>5.0 · Perfekt</span>',
+      'rp9-t':'Feinkost · Sandwiches · Warme Speisen','rp9-s':'Ideal für ein schnelles Mittagessen',
+      'rp10-t':'Weltküche',
+      'rp11-t':'Snacking · Zum Mitnehmen',
+      'rp12-t':'Hähnchen · Street food',
+      'rf1-t':'30 Rue Gambetta · Französisch · ~10 Min.','rf1-s':'★★★★★ <span>4.9 · Außergewöhnlich</span>',
+      'rf2-t':'Place Saint-Pierre · Grill · ~15 Min.','rf2-s':'★★★★★ <span>4.8 · Außergewöhnlich</span>',
+      'rf3-t':'1 Rue Gambetta · Italienisch · ~10 Min.','rf3-s':'★★★★☆ <span>4.6 · Ausgezeichnet</span>',
+      'rf4-t':'11 Place Saint-Pierre · Fleisch · ~15 Min.','rf4-s':'★★★★★ <span>4.6 · Ausgezeichnet</span>',
+      'rf5-t':'Cité Plantagenêt · Französisch · ~18 Min.','rf5-s':'★★★★★ <span>4.7 · Ausgezeichnet</span>',
+      'rf6-t':'Altstadt · Gastronomisch · ~18 Min.','rf6-s':'★★★★☆ <span>4.5 · Sehr gut</span>',
+      'pk1-t':'Park · Gleich nebenan','pk1-s':'Direkt neben der Wohnung',
+      'pk2-t':'Park im Stadtzentrum · ~5 Min. zu Fuß','pk2-s':'Ideal für eine Pause',
+      'pk3-t':'5 Hektar · Tropisches Gewächshaus · ~10 Min.','pk3-s':'★★★★☆ <span>Ein Muss</span>',
+      'pk4-t':'Grüne Oase im Stadtzentrum','pk4-s':'Sehr nah',
+      'sh1-n':'Supermärkte in der Nähe','sh2-t':'Apotheken im Stadtzentrum',
+      'sp1-t':'Metzgerei Ramage · Spezialität aus Le Mans','sp1-s':'✦ Das kulinarische Souvenir zum Mitnehmen',
+      'vo1-t':'Mittelalterliche Altstadt · 10 Min. zu Fuß','vo1-s':'★★★★★ <span>Ein Muss</span>',
+      'vo2-t':'Der Tempel der 24 Stunden von Le Mans','vo2-s':'★★★★★ <span>Legendär</span>',
+      'vo3-t':'Renngeschichte · Einzigartige Sammlung','vo3-s':'★★★★☆ <span>Nicht verpassen</span>',
+    },
+    es: {
+      'nav-acces':'Acceso','nav-wifi':'WiFi','nav-sejour':'Estancia','nav-regles':'Normas','nav-tri':'Reciclaje',
+      'nav-depart':'Salida','nav-circuit':'Circuito','nav-bonplans':'Consejos','nav-decouverte':'Descubrir','nav-contact':'Contacto',
+      'h-sub':'Tu guía de estancia',
+      's1-sub':'Cómo encontrarnos','s1-h2':'ACCESO',
+      'ct-apt':'📍 El apartamento','ct-keys':'🔑 Entrega de llaves','ct-train':'🚆 Estación · 3 min a pie','ct-lift':'🛗 Ascensor disponible',
+      's2-sub':'Mantente conectado','s2-h2':'CONEXIÓN',
+      'wifi-net-label':'📶 Red WiFi','wifi-pwd-label':'🔒 Contraseña',
+      'wifi-footer':'Henri Pescarolo — Leyenda de las 24 Horas de Le Mans 🏁',
+      's3-sub':'Llegada y horarios','s3-h2':'TU ESTANCIA',
+      'timing-in':'Check-in','timing-in-note':'A partir de','timing-out':'Check-out','timing-out-note':'Como tarde',
+      'ct-linge':'🛏️ Ropa de cama y toallas',
+      'ct-linge-body':'<li>Sábanas y toallas <strong>incluidas</strong></li><li>Antes de salir: retirar toda la ropa de cama y dejarla <strong>en el suelo del baño</strong></li><li>Gel de ducha y champú <strong>incluidos</strong></li><li>Cuna disponible bajo petición (niño &lt; 3 años)</li>',
+      'ct-equip':'☕ Equipamiento & suministros',
+      'ct-equip-body':'<li>Cafetera <strong>Senseo</strong> — cápsulas incluidas</li><li>Café y té <strong>incluidos</strong></li><li>Plancha <strong>disponible</strong></li>',
+      'alert-water':'<strong>Agua & electricidad</strong><br>Por favor, sea razonable en su consumo. En caso de uso excesivo, podría aplicarse un recargo.',
+      's4-sub':'A respetar','s4-h2':'REGLAS DE CARRERA',
+      'r1':'<strong>Animales prohibidos</strong> No se admiten animales de compañía en el alojamiento.',
+      'r2':'<strong>No fumadores</strong> Está estrictamente prohibido fumar dentro del alojamiento.',
+      'r3':'<strong>Sin fiestas</strong> No se permiten fiestas ni eventos festivos.',
+      'r4':'<strong>Silencio nocturno</strong> Por favor, respete el silencio entre las <strong>22h y las 8h</strong>.',
+      'r5':'<strong>Capacidad máxima</strong> 4 adultos + 1 niño menor de 3 años.<br><span style="color:var(--muted);font-size:0.85em">Cuna disponible bajo petición.</span>',
+      'r6':'<strong style="color:#ff6b6b">Decoraciones — No tocar</strong> La gorra, el mono de piloto y los objetos de colección son elementos decorativos. Por favor, no los utilice, lleve ni desplace.',
+      's5-sub':'Reciclaje selectivo','s5-h2':'REPOSTAJE',
+      's6-sub':'Check-out','s6-h2':'LÍNEA DE META',
+      'ct-depart':'🚦 Salida antes de las 11h',
+      'ct-depart-body':'Deje las <strong>llaves en el buzón</strong> al salir. Recuerde <strong>sacar su vehículo del aparcamiento antes de dejar las llaves en el buzón</strong>.',
+      'cl-label':'✅ Lista de verificación antes de abandonar el apartamento',
+      'ck1':'🛏️ Sábanas y ropa dejadas en el suelo del baño',
+      'ck2':'🔑 Llaves depositadas en el buzón',
+      'ck3':'🍽️ Vajilla lavada y guardada',
+      'ck4':'♻️ Basuras separadas y sacadas',
+      'ck5':'💡 Todas las luces apagadas',
+      'ck6':'☕ Cafetera vaciada y limpia',
+      'ck7':'🪟 Todas las ventanas cerradas',
+      'ck8':'🧹 Un pequeño paso de aspiradora — no se cobra tarifa de limpieza, ¡gracias por el gesto!',
+      's7-sub':'El circuito mítico','s7-h2':'24H DE LE MANS',
+      'cd-label':'⏳ Próxima salida · 24 Horas de Le Mans',
+      'cd-days':'Días','cd-hours':'Horas','cd-mins':'Minutos','cd-secs':'Segundos',
+      'ct-tram':'🚊 Itinerario en tranvía',
+      's8-sub':'Alrededor del apartamento','s8-h2':'BUENOS PLANES',
+      'sl-prox':'📍 Inmediaciones · menos de 5 min a pie',
+      'sl-faire':'⭐ Vale la pena · imprescindibles',
+      'sl-parcs':'🌳 Parques & espacios verdes',
+      'sl-commerces':'🛒 Tiendas & servicios',
+      'sl-spec':'🥫 Especialidad local · Para llevarte',
+      'sl-voir':'🏛️ Imprescindible ver',
+      's9-sub':'En caso de necesidad','s9-h2':'CONTACTOS',
+      'sl-urgences':'🚨 Números de emergencia',
+      's10-sub':'Tu balance de estancia','s10-h2':'DESCUBRIMIENTO',
+      'disc-label':'🏁 ¿Ya has...',
+      'd1':'🏰 Visitado la Ciudad Plantagenet','d2':'🍖 Probado las Rillettes du Mans',
+      'd3':'🏎️ Asistido a una carrera en el Circuito','d4':'🚊 Tomado el tranvía hasta el Circuito',
+      'd5':'🌸 Explorado el Jardín Botánico','d6':'🏆 Visitado el Museo de las 24 Horas',
+      'd7':'⭐ Probado un restaurante recomendado','d8':'🌿 Hecho un picnic en Gué de Maulny',
+      'disc-score':'{done} / {total} explorados',
+      'footer-review':'¿Tu estancia fue bien?','footer-wa':'Dejar una reseña por WhatsApp',
+      'btn-prox-more':'Ver todos los restaurantes cercanos (9)','btn-prox-less':'Reducir lista (9)',
+      'btn-faire-more':'Ver todos los restaurantes recomendados (4)','btn-faire-less':'Reducir lista (4)',
+      'footer-morning-title':'¡BUENOS DÍAS!','footer-morning-sub':'Disfruta de tu día en Le Mans',
+      'footer-checkout-title':'¡BUENA CARRERA!','footer-checkout-sub':'Gracias por tu estancia · Hasta pronto en el circuito',
+      'footer-noon-title':'¡BUEN PROVECHO!','footer-noon-sub':'Una pausa merecida antes de volver a la pista',
+      'footer-day-title':'¡BUEN DÍA!','footer-day-sub':'En ruta para un gran día en la pista',
+      'footer-evening-title':'¡BUENAS TARDES!','footer-evening-sub':'Le Mans de noche — disfrútalo',
+      'footer-night-title':'¡BUENAS NOCHES!','footer-night-sub':'Descansa · Mañana continúa la carrera',
+      'hero-title':'BIENVENIDO<br>AL <span class="accent">CIRCUITO</span>',
+      'hero-scroll':'Descubrir',
+      'dash-weather':'Tiempo · Le Mans',
+      'ct-keys-body':'La entrega de llaves se realiza <strong>en persona</strong> a su llegada. Contáctenos para acordar la hora exacta.',
+      'ct-train-body':'La <strong>Estación de Le Mans</strong> está a solo 3 minutos a pie. Ideal para desplazamientos profesionales o explorar la región sin coche.',
+      'ct-lift-body':'La residencia está equipada con un <strong>ascensor</strong> para acceder al 1er piso.',
+      'map-foot-sub':'Con llave · Entrada peatonal',
+      'map-car-sub':'Con mando · Aparcamiento cubierto',
+      'photo-parking':'🅿️ Tu plaza · N°<strong style="color:var(--red)">20</strong> · Aparcamiento cubierto y seguro',
+      'trash-ord':'Basura<br>doméstica','trash-ord-desc':'Cubos negros<br>en el aparcamiento',
+      'trash-pla':'Plástico<br>& Cartón','trash-pla-desc':'Cubos verdes<br>en el aparcamiento',
+      'trash-ver':'Vidrio','trash-ver-desc':'Armario<br>de la entrada',
+      'photo-poubelles':'♻️ Cubos negros = basura · Cubos verdes = plástico & cartón',
+      'photo-verre':'🍾 Cubo de vidrio · Armario de la entrada',
+      'photo-bal':'📬 Su buzón — deje las llaves aquí',
+      'ct-tv-light':'💡 Luz del mueble TV',
+      'ct-tv-light-sub':'Para encender la luz del mueble TV con el mando a distancia, <strong>colóquese bien a la derecha del mueble</strong> — es la única posición en la que el mando es detectado.',
+      'ct-cuisine-light':'💡 Luz de la cocina',
+      'video-cuisine-sub':'La luz de la cocina tiene un funcionamiento especial — vea el vídeo.',
+      'tram-a':'<strong>Salida · Parada Zola</strong><br><small>Cerca de la residencia</small>',
+      'tram-mid':'Tome el tranvía dirección <strong>Antarès</strong><br><small>Consulte los horarios de SETRAM los días de carrera</small>',
+      'tram-b':'<strong>Llegada · Pôle Santé Sud</strong><br><small>Parada Guetteloup — más cercana al Circuit de la Sarthe 🏎️</small>',
+      'alert-race':'<strong>Días de carrera</strong><br>Consulte los horarios del tranvía en <a href="https://www.setram.fr" target="_blank" style="color:#88ffbb">setram.fr</a> — pueden habilitarse lanzaderas especiales durante las 24 Horas de Le Mans.',
+      'map-maps-sub':'Ver en Maps',
+      'map-cal-text':'Calendario de eventos',
+      'host-label':'🏎️ Su anfitrión · En caso de necesidad',
+      'host-wa':'Pulse para enviar un mensaje',
+      'host-call-label':'Llamada telefónica',
+      'host-call':'Pulse para llamar directamente',
+      'emg-samu':'SAMU · Urgencias médicas',
+      'emg-police':'Policía · Gendarmería',
+      'emg-fire':'Bomberos',
+      'emg-eu':'Emergencias europeas · Todos los servicios',
+      'nearby':'Cercano','gmaps':'Ver en Google Maps',
+      'rp1-t':'Francés · Internacional · ~2 min','rp1-s':'★★★★☆ <span>4.4 · Muy bien</span>',
+      'rp2-t':'Francés · Bar · ~2 min','rp2-s':'★★★★☆ <span>4.6 · Excelente</span>',
+      'rp3-t':'Bar · Brasserie · Lounge','rp3-s':'★★★★★ <span>4.7 · Excelente</span>',
+      'rp4-t':'Francés · Tradicional','rp4-s':'★★★★☆ <span>4.6 · Excelente</span>',
+      'rp5-t':'Gastronómico · Guía Michelin','rp5-s':'★★★★★ <span>4.7 · Excepcional</span>',
+      'rp6-t':'Brasserie · Bistrot · Casero','rp6-s':'★★★★★ <span>4.7 · Excepcional</span>',
+      'rp7-t':'Francesa · Bistrot','rp7-s':'★★★★☆ <span>4.5 · Muy bien</span>',
+      'rp8-t':'Crêperie · Galettes bretonas','rp8-s':'★★★★★ <span>5.0 · Perfecto</span>',
+      'rp9-t':'Charcutería · Sándwiches · Platos calientes','rp9-s':'Ideal para un almuerzo rápido',
+      'rp10-t':'Cocina del mundo',
+      'rp11-t':'Snacking · Para llevar',
+      'rp12-t':'Pollo · Street food',
+      'rf1-t':'30 Rue Gambetta · Francesa · ~10 min','rf1-s':'★★★★★ <span>4.9 · Excepcional</span>',
+      'rf2-t':'Place Saint-Pierre · Grill · ~15 min','rf2-s':'★★★★★ <span>4.8 · Excepcional</span>',
+      'rf3-t':'1 Rue Gambetta · Italiana · ~10 min','rf3-s':'★★★★☆ <span>4.6 · Excelente</span>',
+      'rf4-t':'11 Place Saint-Pierre · Carnes · ~15 min','rf4-s':'★★★★★ <span>4.6 · Excelente</span>',
+      'rf5-t':'Cité Plantagenêt · Francesa · ~18 min','rf5-s':'★★★★★ <span>4.7 · Excelente</span>',
+      'rf6-t':'Ciudad antigua · Gastronómico · ~18 min','rf6-s':'★★★★☆ <span>4.5 · Muy bien</span>',
+      'pk1-t':'Parque · Justo al lado','pk1-s':'A dos pasos del apartamento',
+      'pk2-t':'Parque en el centro · ~5 min a pie','pk2-s':'Ideal para un descanso',
+      'pk3-t':'5 hectáreas · Invernadero tropical · ~10 min','pk3-s':'★★★★☆ <span>Imprescindible</span>',
+      'pk4-t':'Paraíso verde en el centro','pk4-s':'Muy cercano',
+      'sh1-n':'Supermercados cercanos','sh2-t':'Farmacias en el centro',
+      'sp1-t':'Carnicería Ramage · Especialidad de Le Mans','sp1-s':'✦ El souvenir gastronómico para llevarse',
+      'vo1-t':'Ciudad medieval · A 10 min a pie','vo1-s':'★★★★★ <span>Imprescindible</span>',
+      'vo2-t':'El templo de las 24 Horas de Le Mans','vo2-s':'★★★★★ <span>Mítico</span>',
+      'vo3-t':'Historia de la carrera · Colección única','vo3-s':'★★★★☆ <span>No te lo pierdas</span>',
+    },
+  };
+
+  // ─── WIND LABEL ────────────────────────────────────────
+  function updateWindLabel() {
+    if (_windSpeed === null) return;
+    const labels = { fr:'Vent', en:'Wind', de:'Wind', es:'Viento' };
+    document.getElementById('windValue').textContent = (labels[_currentLang] || 'Vent') + ' · ' + _windSpeed + ' km/h';
+  }
+
+  // ─── FOOTER SLOT HELPER ────────────────────────────────
+  function getFooterSlot() {
+    const hh = new Date().getHours() + new Date().getMinutes() / 60;
+    if (hh >= 6   && hh < 10.5) return 'morning';
+    if (hh >= 10.5 && hh < 11.5) return 'checkout';
+    if (hh >= 11.5 && hh < 14)  return 'noon';
+    if (hh >= 14  && hh < 18)   return 'day';
+    if (hh >= 18  && hh < 22)   return 'evening';
+    return 'night';
+  }
+  const FOOTER_FLAGS = { morning:'🌅', checkout:'🏁', noon:'☀️', day:'🏁', evening:'🌆', night:'🌙' };
+
+  // ─── SET LANGUAGE ──────────────────────────────────────
+  function setLang(lang) {
+    if (!LANGS[lang]) return;
+    const t = LANGS[lang];
+    _currentLang = lang;
+
+    document.querySelectorAll('.lang-btn').forEach(btn =>
+      btn.classList.toggle('active', btn.dataset.lang === lang)
+    );
+    document.documentElement.lang = lang;
+
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.dataset.i18n;
+      if (t[key] !== undefined) el.innerHTML = t[key];
+    });
+
+    // Dynamic footer text
+    const slot = getFooterSlot();
+    document.getElementById('footerFlag').textContent  = FOOTER_FLAGS[slot];
+    document.getElementById('footerTitle').textContent = t['footer-' + slot + '-title'] || '';
+    document.getElementById('footerSub').textContent   = t['footer-' + slot + '-sub']   || '';
+
+    // Localized date
+    const localeMap = { fr:'fr-FR', en:'en-GB', de:'de-DE', es:'es-ES' };
+    const opts = { weekday:'long', day:'numeric', month:'long', year:'numeric' };
+    const dateEl = document.getElementById('footerDate');
+    if (dateEl) dateEl.textContent = new Date().toLocaleDateString(localeMap[lang] || 'fr-FR', opts);
+
+    // Discovery score
+    const discItems = document.querySelectorAll('.discovery-item');
+    const discDone  = document.querySelectorAll('.discovery-item.done');
+    const scoreEl   = document.getElementById('discoveryScore');
+    if (scoreEl && t['disc-score']) {
+      scoreEl.textContent = t['disc-score']
+        .replace('{done}', discDone.length).replace('{total}', discItems.length);
+    }
+
+    // Update show-more button texts
+    const btnProx = document.getElementById('btnProximite');
+    if (btnProx) btnProx.querySelector('span:first-child').textContent =
+      btnProx.classList.contains('open') ? t['btn-prox-less'] : t['btn-prox-more'];
+    const btnFaire = document.getElementById('btnAfaire');
+    if (btnFaire) btnFaire.querySelector('span:first-child').textContent =
+      btnFaire.classList.contains('open') ? t['btn-faire-less'] : t['btn-faire-more'];
+
+    updateWindLabel();
+    localStorage.setItem('lang', lang);
+  }
+
+  // ─── HERO BG ───────────────────────────────────────────
+  window.addEventListener('load', () => {
+    document.getElementById('heroBg').classList.add('loaded');
+  });
+
+  // ─── F1 LIGHTS ANIMATION ───────────────────────────────
+  (function() {
+    const overlay = document.getElementById('f1overlay');
+    const lights  = ['l1','l2','l3','l4','l5'].map(id => document.getElementById(id));
+    const goEl    = document.getElementById('f1go');
+    let i = 0;
+
+    function lightUp() {
+      if (i < lights.length) {
+        lights[i].classList.add('on');
+        i++;
+        setTimeout(lightUp, 550);
+      } else {
+        setTimeout(() => {
+          lights.forEach(l => l.classList.remove('on'));
+          goEl.classList.add('show');
+          setTimeout(() => {
+            overlay.classList.add('fade-out');
+            document.getElementById('scrollTrack').style.display = '';
+            setTimeout(() => { overlay.style.display = 'none'; }, 900);
+          }, 700);
+        }, 900);
+      }
+    }
+
+    setTimeout(lightUp, 400);
+  })();
+
+  // ─── SCROLL PROGRESS CAR ───────────────────────────────
+  const scrollTrack = document.getElementById('scrollTrack');
+  const scrollCar   = document.getElementById('scrollCar');
+
+  window.addEventListener('scroll', () => {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const pct       = docHeight > 0 ? scrollTop / docHeight : 0;
+    scrollCar.style.left = Math.max(0, pct * (scrollTrack.clientWidth - 24)) + 'px';
+  }, { passive: true });
+
+  // ─── LOCAL CLOCK ───────────────────────────────────────
+  (function tick() {
+    const el = document.getElementById('clockValue');
+    if (el) el.textContent = new Date().toLocaleTimeString('fr-FR', {
+      timeZone: 'Europe/Paris', hour: '2-digit', minute: '2-digit', second: '2-digit'
+    });
+    setTimeout(tick, 1000);
+  })();
+
+  // ─── LIVE WEATHER (Open-Meteo) ─────────────────────────
+  (async function() {
+    try {
+      const r = await fetch('https://api.open-meteo.com/v1/forecast?latitude=47.9956&longitude=0.1963&current=temperature_2m,weathercode,windspeed_10m&timezone=Europe%2FParis');
+      const d = await r.json();
+      const c = d.current;
+      const code = c.weathercode;
+      let icon = '🌤️';
+      if (code === 0)                               icon = '☀️';
+      else if (code <= 3)                           icon = '⛅';
+      else if (code <= 48)                          icon = '🌫️';
+      else if (code <= 67 || (code >= 80 && code <= 82)) icon = '🌧️';
+      else if (code <= 77)                          icon = '❄️';
+      else                                          icon = '⛈️';
+      document.getElementById('weatherIcon').textContent  = icon;
+      document.getElementById('weatherValue').textContent = Math.round(c.temperature_2m) + '°C';
+      _windSpeed = Math.round(c.windspeed_10m);
+      updateWindLabel();
+    } catch(e) {
+      document.getElementById('weatherValue').textContent = '--°C';
+    }
+  })();
+
+  // ─── COUNTDOWN · 24H DU MANS ───────────────────────────
+  (function countdown() {
+    const now  = new Date();
+    let race   = new Date('2025-06-14T16:00:00+02:00');
+    if (now >= race) race = new Date('2026-06-13T16:00:00+02:00');
+    const diff = Math.max(0, race - now);
+    const pad  = n => String(Math.floor(n)).padStart(2, '0');
+    document.getElementById('cdDays').textContent  = pad(diff / 864e5);
+    document.getElementById('cdHours').textContent = pad((diff % 864e5) / 36e5);
+    document.getElementById('cdMins').textContent  = pad((diff % 36e5) / 6e4);
+    document.getElementById('cdSecs').textContent  = pad((diff % 6e4) / 1e3);
+    setTimeout(countdown, 1000);
+  })();
+
+  // ─── CHECKLIST + CONFETTI ──────────────────────────────
+  function toggleCheck(el) {
+    el.classList.toggle('done');
+    const items   = document.querySelectorAll('#depart .check-item');
+    const allDone = [...items].every(i => i.classList.contains('done'));
+    if (allDone && !confettiTriggered) { confettiTriggered = true; launchConfetti(); }
+    if (!allDone) confettiTriggered = false;
+  }
+
+  function launchConfetti() {
+    const canvas = document.getElementById('confettiCanvas');
+    const ctx    = canvas.getContext('2d');
+    canvas.width  = window.innerWidth;
+    canvas.height = window.innerHeight;
+    const colors = ['#000000','#ffffff','#CC0000','#00B140','#FFD700','#1565C0'];
+    const pts = Array.from({ length: 150 }, () => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * -canvas.height,
+      r: Math.random() * 7 + 3,
+      d: Math.random() * 2 + 1.5,
+      c: colors[Math.floor(Math.random() * colors.length)],
+      ta: 0, ti: Math.random() * 0.07 + 0.04,
+      sq: Math.random() > 0.5
+    }));
+    let frame = 0;
+    (function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      pts.forEach(p => {
+        p.ta += p.ti; p.y += p.d + 1;
+        const tilt = Math.sin(p.ta) * 15;
+        ctx.fillStyle = p.c;
+        if (p.sq) { ctx.fillRect(p.x + tilt, p.y, p.r, p.r); }
+        else { ctx.beginPath(); ctx.arc(p.x + tilt, p.y, p.r / 2, 0, Math.PI * 2); ctx.fill(); }
+      });
+      if (++frame < 220) requestAnimationFrame(draw);
+      else ctx.clearRect(0, 0, canvas.width, canvas.height);
+    })();
+  }
+
+  // ─── DYNAMIC FOOTER BACKGROUND ─────────────────────────
+  (function() {
+    const hh = new Date().getHours() + new Date().getMinutes() / 60;
+    const bgMap = [
+      { from: 6,  to: 10, img: 'lever-soleil.jpg' },
+      { from: 10, to: 19, img: 'journee.jpg' },
+      { from: 19, to: 22, img: 'coucher-soleil.jpg' },
+    ];
+    let bg = 'nuit.jpg';
+    for (const r of bgMap) { if (hh >= r.from && hh < r.to) { bg = r.img; break; } }
+    const footer = document.querySelector('footer');
+    footer.style.backgroundImage    = `url('images/${bg}')`;
+    footer.style.backgroundSize     = 'cover';
+    footer.style.backgroundPosition = 'center';
+  })();
+
+  // ─── TOGGLE RESTAURANT LIST ────────────────────────────
+  function toggleReco(id, btn) {
+    const el = document.getElementById(id);
+    const isOpen = el.classList.toggle('open');
+    btn.classList.toggle('open', isOpen);
+    const span = btn.querySelector('span:first-child');
+    const t = LANGS[_currentLang] || LANGS.fr;
+    if (id === 'recoProximite') {
+      span.textContent = isOpen ? t['btn-prox-less'] : t['btn-prox-more'];
+    } else {
+      span.textContent = isOpen ? t['btn-faire-less'] : t['btn-faire-more'];
+    }
+  }
+
+  // ─── DISCOVERY CHECKLIST ───────────────────────────────
+  function toggleDiscovery(el) {
+    el.classList.toggle('done');
+    const total = document.querySelectorAll('.discovery-item').length;
+    const done  = document.querySelectorAll('.discovery-item.done').length;
+    const t = LANGS[_currentLang] || LANGS.fr;
+    document.getElementById('discoveryScore').textContent =
+      (t['disc-score'] || `${done} / ${total}`).replace('{done}', done).replace('{total}', total);
+  }
+
+  // ─── LIGHTBOX ──────────────────────────────────────────
+  const _gallery = [
+    'images/salon2.jpeg','images/cuisine2.jpg','images/deux-chambres.jpg',
+    'images/chambre.jpeg','images/chambre-salon.jpg','images/cuisine.jpg',
+    'images/salle-de-bain.jpg','images/decomeuble.jpeg',
+    'images/salon.jpg','images/table-basse.jpg'
+  ];
+  let _lbIndex = -1;
+  let _lbTouchX = null;
+
+  function openLightbox(src) {
+    _lbIndex = _gallery.indexOf(src);
+    _lbShow(src);
+    document.getElementById('lightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function _lbShow(src) {
+    const img = document.getElementById('lightboxImg');
+    img.classList.add('fading');
+    setTimeout(() => {
+      img.src = src;
+      img.classList.remove('fading');
+    }, 150);
+    const inGallery = _lbIndex >= 0;
+    document.getElementById('lbPrev').classList.toggle('hidden', !inGallery);
+    document.getElementById('lbNext').classList.toggle('hidden', !inGallery);
+    const counter = document.getElementById('lbCounter');
+    counter.textContent = inGallery ? (_lbIndex + 1) + ' / ' + _gallery.length : '';
+  }
+
+  function lbNav(dir) {
+    if (_lbIndex < 0) return;
+    _lbIndex = (_lbIndex + dir + _gallery.length) % _gallery.length;
+    _lbShow(_gallery[_lbIndex]);
+  }
+
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  // Keyboard navigation
+  document.addEventListener('keydown', e => {
+    if (!document.getElementById('lightbox').classList.contains('open')) return;
+    if (e.key === 'ArrowLeft')  lbNav(-1);
+    if (e.key === 'ArrowRight') lbNav(1);
+    if (e.key === 'Escape')     closeLightbox();
+  });
+
+  // Touch swipe
+  document.getElementById('lightboxImg').addEventListener('touchstart', e => {
+    _lbTouchX = e.touches[0].clientX;
+  }, { passive: true });
+  document.getElementById('lightboxImg').addEventListener('touchend', e => {
+    if (_lbTouchX === null) return;
+    const dx = e.changedTouches[0].clientX - _lbTouchX;
+    if (Math.abs(dx) > 50) lbNav(dx < 0 ? 1 : -1);
+    _lbTouchX = null;
+  }, { passive: true });
+
+  // ─── ACTIVE NAV ON SCROLL ──────────────────────────────
+  const navBtns = document.querySelectorAll('.top-nav .nav-btn, .bottom-nav .nav-btn');
+  const secObs  = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        navBtns.forEach(btn => btn.classList.toggle('active', btn.getAttribute('href') === '#' + id));
+      }
+    });
+  }, { threshold: 0.35, rootMargin: '-10% 0px -55% 0px' });
+
+  document.querySelectorAll('section[id]').forEach(s => secObs.observe(s));
+
+  // ─── SECTION REVEAL ANIMATIONS ─────────────────────────
+  const revealObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        revealObs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.06, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll(
+    '.card, .rule, .reco-item, .contact-btn, .timing-card, .trash-item, .discovery-item, .wifi-card, .photo-card, .section-head, .alert, .countdown-grid, .tram-line'
+  ).forEach(el => { el.classList.add('reveal'); revealObs.observe(el); });
+
+  // ─── AUTO-DETECT LANGUAGE ─────────────────────────────
+  (function() {
+    const saved    = localStorage.getItem('lang');
+    const browser  = (navigator.language || 'fr').slice(0, 2);
+    const detected = LANGS[saved] ? saved : (LANGS[browser] ? browser : 'fr');
+    setLang(detected);
+  })();
+</script>
+
+</body>
+</html>

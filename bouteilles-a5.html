@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Bouteilles à vendre – Résidence Cervantes</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@600;700;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #1a1a1a;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      font-family: 'Barlow', sans-serif;
+    }
+
+    .page {
+      width: 148mm;
+      height: 210mm;
+      background: #0d0d0d;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* Background */
+    .bg-stripes {
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        -45deg,
+        rgba(0,177,64,0.03) 0px,
+        rgba(0,177,64,0.03) 2px,
+        transparent 2px,
+        transparent 18px
+      );
+    }
+
+    /* Top bar */
+    .top-bar {
+      position: relative;
+      width: 100%;
+      background: #00B140;
+      padding: 5mm 6mm 4mm;
+      text-align: center;
+      z-index: 10;
+      flex-shrink: 0;
+    }
+    .top-bar::after {
+      content: '';
+      position: absolute;
+      bottom: -7px; left: 0; right: 0;
+      height: 7px;
+      background: repeating-linear-gradient(
+        90deg,
+        #00B140 0px, #00B140 18px,
+        #f5f5f5 18px, #f5f5f5 36px,
+        #0d0d0d 36px, #0d0d0d 54px
+      );
+    }
+    .top-eyebrow {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 10px;
+      letter-spacing: 4px;
+      color: rgba(255,255,255,0.7);
+      text-transform: uppercase;
+    }
+    .top-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 36px;
+      letter-spacing: 6px;
+      color: white;
+      line-height: 1;
+      margin-top: 1mm;
+    }
+
+    /* Content */
+    .content {
+      position: relative;
+      z-index: 5;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 8mm 6mm 5mm;
+      gap: 5mm;
+      width: 100%;
+    }
+
+    /* Big icon */
+    .main-icon {
+      font-size: 52px;
+      filter: drop-shadow(0 0 16px rgba(0,177,64,0.5));
+      line-height: 1;
+    }
+
+    /* Instruction cards */
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 3mm;
+      width: 100%;
+    }
+
+    .step {
+      display: flex;
+      align-items: center;
+      gap: 3mm;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 6px;
+      padding: 3mm 4mm;
+    }
+    .step-num {
+      width: 8mm;
+      height: 8mm;
+      border-radius: 50%;
+      background: #00B140;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 16px;
+      color: white;
+      flex-shrink: 0;
+    }
+    .step-emoji {
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+    .step-text {
+      font-size: 12px;
+      color: rgba(255,255,255,0.75);
+      line-height: 1.4;
+    }
+    .step-text strong {
+      color: white;
+      font-weight: 600;
+    }
+
+    /* Divider */
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 3mm;
+      width: 100%;
+    }
+    .div-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(0,177,64,0.4), transparent);
+    }
+    .div-text {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px;
+      color: rgba(0,177,64,0.7);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    /* Trust box */
+    .trust-box {
+      background: rgba(0,177,64,0.08);
+      border: 1px solid rgba(0,177,64,0.3);
+      border-radius: 8px;
+      padding: 4mm 5mm;
+      text-align: center;
+      width: 100%;
+    }
+    .trust-icon { font-size: 28px; }
+    .trust-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 22px;
+      color: #00B140;
+      letter-spacing: 4px;
+      margin-top: 1mm;
+    }
+    .trust-sub {
+      font-size: 11px;
+      color: rgba(255,255,255,0.5);
+      letter-spacing: 1px;
+      margin-top: 1mm;
+    }
+
+    /* Price reminder */
+    .price-reminder {
+      display: flex;
+      align-items: center;
+      gap: 3mm;
+      background: rgba(255,255,255,0.03);
+      border: 1px dashed rgba(255,255,255,0.15);
+      border-radius: 6px;
+      padding: 3mm 4mm;
+      width: 100%;
+    }
+    .price-reminder-icon { font-size: 20px; }
+    .price-reminder-text {
+      font-size: 11px;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.4;
+    }
+    .price-reminder-text strong { color: rgba(255,255,255,0.8); }
+
+    /* Bottom bar */
+    .bottom-bar {
+      position: relative;
+      width: 100%;
+      background: #00B140;
+      padding: 3mm;
+      text-align: center;
+      z-index: 10;
+      flex-shrink: 0;
+    }
+    .bottom-bar::before {
+      content: '';
+      position: absolute;
+      top: -7px; left: 0; right: 0;
+      height: 7px;
+      background: repeating-linear-gradient(
+        90deg,
+        #0d0d0d 0px, #0d0d0d 18px,
+        #f5f5f5 18px, #f5f5f5 36px,
+        #00B140 36px, #00B140 54px
+      );
+    }
+    .bottom-text {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 10px;
+      letter-spacing: 3px;
+      color: rgba(255,255,255,0.8);
+      text-transform: uppercase;
+    }
+
+    @media print {
+      body { background: white; }
+      .page { box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="bg-stripes"></div>
+
+    <div class="top-bar">
+      <div class="top-eyebrow">🏁 Résidence Cervantes · Le Mans</div>
+      <div class="top-title">Boutique & Boissons</div>
+    </div>
+
+    <div class="content">
+
+      <div class="main-icon">🍾</div>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-emoji">👀</div>
+          <div class="step-text">
+            <strong>Choisissez votre bouteille</strong><br>
+            Le prix est indiqué directement sur chaque bouteille.
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-emoji">🐷</div>
+          <div class="step-text">
+            <strong>Déposez le montant dans la tirelire</strong><br>
+            La tirelire est à disposition à côté des bouteilles.
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-emoji">🥂</div>
+          <div class="step-text">
+            <strong>Profitez !</strong><br>
+            Savourez votre boisson et bonne course ! 🏎️
+          </div>
+        </div>
+      </div>
+
+      <div class="divider">
+        <div class="div-line"></div>
+        <div class="div-text">Fonctionnement</div>
+        <div class="div-line"></div>
+      </div>
+
+      <div class="trust-box">
+        <div class="trust-icon">🤝</div>
+        <div class="trust-title">Système à la Confiance</div>
+        <div class="trust-sub">Merci pour votre honnêteté · Bonne dégustation !</div>
+      </div>
+
+      <div class="price-reminder">
+        <div class="price-reminder-icon">💰</div>
+        <div class="price-reminder-text">
+          <strong>Le prix est affiché sur chaque bouteille.</strong><br>
+          Monnaie exacte si possible — merci ! 🙏
+        </div>
+      </div>
+
+    </div>
+
+    <div class="bottom-bar">
+      <div class="bottom-text">🏁 Bonne route & bon séjour au Mans 🏎️</div>
+    </div>
+  </div>
+</body>
+</html>
